@@ -1,0 +1,14 @@
+{
+  "name": "intake-agent",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/main.js",
+  "scripts": {
+    "test": "node --test"
+  },
+  "dependencies": {
+    "node-appwrite": "29.0.0",
+    "openai": "7.24.0"
+  }
+}

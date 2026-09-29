@@ -1,0 +1,7 @@
+packages:
+  - apps/*
+  - functions/*
+allowBuilds:
+  esbuild: true
+minimumReleaseAgeExclude:
+  - openai@7.24.0

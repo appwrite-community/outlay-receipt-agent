@@ -1,0 +1,20 @@
+{
+  "name": "outlay-receipt-agent",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "provision": "tsx --env-file=.env scripts/provision.ts",
+    "seed": "tsx --env-file=.env scripts/seed.ts",
+    "samples": "tsx scripts/render-samples.ts",
+    "test": "pnpm --filter intake-agent test",
+    "typecheck": "tsc --noEmit -p scripts"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.4",
+    "node-appwrite": "29.0.0",
+    "playwright": "1.58.2",
+    "tsx": "4.23.15",
+    "typescript": "7.0.2"
+  },
+  "packageManager": "pnpm@12.4.1"
+}
