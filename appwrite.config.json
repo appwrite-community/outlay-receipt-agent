@@ -1,0 +1,35 @@
+{
+    "projectId": "<PROJECT_ID>",
+    "endpoint": "https://<REGION>.cloud.appwrite.io/v1",
+    "functions": [
+        {
+            "$id": "intake-agent",
+            "name": "intake-agent",
+            "runtime": "node-22",
+            "execute": [
+                "users"
+            ],
+            "events": [
+                "buckets.receipts.files.*.create"
+            ],
+            "enabled": true,
+            "logging": true,
+            "timeout": 180,
+            "entrypoint": "src/main.js",
+            "commands": "npm install",
+            "path": "functions/intake-agent",
+            "scopes": [
+                "tokens.write",
+                "rows.read",
+                "rows.write",
+                "users.read"
+            ],
+            "specification": "s-0.5vcpu-512mb",
+            "ignore": [
+                "node_modules",
+                ".npm",
+                "test"
+            ]
+        }
+    ]
+}

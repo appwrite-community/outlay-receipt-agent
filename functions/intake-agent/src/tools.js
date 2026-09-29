@@ -190,7 +190,7 @@ export function createLookups({ tablesDB, error }, expense, record) {
   };
 }
 
-function describeHistory(matches) {
+export function describeHistory(matches) {
   if (matches.length === 0) return 'No earlier expenses from this merchant';
   const count = `${matches.length} earlier ${matches.length === 1 ? 'expense' : 'expenses'}`;
   const chosenByUser = matches.find((match) => match.categorySetBy === 'user');
@@ -198,7 +198,7 @@ function describeHistory(matches) {
   return `${count}, last filed under ${categoryLabel(matches[0].category)}`;
 }
 
-function describeDuplicates(matches) {
+export function describeDuplicates(matches) {
   if (matches.length === 0) return 'No expense with the same total nearby';
   if (matches.length === 1) return `Same total as ${matches[0].merchant} on ${formatDate(matches[0].date)}`;
   return `${matches.length} expenses with the same total nearby`;

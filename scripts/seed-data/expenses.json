@@ -1,0 +1,2536 @@
+{
+  "merchants": {
+    "Harbor Light Cafe": {
+      "template": "thermal",
+      "format": "png",
+      "address": [
+        "2210 SE Division St",
+        "Portland, OR 97202"
+      ],
+      "phone": "(503) 555-0142",
+      "footer": "Thank you. See you tomorrow."
+    },
+    "Juniper & Rye": {
+      "template": "thermal",
+      "format": "jpg",
+      "address": [
+        "915 NW 23rd Ave",
+        "Portland, OR 97210"
+      ],
+      "phone": "(503) 555-0187",
+      "footer": "Gratuity is not included."
+    },
+    "Little Fern Bakery": {
+      "template": "thermal",
+      "format": "jpg",
+      "address": [
+        "3321 N Williams Ave",
+        "Portland, OR 97227"
+      ],
+      "phone": "(503) 555-0119",
+      "footer": "Baked this morning."
+    },
+    "Kinjo Noodle Bar": {
+      "template": "thermal",
+      "format": "jpg",
+      "address": [
+        "1408 SE Belmont St",
+        "Portland, OR 97214"
+      ],
+      "phone": "(503) 555-0163",
+      "footer": "Arigato. Come back hungry."
+    },
+    "Tasca do Bairro": {
+      "template": "thermal",
+      "format": "jpg",
+      "locale": "pt",
+      "address": [
+        "Rua dos Remédios 41",
+        "1100-445 Lisboa"
+      ],
+      "phone": "NIF 514 208 377",
+      "footer": "Obrigado pela visita"
+    },
+    "Rose City Cab": {
+      "template": "thermal",
+      "format": "jpg",
+      "address": [
+        "Cab 214 · Driver: D. Okafor",
+        "Portland, OR"
+      ],
+      "phone": "(503) 555-0100",
+      "footer": "Thanks for riding with Rose City Cab."
+    },
+    "Pearl Street Parking": {
+      "template": "thermal",
+      "format": "jpg",
+      "address": [
+        "Garage 3 · 1100 NW Glisan St",
+        "Portland, OR 97209"
+      ],
+      "phone": "(503) 555-0155",
+      "footer": "Keep this receipt for your records."
+    },
+    "Carris": {
+      "template": "thermal",
+      "format": "jpg",
+      "locale": "pt",
+      "address": [
+        "Estação Baixa-Chiado",
+        "Lisboa"
+      ],
+      "phone": "NIF 500 510 125",
+      "footer": "Boa viagem"
+    },
+    "Northline Rail": {
+      "template": "thermal",
+      "format": "jpg",
+      "address": [
+        "Portland Union Station",
+        "800 NW 6th Ave, Portland, OR"
+      ],
+      "phone": "northlinerail.example.com",
+      "footer": "Keep this ticket until the end of your trip."
+    },
+    "Cedar Loop Coworking": {
+      "template": "invoice",
+      "format": "pdf",
+      "address": [
+        "620 SE Grand Ave",
+        "Portland, OR 97214"
+      ],
+      "email": "billing@cedarloop.example.com",
+      "color": "#2f5d50"
+    },
+    "Cedar Loop Coworking POS": {
+      "template": "thermal",
+      "format": "jpg",
+      "address": [
+        "620 SE Grand Ave",
+        "Portland, OR 97214"
+      ],
+      "phone": "(503) 555-0170",
+      "footer": "Members get 10% off at the coffee bar."
+    },
+    "Paper & Pine Stationers": {
+      "template": "thermal",
+      "format": "jpg",
+      "address": [
+        "512 SW Ankeny St",
+        "Portland, OR 97204"
+      ],
+      "phone": "(503) 555-0128",
+      "footer": "Returns within 30 days with receipt."
+    },
+    "Quillframe": {
+      "template": "invoice",
+      "format": "pdf",
+      "address": [
+        "88 Mission St, Suite 400",
+        "San Francisco, CA 94105"
+      ],
+      "email": "billing@quillframe.example.com",
+      "color": "#4b3fa8"
+    },
+    "Cobalt Hosting Co.": {
+      "template": "invoice",
+      "format": "pdf",
+      "address": [
+        "1550 Wynkoop St",
+        "Denver, CO 80202"
+      ],
+      "email": "accounts@cobalthosting.example.com",
+      "color": "#1f4e8c"
+    },
+    "Tempo Mail": {
+      "template": "email",
+      "format": "png",
+      "address": [
+        "Tempo Mail, Inc.",
+        "Austin, TX 78701"
+      ],
+      "email": "receipts@tempomail.example.com",
+      "color": "#b4532a"
+    },
+    "Brightline Type Foundry": {
+      "template": "invoice",
+      "format": "pdf",
+      "address": [
+        "14 Garden Walk",
+        "Providence, RI 02903"
+      ],
+      "email": "hello@brightline.example.com",
+      "color": "#222222"
+    },
+    "Kestrel Air": {
+      "template": "eticket",
+      "format": "pdf",
+      "address": [
+        "PO Box 68900",
+        "Seattle, WA 98168"
+      ],
+      "email": "tickets@kestrelair.example.com",
+      "color": "#0d6e7a"
+    },
+    "Alder & Pine Hotel Seattle": {
+      "template": "folio",
+      "format": "pdf",
+      "address": [
+        "1120 Pine St",
+        "Seattle, WA 98101"
+      ],
+      "email": "frontdesk@alderpine.example.com",
+      "color": "#5a4632"
+    },
+    "Casa do Largo Guesthouse": {
+      "template": "folio",
+      "format": "pdf",
+      "locale": "pt",
+      "address": [
+        "Largo do Chafariz de Dentro 12",
+        "1100-139 Lisboa"
+      ],
+      "email": "reservas@casadolargo.example.com",
+      "color": "#7a3b2e"
+    },
+    "Northgate Electronics": {
+      "template": "thermal",
+      "format": "jpg",
+      "address": [
+        "9550 SW Washington Square Rd",
+        "Tigard, OR 97223"
+      ],
+      "phone": "(503) 555-0191",
+      "footer": "30-day returns. Keep the box."
+    },
+    "City of Portland": {
+      "template": "email",
+      "format": "png",
+      "address": [
+        "Revenue Division",
+        "111 SW Columbia St, Portland, OR 97201"
+      ],
+      "email": "revenue@portland.example.gov",
+      "color": "#1c3f6e"
+    },
+    "Ledgerline Bank": {
+      "template": "invoice",
+      "format": "pdf",
+      "address": [
+        "700 SW Fifth Ave",
+        "Portland, OR 97204"
+      ],
+      "email": "support@ledgerline.example.com",
+      "color": "#3b3b58"
+    },
+    "Birch Street Diner": {
+      "template": "thermal",
+      "format": "jpg",
+      "address": [
+        "47 Birch St",
+        "Portland, OR 97206"
+      ],
+      "phone": "(503) 555-0133",
+      "footer": "Pie is always half off after 8."
+    },
+    "Inkwell Supply Co.": {
+      "template": "thermal",
+      "format": "jpg",
+      "address": [
+        "2045 NE Broadway",
+        "Portland, OR 97232"
+      ],
+      "phone": "(503) 555-0176",
+      "footer": "Thanks for writing by hand."
+    }
+  },
+  "expenses": [
+    {
+      "owner": "nora",
+      "file": "nora/2026-04-01-cobalt-hosting-co.pdf",
+      "template": "invoice",
+      "profile": "Cobalt Hosting Co.",
+      "merchant": "Cobalt Hosting Co.",
+      "category": "software",
+      "date": "2026-04-01",
+      "time": "04:30",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Cloud VPS, 2 vCPU / 4 GB",
+          "quantity": 1,
+          "amount": 32
+        },
+        {
+          "description": "Managed backups",
+          "quantity": 1,
+          "amount": 9
+        }
+      ],
+      "tip": null,
+      "tax": {
+        "label": "Sales tax 8.5%",
+        "amount": 3.49
+      },
+      "total": 44.49,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Monthly hosting for a cloud server and backups.",
+      "reference": "CH-2026-0401",
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 8188
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-04-01-cedar-loop-coworking.pdf",
+      "template": "invoice",
+      "profile": "Cedar Loop Coworking",
+      "merchant": "Cedar Loop Coworking",
+      "category": "office",
+      "date": "2026-04-01",
+      "time": "08:00",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Flex membership, monthly",
+          "quantity": 1,
+          "amount": 325
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 325,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Monthly flex membership at Cedar Loop Coworking.",
+      "reference": "CLC-2604-017",
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 14789
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-04-03-quillframe.pdf",
+      "template": "invoice",
+      "profile": "Quillframe",
+      "merchant": "Quillframe",
+      "category": "software",
+      "date": "2026-04-03",
+      "time": "06:12",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Quillframe Pro, monthly plan",
+          "quantity": 1,
+          "amount": 24
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 24,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Monthly Quillframe Pro plan.",
+      "reference": "QF-2026-4801",
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 10902
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-04-06-city-of-portland.png",
+      "template": "email",
+      "profile": "City of Portland",
+      "merchant": "City of Portland",
+      "category": "fees",
+      "date": "2026-04-06",
+      "time": "10:02",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Business license tax registration, 2026",
+          "quantity": 1,
+          "amount": 100
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 100,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Annual business license registration.",
+      "reference": "BL-2026-118804",
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 13729
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-04-08-harbor-light-cafe.png",
+      "template": "thermal",
+      "profile": "Harbor Light Cafe",
+      "merchant": "Harbor Light Cafe",
+      "category": "meals",
+      "date": "2026-04-08",
+      "time": "10:48",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Oat latte",
+          "quantity": 1,
+          "amount": 5.5
+        }
+      ],
+      "tip": 1.25,
+      "tax": null,
+      "total": 6.75,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Coffee at Harbor Light Cafe.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 15175
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-04-09-tempo-mail.png",
+      "template": "email",
+      "profile": "Tempo Mail",
+      "merchant": "Tempo Mail",
+      "category": "software",
+      "date": "2026-04-09",
+      "time": "11:05",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Tempo Mail Business, 1 seat",
+          "quantity": 1,
+          "amount": 9
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 9,
+      "paymentMethod": "Mastercard ending 0921",
+      "summary": "Monthly business email plan.",
+      "reference": "TM-8812-4417",
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 11503
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-04-14-rose-city-cab.jpg",
+      "template": "thermal",
+      "profile": "Rose City Cab",
+      "merchant": "Rose City Cab",
+      "category": "transport",
+      "date": "2026-04-14",
+      "time": "12:50",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Fare, 5.8 mi",
+          "quantity": 1,
+          "amount": 19.8
+        }
+      ],
+      "tip": 4,
+      "tax": null,
+      "total": 23.8,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Cab to a client meeting.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 9763
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-04-17-little-fern-bakery.jpg",
+      "template": "thermal",
+      "profile": "Little Fern Bakery",
+      "merchant": "Little Fern Bakery",
+      "category": "meals",
+      "date": "2026-04-17",
+      "time": "12:52",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Sourdough loaf",
+          "quantity": 1,
+          "amount": 9.25
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 9.25,
+      "paymentMethod": "Cash",
+      "summary": "Bread for a studio meeting.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 9173
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-04-22-harbor-light-cafe.png",
+      "template": "thermal",
+      "profile": "Harbor Light Cafe",
+      "merchant": "Harbor Light Cafe",
+      "category": "meals",
+      "date": "2026-04-22",
+      "time": "09:25",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Cappuccino",
+          "quantity": 1,
+          "amount": 4.75
+        },
+        {
+          "description": "Almond croissant",
+          "quantity": 1,
+          "amount": 5.25
+        }
+      ],
+      "tip": 2.4,
+      "tax": null,
+      "total": 12.4,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Coffee at Harbor Light Cafe.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 10810
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-04-29-kinjo-noodle-bar.jpg",
+      "template": "thermal",
+      "profile": "Kinjo Noodle Bar",
+      "merchant": "Kinjo Noodle Bar",
+      "category": "meals",
+      "date": "2026-04-29",
+      "time": "19:20",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Tonkotsu ramen",
+          "quantity": 1,
+          "amount": 17.5
+        },
+        {
+          "description": "Gyoza, 6 pieces",
+          "quantity": 1,
+          "amount": 7.1
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 24.6,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Dinner while working late.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 11253
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-05-01-cobalt-hosting-co.pdf",
+      "template": "invoice",
+      "profile": "Cobalt Hosting Co.",
+      "merchant": "Cobalt Hosting Co.",
+      "category": "software",
+      "date": "2026-05-01",
+      "time": "04:30",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Cloud VPS, 2 vCPU / 4 GB",
+          "quantity": 1,
+          "amount": 32
+        },
+        {
+          "description": "Managed backups",
+          "quantity": 1,
+          "amount": 9
+        }
+      ],
+      "tip": null,
+      "tax": {
+        "label": "Sales tax 8.5%",
+        "amount": 3.49
+      },
+      "total": 44.49,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Monthly hosting for a cloud server and backups.",
+      "reference": "CH-2026-0501",
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 13514
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-05-01-cedar-loop-coworking.pdf",
+      "template": "invoice",
+      "profile": "Cedar Loop Coworking",
+      "merchant": "Cedar Loop Coworking",
+      "category": "office",
+      "date": "2026-05-01",
+      "time": "08:00",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Flex membership, monthly",
+          "quantity": 1,
+          "amount": 325
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 325,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Monthly flex membership at Cedar Loop Coworking.",
+      "reference": "CLC-2704-017",
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 7883
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-05-03-quillframe.pdf",
+      "template": "invoice",
+      "profile": "Quillframe",
+      "merchant": "Quillframe",
+      "category": "software",
+      "date": "2026-05-03",
+      "time": "06:12",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Quillframe Pro, monthly plan",
+          "quantity": 1,
+          "amount": 24
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 24,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Monthly Quillframe Pro plan.",
+      "reference": "QF-2026-4808",
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 14066
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-05-07-rose-city-cab.jpg",
+      "template": "thermal",
+      "profile": "Rose City Cab",
+      "merchant": "Rose City Cab",
+      "category": "transport",
+      "date": "2026-05-07",
+      "time": "12:35",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Fare, 7.2 mi",
+          "quantity": 1,
+          "amount": 26.4
+        }
+      ],
+      "tip": 5,
+      "tax": null,
+      "total": 31.4,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Cab to the client lunch.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 12403
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-05-07-juniper-and-rye.jpg",
+      "template": "thermal",
+      "profile": "Juniper & Rye",
+      "merchant": "Juniper & Rye",
+      "category": "meals",
+      "date": "2026-05-07",
+      "time": "13:12",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Market salad",
+          "quantity": 1,
+          "amount": 16
+        },
+        {
+          "description": "Roast chicken",
+          "quantity": 1,
+          "amount": 28
+        },
+        {
+          "description": "Steelhead",
+          "quantity": 1,
+          "amount": 31
+        },
+        {
+          "description": "Sparkling water",
+          "quantity": 1,
+          "amount": 5
+        }
+      ],
+      "tip": 16.4,
+      "tax": null,
+      "total": 96.4,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Client lunch for two.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": "Lunch with the Harborview team",
+      "filedInMs": 14724
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-05-09-tempo-mail.png",
+      "template": "email",
+      "profile": "Tempo Mail",
+      "merchant": "Tempo Mail",
+      "category": "software",
+      "date": "2026-05-09",
+      "time": "11:05",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Tempo Mail Business, 1 seat",
+          "quantity": 1,
+          "amount": 9
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 9,
+      "paymentMethod": "Mastercard ending 0921",
+      "summary": "Monthly business email plan.",
+      "reference": "TM-8813-4417",
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 13844
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-05-12-harbor-light-cafe.png",
+      "template": "thermal",
+      "profile": "Harbor Light Cafe",
+      "merchant": "Harbor Light Cafe",
+      "category": "meals",
+      "date": "2026-05-12",
+      "time": "09:27",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Drip coffee",
+          "quantity": 1,
+          "amount": 3.5
+        },
+        {
+          "description": "Morning bun",
+          "quantity": 1,
+          "amount": 4.4
+        }
+      ],
+      "tip": 1,
+      "tax": null,
+      "total": 8.9,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Coffee at Harbor Light Cafe.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 8134
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-05-14-brightline-type-foundry.pdf",
+      "template": "invoice",
+      "profile": "Brightline Type Foundry",
+      "merchant": "Brightline Type Foundry",
+      "category": "software",
+      "date": "2026-05-14",
+      "time": "15:40",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Halyard Sans, desktop license, 5 seats",
+          "quantity": 1,
+          "amount": 149
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 149,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Desktop font license for Halyard Sans.",
+      "reference": "BTF-10384",
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 13460
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-05-20-northgate-electronics.jpg",
+      "template": "thermal",
+      "profile": "Northgate Electronics",
+      "merchant": "Northgate Electronics",
+      "category": "equipment",
+      "date": "2026-05-20",
+      "time": "16:22",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "27-inch 4K monitor, USB-C",
+          "quantity": 1,
+          "amount": 429.99
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 429.99,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "A 27-inch 4K monitor for the studio.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 10302
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-05-21-cedar-loop-coworking-room.jpg",
+      "template": "thermal",
+      "profile": "Cedar Loop Coworking POS",
+      "merchant": "Cedar Loop Coworking",
+      "category": "office",
+      "date": "2026-05-21",
+      "time": "13:55",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Meeting room B, 2 h",
+          "quantity": 2,
+          "amount": 40
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 40,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Two hours in meeting room B.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 14682
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-05-21-pearl-street-parking.jpg",
+      "template": "thermal",
+      "profile": "Pearl Street Parking",
+      "merchant": "Pearl Street Parking",
+      "category": "transport",
+      "date": "2026-05-21",
+      "time": "15:02",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Parking, 3 h 12 min",
+          "quantity": 1,
+          "amount": 14
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 14,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Parking for a client meeting.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 13396
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-06-01-cobalt-hosting-co.pdf",
+      "template": "invoice",
+      "profile": "Cobalt Hosting Co.",
+      "merchant": "Cobalt Hosting Co.",
+      "category": "software",
+      "date": "2026-06-01",
+      "time": "04:30",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Cloud VPS, 2 vCPU / 4 GB",
+          "quantity": 1,
+          "amount": 32
+        },
+        {
+          "description": "Managed backups",
+          "quantity": 1,
+          "amount": 9
+        }
+      ],
+      "tip": null,
+      "tax": {
+        "label": "Sales tax 8.5%",
+        "amount": 3.49
+      },
+      "total": 44.49,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Monthly hosting for a cloud server and backups.",
+      "reference": "CH-2026-0601",
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 13174
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-06-01-cedar-loop-coworking.pdf",
+      "template": "invoice",
+      "profile": "Cedar Loop Coworking",
+      "merchant": "Cedar Loop Coworking",
+      "category": "office",
+      "date": "2026-06-01",
+      "time": "08:00",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Flex membership, monthly",
+          "quantity": 1,
+          "amount": 325
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 325,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Monthly flex membership at Cedar Loop Coworking.",
+      "reference": "CLC-2804-017",
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 14260
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-06-03-quillframe.pdf",
+      "template": "invoice",
+      "profile": "Quillframe",
+      "merchant": "Quillframe",
+      "category": "software",
+      "date": "2026-06-03",
+      "time": "06:12",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Quillframe Pro, monthly plan",
+          "quantity": 1,
+          "amount": 24
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 24,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Monthly Quillframe Pro plan.",
+      "reference": "QF-2026-4815",
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 11684
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-06-04-harbor-light-cafe.png",
+      "template": "thermal",
+      "profile": "Harbor Light Cafe",
+      "merchant": "Harbor Light Cafe",
+      "category": "meals",
+      "date": "2026-06-04",
+      "time": "07:26",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Latte",
+          "quantity": 2,
+          "amount": 11
+        },
+        {
+          "description": "Banana bread",
+          "quantity": 1,
+          "amount": 3.1
+        }
+      ],
+      "tip": 1.5,
+      "tax": null,
+      "total": 15.6,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Coffee at Harbor Light Cafe.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 13941
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-06-09-tempo-mail.png",
+      "template": "email",
+      "profile": "Tempo Mail",
+      "merchant": "Tempo Mail",
+      "category": "software",
+      "date": "2026-06-09",
+      "time": "11:05",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Tempo Mail Business, 1 seat",
+          "quantity": 1,
+          "amount": 9
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 9,
+      "paymentMethod": "Mastercard ending 0921",
+      "summary": "Monthly business email plan.",
+      "reference": "TM-8814-4417",
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 9003
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-06-12-paper-and-pine.jpg",
+      "template": "thermal",
+      "profile": "Paper & Pine Stationers",
+      "merchant": "Paper & Pine Stationers",
+      "category": "office",
+      "date": "2026-06-12",
+      "time": "15:19",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Sketchbook, A5 dot grid",
+          "quantity": 1,
+          "amount": 14.5
+        },
+        {
+          "description": "Fineliner set, 6 colors",
+          "quantity": 1,
+          "amount": 8.68
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 23.18,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Sketchbook and fineliners.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 9513
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-06-18-rose-city-cab.jpg",
+      "template": "thermal",
+      "profile": "Rose City Cab",
+      "merchant": "Rose City Cab",
+      "category": "transport",
+      "date": "2026-06-18",
+      "time": "12:10",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Fare, 6.9 mi",
+          "quantity": 1,
+          "amount": 23.65
+        }
+      ],
+      "tip": 4,
+      "tax": null,
+      "total": 27.65,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Cab to the client lunch.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 8395
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-06-18-juniper-and-rye.jpg",
+      "template": "thermal",
+      "profile": "Juniper & Rye",
+      "merchant": "Juniper & Rye",
+      "category": "meals",
+      "date": "2026-06-18",
+      "time": "12:48",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Burrata",
+          "quantity": 1,
+          "amount": 17
+        },
+        {
+          "description": "Hanger steak",
+          "quantity": 1,
+          "amount": 34
+        },
+        {
+          "description": "Mushroom risotto",
+          "quantity": 1,
+          "amount": 26
+        },
+        {
+          "description": "Iced tea",
+          "quantity": 2,
+          "amount": 9
+        },
+        {
+          "description": "Olive oil cake",
+          "quantity": 1,
+          "amount": 12
+        }
+      ],
+      "tip": 20.2,
+      "tax": null,
+      "total": 118.2,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Client lunch for two.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 10996
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-06-25-little-fern-bakery.jpg",
+      "template": "thermal",
+      "profile": "Little Fern Bakery",
+      "merchant": "Little Fern Bakery",
+      "category": "meals",
+      "date": "2026-06-25",
+      "time": "09:43",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Pastry box, 6 pieces",
+          "quantity": 1,
+          "amount": 14.1
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 14.1,
+      "paymentMethod": "Cash",
+      "summary": "Pastries for a client workshop.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 11643
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-07-01-cobalt-hosting-co.pdf",
+      "template": "invoice",
+      "profile": "Cobalt Hosting Co.",
+      "merchant": "Cobalt Hosting Co.",
+      "category": "software",
+      "date": "2026-07-01",
+      "time": "04:30",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Cloud VPS, 2 vCPU / 4 GB",
+          "quantity": 1,
+          "amount": 32
+        },
+        {
+          "description": "Managed backups",
+          "quantity": 1,
+          "amount": 9
+        }
+      ],
+      "tip": null,
+      "tax": {
+        "label": "Sales tax 8.5%",
+        "amount": 3.49
+      },
+      "total": 44.49,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Monthly hosting for a cloud server and backups.",
+      "reference": "CH-2026-0701",
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 11073
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-07-01-cedar-loop-coworking.pdf",
+      "template": "invoice",
+      "profile": "Cedar Loop Coworking",
+      "merchant": "Cedar Loop Coworking",
+      "category": "office",
+      "date": "2026-07-01",
+      "time": "08:00",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Flex membership, monthly",
+          "quantity": 1,
+          "amount": 325
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 325,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Monthly flex membership at Cedar Loop Coworking.",
+      "reference": "CLC-2904-017",
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 12749
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-07-02-kinjo-noodle-bar.jpg",
+      "template": "thermal",
+      "profile": "Kinjo Noodle Bar",
+      "merchant": "Kinjo Noodle Bar",
+      "category": "meals",
+      "date": "2026-07-02",
+      "time": "18:55",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Spicy miso ramen",
+          "quantity": 1,
+          "amount": 16.9
+        },
+        {
+          "description": "Green tea",
+          "quantity": 1,
+          "amount": 2
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 18.9,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Dinner while working late.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 13038
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-07-03-quillframe.pdf",
+      "template": "invoice",
+      "profile": "Quillframe",
+      "merchant": "Quillframe",
+      "category": "software",
+      "date": "2026-07-03",
+      "time": "06:12",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Quillframe Pro, monthly plan",
+          "quantity": 1,
+          "amount": 24
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 24,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Monthly Quillframe Pro plan.",
+      "reference": "QF-2026-4822",
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 12583
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-07-09-harbor-light-cafe.png",
+      "template": "thermal",
+      "profile": "Harbor Light Cafe",
+      "merchant": "Harbor Light Cafe",
+      "category": "meals",
+      "date": "2026-07-09",
+      "time": "09:27",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Iced latte",
+          "quantity": 1,
+          "amount": 5.5
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 5.5,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Coffee at Harbor Light Cafe.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 12865
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-07-09-tempo-mail.png",
+      "template": "email",
+      "profile": "Tempo Mail",
+      "merchant": "Tempo Mail",
+      "category": "software",
+      "date": "2026-07-09",
+      "time": "11:05",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Tempo Mail Business, 1 seat",
+          "quantity": 1,
+          "amount": 9
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 9,
+      "paymentMethod": "Mastercard ending 0921",
+      "summary": "Monthly business email plan.",
+      "reference": "TM-8815-4417",
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 12722
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-07-16-cedar-loop-coworking-room.jpg",
+      "template": "thermal",
+      "profile": "Cedar Loop Coworking POS",
+      "merchant": "Cedar Loop Coworking",
+      "category": "office",
+      "date": "2026-07-16",
+      "time": "10:20",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Meeting room B, 2 h",
+          "quantity": 2,
+          "amount": 40
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 40,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Two hours in meeting room B.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 10288
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-07-16-pearl-street-parking.jpg",
+      "template": "thermal",
+      "profile": "Pearl Street Parking",
+      "merchant": "Pearl Street Parking",
+      "category": "transport",
+      "date": "2026-07-16",
+      "time": "14:47",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Parking, 4 h 40 min",
+          "quantity": 1,
+          "amount": 18
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 18,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Parking for a client meeting.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 12706
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-07-23-juniper-and-rye.jpg",
+      "template": "thermal",
+      "profile": "Juniper & Rye",
+      "merchant": "Juniper & Rye",
+      "category": "meals",
+      "date": "2026-07-23",
+      "time": "12:30",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Soup of the day",
+          "quantity": 1,
+          "amount": 9.5
+        },
+        {
+          "description": "Chicken sandwich",
+          "quantity": 1,
+          "amount": 18
+        },
+        {
+          "description": "Garden salad",
+          "quantity": 1,
+          "amount": 14
+        },
+        {
+          "description": "Lemonade",
+          "quantity": 2,
+          "amount": 10.5
+        }
+      ],
+      "tip": 10.75,
+      "tax": null,
+      "total": 62.75,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Working lunch.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 9656
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-07-28-ledgerline-bank.pdf",
+      "template": "invoice",
+      "profile": "Ledgerline Bank",
+      "merchant": "Ledgerline Bank",
+      "category": "fees",
+      "date": "2026-07-28",
+      "time": "09:30",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "International wire fee",
+          "quantity": 1,
+          "amount": 25
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 25,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Fee for an international wire to a subcontractor.",
+      "reference": "WF-20260728-0042",
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 14831
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-08-01-cobalt-hosting-co.pdf",
+      "template": "invoice",
+      "profile": "Cobalt Hosting Co.",
+      "merchant": "Cobalt Hosting Co.",
+      "category": "software",
+      "date": "2026-08-01",
+      "time": "04:30",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Cloud VPS, 2 vCPU / 4 GB",
+          "quantity": 1,
+          "amount": 32
+        },
+        {
+          "description": "Managed backups",
+          "quantity": 1,
+          "amount": 9
+        }
+      ],
+      "tip": null,
+      "tax": {
+        "label": "Sales tax 8.5%",
+        "amount": 3.49
+      },
+      "total": 44.49,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Monthly hosting for a cloud server and backups.",
+      "reference": "CH-2026-0801",
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 14969
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-08-01-cedar-loop-coworking.pdf",
+      "template": "invoice",
+      "profile": "Cedar Loop Coworking",
+      "merchant": "Cedar Loop Coworking",
+      "category": "office",
+      "date": "2026-08-01",
+      "time": "08:00",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Flex membership, monthly",
+          "quantity": 1,
+          "amount": 325
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 325,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Monthly flex membership at Cedar Loop Coworking.",
+      "reference": "CLC-3004-017",
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 10742
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-08-03-quillframe.pdf",
+      "template": "invoice",
+      "profile": "Quillframe",
+      "merchant": "Quillframe",
+      "category": "software",
+      "date": "2026-08-03",
+      "time": "06:12",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Quillframe Pro, monthly plan",
+          "quantity": 1,
+          "amount": 24
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 24,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Monthly Quillframe Pro plan.",
+      "reference": "QF-2026-4829",
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 14743
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-08-05-northgate-electronics.jpg",
+      "template": "thermal",
+      "profile": "Northgate Electronics",
+      "merchant": "Northgate Electronics",
+      "category": "equipment",
+      "date": "2026-08-05",
+      "time": "12:05",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Tablet pen, pressure sensitive",
+          "quantity": 1,
+          "amount": 89
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 89,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Replacement pen for the drawing tablet.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 13036
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-08-09-tempo-mail.png",
+      "template": "email",
+      "profile": "Tempo Mail",
+      "merchant": "Tempo Mail",
+      "category": "software",
+      "date": "2026-08-09",
+      "time": "11:05",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Tempo Mail Business, 1 seat",
+          "quantity": 1,
+          "amount": 9
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 9,
+      "paymentMethod": "Mastercard ending 0921",
+      "summary": "Monthly business email plan.",
+      "reference": "TM-8816-4417",
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 13580
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-08-11-rose-city-cab.jpg",
+      "template": "thermal",
+      "profile": "Rose City Cab",
+      "merchant": "Rose City Cab",
+      "category": "transport",
+      "date": "2026-08-11",
+      "time": "06:40",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Fare, 9.1 mi",
+          "quantity": 1,
+          "amount": 29.1
+        }
+      ],
+      "tip": 5,
+      "tax": null,
+      "total": 34.1,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Cab to Portland Union Station.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 7995
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-08-11-northline-rail.jpg",
+      "template": "thermal",
+      "profile": "Northline Rail",
+      "merchant": "Northline Rail",
+      "category": "travel",
+      "date": "2026-08-11",
+      "time": "07:21",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Coach fare, 1 adult",
+          "quantity": 1,
+          "amount": 38.5
+        },
+        {
+          "description": "Reservation fee",
+          "quantity": 1,
+          "amount": 6
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 44.5,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Train ticket from Portland to Seattle.",
+      "reference": "NLR 4417-0811",
+      "details": {
+        "route": [
+          "Portland Union Station",
+          "Seattle King Street"
+        ],
+        "departure": "07:45"
+      },
+      "corrections": [
+        {
+          "field": "category",
+          "from": "transport",
+          "to": "travel",
+          "afterMinutes": 95
+        }
+      ],
+      "note": null,
+      "filedInMs": 14805
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-08-13-alder-and-pine.pdf",
+      "template": "folio",
+      "profile": "Alder & Pine Hotel Seattle",
+      "merchant": "Alder & Pine Hotel Seattle",
+      "category": "lodging",
+      "date": "2026-08-13",
+      "time": "10:15",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Deluxe king room",
+          "quantity": 1,
+          "amount": 219
+        },
+        {
+          "description": "Deluxe king room",
+          "quantity": 1,
+          "amount": 219
+        }
+      ],
+      "tip": null,
+      "tax": {
+        "label": "Lodging and sales tax 15.7%",
+        "amount": 68.77
+      },
+      "total": 506.77,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Two nights at Alder & Pine Hotel in Seattle.",
+      "reference": "Folio 20814",
+      "details": {
+        "arrival": "2026-08-11",
+        "departure": "2026-08-13",
+        "room": "612",
+        "guest": "Nora Lindqvist",
+        "nights": [
+          "2026-08-11",
+          "2026-08-12"
+        ]
+      },
+      "corrections": [],
+      "note": null,
+      "filedInMs": 8819
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-08-13-northline-rail.jpg",
+      "template": "thermal",
+      "profile": "Northline Rail",
+      "merchant": "Northline Rail",
+      "category": "travel",
+      "date": "2026-08-13",
+      "time": "16:05",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Coach fare, 1 adult",
+          "quantity": 1,
+          "amount": 38.5
+        },
+        {
+          "description": "Reservation fee",
+          "quantity": 1,
+          "amount": 6
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 44.5,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Train ticket from Seattle to Portland.",
+      "reference": "NLR 4417-0813",
+      "details": {
+        "route": [
+          "Seattle King Street",
+          "Portland Union Station"
+        ],
+        "departure": "16:30"
+      },
+      "corrections": [],
+      "note": null,
+      "filedInMs": 9792
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-08-20-harbor-light-cafe.png",
+      "template": "thermal",
+      "profile": "Harbor Light Cafe",
+      "merchant": "Harbor Light Cafe",
+      "category": "meals",
+      "date": "2026-08-20",
+      "time": "09:44",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Cold brew",
+          "quantity": 1,
+          "amount": 4.85
+        },
+        {
+          "description": "Scone",
+          "quantity": 1,
+          "amount": 3.75
+        }
+      ],
+      "tip": 1.25,
+      "tax": null,
+      "total": 9.85,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Coffee at Harbor Light Cafe.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 11746
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-08-25-kestrel-air.pdf",
+      "template": "eticket",
+      "profile": "Kestrel Air",
+      "merchant": "Kestrel Air",
+      "category": "travel",
+      "date": "2026-08-25",
+      "time": "21:14",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Round trip PDX to SFO, economy, 1 adult",
+          "quantity": 1,
+          "amount": 238.14
+        }
+      ],
+      "tip": null,
+      "tax": {
+        "label": "Taxes and carrier fees",
+        "amount": 48.26
+      },
+      "total": 286.4,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Round-trip flight to San Francisco for a client workshop.",
+      "reference": "KA7Q2M",
+      "details": {
+        "flights": [
+          [
+            "KA 318",
+            "PDX",
+            "SFO",
+            "2026-08-27",
+            "07:05",
+            "09:02"
+          ],
+          [
+            "KA 327",
+            "SFO",
+            "PDX",
+            "2026-08-27",
+            "19:40",
+            "21:31"
+          ]
+        ],
+        "passenger": "LINDQVIST/NORA"
+      },
+      "corrections": [],
+      "note": null,
+      "filedInMs": 11888
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-08-27-little-fern-bakery.jpg",
+      "template": "thermal",
+      "profile": "Little Fern Bakery",
+      "merchant": "Little Fern Bakery",
+      "category": "meals",
+      "date": "2026-08-27",
+      "time": "15:48",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Cardamom bun",
+          "quantity": 1,
+          "amount": 4.5
+        },
+        {
+          "description": "Rye loaf",
+          "quantity": 1,
+          "amount": 6.8
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 11.3,
+      "paymentMethod": "Cash",
+      "summary": "Bakery run before a client call.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 8127
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-09-01-cedar-loop-coworking.pdf",
+      "template": "invoice",
+      "profile": "Cedar Loop Coworking",
+      "merchant": "Cedar Loop Coworking",
+      "category": "office",
+      "date": "2026-09-01",
+      "time": "08:00",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Flex membership, monthly",
+          "quantity": 1,
+          "amount": 325
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 325,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Monthly flex membership at Cedar Loop Coworking.",
+      "reference": "CLC-3104-017",
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 12773
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-09-02-harbor-light-cafe.png",
+      "template": "thermal",
+      "profile": "Harbor Light Cafe",
+      "merchant": "Harbor Light Cafe",
+      "category": "meals",
+      "date": "2026-09-02",
+      "time": "07:51",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Cappuccino",
+          "quantity": 1,
+          "amount": 4.75
+        },
+        {
+          "description": "Almond croissant",
+          "quantity": 1,
+          "amount": 5.25
+        }
+      ],
+      "tip": 2.4,
+      "tax": null,
+      "total": 12.4,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Coffee at Harbor Light Cafe.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 13112
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-09-03-quillframe.pdf",
+      "template": "invoice",
+      "profile": "Quillframe",
+      "merchant": "Quillframe",
+      "category": "software",
+      "date": "2026-09-03",
+      "time": "06:12",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Quillframe Pro, monthly plan",
+          "quantity": 1,
+          "amount": 24
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 24,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Monthly Quillframe Pro plan.",
+      "reference": "QF-2026-4836",
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 10934
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-09-08-paper-and-pine.jpg",
+      "template": "thermal",
+      "profile": "Paper & Pine Stationers",
+      "merchant": "Paper & Pine Stationers",
+      "category": "office",
+      "date": "2026-09-08",
+      "time": "16:29",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Printer paper, 500 sheets",
+          "quantity": 1,
+          "amount": 11.95
+        },
+        {
+          "description": "Binder clips, box of 24",
+          "quantity": 1,
+          "amount": 5.5
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 17.45,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Printer paper and binder clips.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 8822
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-09-09-tempo-mail.png",
+      "template": "email",
+      "profile": "Tempo Mail",
+      "merchant": "Tempo Mail",
+      "category": "software",
+      "date": "2026-09-09",
+      "time": "11:05",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Tempo Mail Business, 1 seat",
+          "quantity": 1,
+          "amount": 9
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 9,
+      "paymentMethod": "Mastercard ending 0921",
+      "summary": "Monthly business email plan.",
+      "reference": "TM-8817-4417",
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 10299
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-09-10-kestrel-air.pdf",
+      "template": "eticket",
+      "profile": "Kestrel Air",
+      "merchant": "Kestrel Air",
+      "category": "travel",
+      "date": "2026-09-10",
+      "time": "18:02",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Round trip PDX to LIS, economy, 1 adult",
+          "quantity": 1,
+          "amount": 968
+        }
+      ],
+      "tip": null,
+      "tax": {
+        "label": "Taxes and carrier fees",
+        "amount": 174.6
+      },
+      "total": 1142.6,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Round-trip flight to Lisbon for a client project.",
+      "reference": "KB3N8T",
+      "details": {
+        "flights": [
+          [
+            "KA 1142",
+            "PDX",
+            "LIS",
+            "2026-09-11",
+            "13:25",
+            "09:50 +1"
+          ],
+          [
+            "KA 1143",
+            "LIS",
+            "PDX",
+            "2026-09-17",
+            "11:30",
+            "15:05"
+          ]
+        ],
+        "passenger": "LINDQVIST/NORA"
+      },
+      "corrections": [],
+      "note": null,
+      "filedInMs": 10623
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-09-12-carris.jpg",
+      "template": "thermal",
+      "profile": "Carris",
+      "merchant": "Carris",
+      "category": "transport",
+      "date": "2026-09-12",
+      "time": "09:18",
+      "currency": "EUR",
+      "items": [
+        {
+          "description": "Navegante 24 h ticket",
+          "quantity": 1,
+          "amount": 6.8
+        }
+      ],
+      "tip": null,
+      "tax": {
+        "label": "IVA 6% incluído",
+        "amount": 0.38,
+        "included": true
+      },
+      "total": 6.8,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Day ticket for Lisbon transit.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 8295
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-09-13-tasca-do-bairro.jpg",
+      "template": "thermal",
+      "profile": "Tasca do Bairro",
+      "merchant": "Tasca do Bairro",
+      "category": "meals",
+      "date": "2026-09-13",
+      "time": "20:45",
+      "currency": "EUR",
+      "items": [
+        {
+          "description": "Polvo à lagareiro",
+          "quantity": 1,
+          "amount": 22
+        },
+        {
+          "description": "Bacalhau à brás",
+          "quantity": 1,
+          "amount": 16.5
+        },
+        {
+          "description": "Vinho da casa, jarro",
+          "quantity": 1,
+          "amount": 7
+        },
+        {
+          "description": "Pão e azeitonas",
+          "quantity": 1,
+          "amount": 3
+        }
+      ],
+      "tip": null,
+      "tax": {
+        "label": "IVA 13% incluído",
+        "amount": 5.58,
+        "included": true
+      },
+      "total": 48.5,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Dinner in Lisbon during the client trip.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 10533
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-09-16-casa-do-largo.pdf",
+      "template": "folio",
+      "profile": "Casa do Largo Guesthouse",
+      "merchant": "Casa do Largo Guesthouse",
+      "category": "lodging",
+      "date": "2026-09-16",
+      "time": "10:40",
+      "currency": "EUR",
+      "items": [
+        {
+          "description": "Quarto duplo, 4 noites",
+          "quantity": 1,
+          "amount": 356
+        },
+        {
+          "description": "Taxa turística municipal",
+          "quantity": 1,
+          "amount": 16
+        }
+      ],
+      "tip": null,
+      "tax": {
+        "label": "IVA 6% incluído",
+        "amount": 20.15,
+        "included": true
+      },
+      "total": 372,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Four nights at Casa do Largo Guesthouse in Lisbon.",
+      "reference": "FT 2026/0916",
+      "details": {
+        "arrival": "2026-09-12",
+        "departure": "2026-09-16",
+        "room": "3",
+        "guest": "Nora Lindqvist"
+      },
+      "corrections": [],
+      "note": null,
+      "filedInMs": 9612
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-09-18-harbor-light-cafe.png",
+      "template": "thermal",
+      "profile": "Harbor Light Cafe",
+      "merchant": "Harbor Light Cafe",
+      "category": "meals",
+      "date": "2026-09-18",
+      "time": "12:41",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Latte",
+          "quantity": 2,
+          "amount": 11
+        },
+        {
+          "description": "Croissant",
+          "quantity": 1,
+          "amount": 4.75
+        },
+        {
+          "description": "Orange juice",
+          "quantity": 1,
+          "amount": 6.25
+        }
+      ],
+      "tip": 1.9,
+      "tax": null,
+      "total": 23.9,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Coffee at Harbor Light Cafe.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 14441
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-09-22-kinjo-noodle-bar.jpg",
+      "template": "thermal",
+      "profile": "Kinjo Noodle Bar",
+      "merchant": "Kinjo Noodle Bar",
+      "category": "meals",
+      "date": "2026-09-22",
+      "time": "19:40",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Shoyu ramen",
+          "quantity": 1,
+          "amount": 16.5
+        },
+        {
+          "description": "Karaage",
+          "quantity": 1,
+          "amount": 8.9
+        },
+        {
+          "description": "Yuzu soda",
+          "quantity": 1,
+          "amount": 2
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 27.4,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Dinner while working late.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 9242
+    },
+    {
+      "owner": "nora",
+      "file": "nora/2026-09-24-pearl-street-parking.jpg",
+      "template": "thermal",
+      "profile": "Pearl Street Parking",
+      "merchant": "Pearl Street Parking",
+      "category": "transport",
+      "date": "2026-09-24",
+      "time": "17:31",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Parking, 2 h 55 min",
+          "quantity": 1,
+          "amount": 12
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 12,
+      "paymentMethod": "Visa ending 4417",
+      "summary": "Parking for a client meeting.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 10379
+    },
+    {
+      "owner": "theo",
+      "file": "theo/2026-08-28-inkwell-supply-co.jpg",
+      "template": "thermal",
+      "profile": "Inkwell Supply Co.",
+      "merchant": "Inkwell Supply Co.",
+      "category": "office",
+      "date": "2026-08-28",
+      "time": "11:17",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Notebook, lined",
+          "quantity": 1,
+          "amount": 18.5
+        },
+        {
+          "description": "Fountain pen ink",
+          "quantity": 1,
+          "amount": 16
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 34.5,
+      "paymentMethod": "Amex ending 3006",
+      "summary": "Notebook and ink.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 12480
+    },
+    {
+      "owner": "theo",
+      "file": "theo/2026-09-05-birch-street-diner.jpg",
+      "template": "thermal",
+      "profile": "Birch Street Diner",
+      "merchant": "Birch Street Diner",
+      "category": "meals",
+      "date": "2026-09-05",
+      "time": "08:50",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Two-egg breakfast",
+          "quantity": 1,
+          "amount": 13.5
+        },
+        {
+          "description": "Coffee",
+          "quantity": 1,
+          "amount": 3
+        }
+      ],
+      "tip": 3.3,
+      "tax": null,
+      "total": 19.8,
+      "paymentMethod": "Amex ending 3006",
+      "summary": "Breakfast meeting.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 9238
+    },
+    {
+      "owner": "theo",
+      "file": "theo/2026-09-09-tempo-mail.png",
+      "template": "email",
+      "profile": "Tempo Mail",
+      "merchant": "Tempo Mail",
+      "category": "software",
+      "date": "2026-09-09",
+      "time": "12:49",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Tempo Mail Business, 1 seat",
+          "quantity": 1,
+          "amount": 9
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 9,
+      "paymentMethod": "Amex ending 3006",
+      "summary": "Monthly business email plan.",
+      "reference": "TM-9021-3006",
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 8322
+    },
+    {
+      "owner": "theo",
+      "file": "theo/2026-09-11-rose-city-cab.jpg",
+      "template": "thermal",
+      "profile": "Rose City Cab",
+      "merchant": "Rose City Cab",
+      "category": "transport",
+      "date": "2026-09-11",
+      "time": "13:09",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Fare, 6.1 mi",
+          "quantity": 1,
+          "amount": 18.4
+        }
+      ],
+      "tip": 4,
+      "tax": null,
+      "total": 22.4,
+      "paymentMethod": "Amex ending 3006",
+      "summary": "Cab to a client meeting.",
+      "reference": null,
+      "details": null,
+      "corrections": [],
+      "note": null,
+      "filedInMs": 13568
+    },
+    {
+      "owner": "theo",
+      "file": "theo/2026-09-17-harbor-light-cafe.png",
+      "template": "thermal",
+      "profile": "Harbor Light Cafe",
+      "merchant": "Harbor Light Cafe",
+      "category": "other",
+      "date": "2026-09-17",
+      "time": "12:50",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Latte",
+          "quantity": 2,
+          "amount": 11
+        },
+        {
+          "description": "Croissant",
+          "quantity": 1,
+          "amount": 4.75
+        },
+        {
+          "description": "Orange juice",
+          "quantity": 1,
+          "amount": 6.25
+        }
+      ],
+      "tip": 1.9,
+      "tax": null,
+      "total": 23.9,
+      "paymentMethod": "Amex ending 3006",
+      "summary": "Coffee at Harbor Light Cafe.",
+      "reference": null,
+      "details": null,
+      "corrections": [
+        {
+          "field": "category",
+          "from": "meals",
+          "to": "other",
+          "afterMinutes": 40
+        }
+      ],
+      "note": null,
+      "filedInMs": 9596
+    },
+    {
+      "owner": "theo",
+      "file": "theo/2026-09-21-northline-rail.jpg",
+      "template": "thermal",
+      "profile": "Northline Rail",
+      "merchant": "Northline Rail",
+      "category": "transport",
+      "date": "2026-09-21",
+      "time": "18:20",
+      "currency": "USD",
+      "items": [
+        {
+          "description": "Coach fare, 1 adult",
+          "quantity": 1,
+          "amount": 38.5
+        },
+        {
+          "description": "Reservation fee",
+          "quantity": 1,
+          "amount": 6
+        }
+      ],
+      "tip": null,
+      "tax": null,
+      "total": 44.5,
+      "paymentMethod": "Amex ending 3006",
+      "summary": "Train ticket from Portland to Seattle.",
+      "reference": "NLR 3006-0921",
+      "details": {
+        "route": [
+          "Portland Union Station",
+          "Seattle King Street"
+        ],
+        "departure": "09:10"
+      },
+      "corrections": [],
+      "note": null,
+      "filedInMs": 13806
+    }
+  ]
+}

@@ -22,7 +22,7 @@ const storage = new Storage(client);
 const CATEGORIES = ['meals', 'travel', 'lodging', 'transport', 'software', 'equipment', 'office', 'fees', 'other'];
 const FLAG_FIELDS = ['merchant', 'spentOn', 'total', 'tax', 'currency', 'category', 'paymentMethod', 'lineItems', 'duplicate'];
 const ACTIVITY_KINDS = [
-  'received', 'reading', 'lookup', 'extracted', 'flagged', 'filed', 'rejected', 'failed',
+  'received', 'reading', 'lookup', 'flagged', 'filed', 'rejected', 'failed',
   'retried', 'confirmed', 'corrected', 'dismissed', 'updated',
 ];
 
