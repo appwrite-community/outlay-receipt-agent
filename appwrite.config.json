@@ -1,6 +1,7 @@
 {
-    "projectId": "<PROJECT_ID>",
-    "endpoint": "https://<REGION>.cloud.appwrite.io/v1",
+    "projectId": "outlay",
+    "projectName": "Outlay",
+    "endpoint": "https://fra.cloud.appwrite.io/v1",
     "functions": [
         {
             "$id": "intake-agent",

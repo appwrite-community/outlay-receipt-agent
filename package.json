@@ -3,6 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "dev": "pnpm --filter web dev",
+    "build": "pnpm --filter web build",
     "provision": "tsx --env-file=.env scripts/provision.ts",
     "seed": "tsx --env-file=.env scripts/seed.ts",
     "samples": "tsx scripts/render-samples.ts",
