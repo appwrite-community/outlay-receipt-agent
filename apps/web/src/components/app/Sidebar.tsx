@@ -1,6 +1,14 @@
 import { useQuery } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
-import { ChevronsUpDown, LayoutGrid, LogOut, Menu, ReceiptText, ScanSearch, Settings } from 'lucide-react'
+import {
+  ChevronsUpDown,
+  LayoutGrid,
+  LogOut,
+  Menu,
+  ReceiptText,
+  ScanSearch,
+  Settings,
+} from 'lucide-react'
 import { type ComponentType, useState } from 'react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
@@ -26,7 +34,11 @@ import { useIntakeSummary } from './IntakeSheet'
 import { Logo, LogoMark } from './Logo'
 import { SettingsDialog } from './SettingsDialog'
 
-type NavItem = { to: '/' | '/expenses' | '/review'; label: string; icon: ComponentType<{ className?: string }> }
+type NavItem = {
+  to: '/' | '/expenses' | '/review'
+  label: string
+  icon: ComponentType<{ className?: string }>
+}
 
 const NAV: NavItem[] = [
   { to: '/', label: 'Overview', icon: LayoutGrid },
@@ -57,7 +69,10 @@ function NavLinks({ compact = false, onNavigate }: { compact?: boolean; onNaviga
             {!compact && <span className="flex-1 truncate">{label}</span>}
             {badge !== null &&
               (compact ? (
-                <span className="absolute top-1 right-2 size-1.5 rounded-full bg-warn" aria-label={`${badge} to review`} />
+                <span
+                  className="absolute top-1 right-2 size-1.5 rounded-full bg-warn"
+                  aria-label={`${badge} to review`}
+                />
               ) : (
                 <span className="min-w-5 rounded-full border border-warn-line bg-warn-tint px-1.5 text-center text-2xs font-semibold text-warn tabular">
                   {badge}
@@ -82,7 +97,10 @@ function IntakeIndicator({ compact }: { compact?: boolean }) {
   const summary = useIntakeSummary()
   if (summary.total === 0) return null
 
-  const label = summary.active > 0 ? `Filing ${summary.active} ${summary.active === 1 ? 'receipt' : 'receipts'}` : 'Intake'
+  const label =
+    summary.active > 0
+      ? `Filing ${summary.active} ${summary.active === 1 ? 'receipt' : 'receipts'}`
+      : 'Intake'
   const detail =
     summary.active > 0
       ? `${summary.done} of ${summary.total} done`
@@ -167,7 +185,11 @@ function UserMenu({ compact }: { compact?: boolean }) {
             )}
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent side="top" align="start" className="w-[var(--radix-dropdown-menu-trigger-width)] min-w-52">
+        <DropdownMenuContent
+          side="top"
+          align="start"
+          className="w-[var(--radix-dropdown-menu-trigger-width)] min-w-52"
+        >
           <DropdownMenuLabel className="truncate">{user.email}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem onSelect={() => setSettingsOpen(true)}>
@@ -192,7 +214,10 @@ export function Sidebar() {
   if (!visible) return null
   const compact = !wide
   return (
-    <aside className="sticky top-0 hidden h-dvh w-16 shrink-0 flex-col border-r border-border bg-surface-1 md:flex lg:w-[232px]">
+    <aside
+      aria-label="Sidebar"
+      className="sticky top-0 hidden h-dvh w-16 shrink-0 flex-col border-r border-border bg-surface-1 md:flex lg:w-[232px]"
+    >
       <div className={cn('flex h-14 shrink-0 items-center px-4', compact && 'justify-center px-0')}>
         <Link to="/" className="rounded-md" aria-label="Outlay overview">
           {compact ? (
@@ -231,7 +256,9 @@ export function MobileNav() {
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetContent className="gap-4 p-4 pt-5">
           <SheetTitle className="px-1 text-sm font-semibold">Menu</SheetTitle>
-          <SheetDescription className="sr-only">Go to a page or open your account settings.</SheetDescription>
+          <SheetDescription className="sr-only">
+            Go to a page or open your account settings.
+          </SheetDescription>
           <NavLinks onNavigate={() => setOpen(false)} />
           <IntakeIndicator />
           <UserMenu />

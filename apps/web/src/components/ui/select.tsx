@@ -8,10 +8,18 @@ import { menuContentClass, menuItemClass } from './dropdown-menu'
 export const Select = SelectPrimitive.Root
 export const SelectValue = SelectPrimitive.Value
 
-export function SelectTrigger({ className, children, ...props }: ComponentProps<typeof SelectPrimitive.Trigger>) {
+export function SelectTrigger({
+  className,
+  children,
+  ...props
+}: ComponentProps<typeof SelectPrimitive.Trigger>) {
   return (
     <SelectPrimitive.Trigger
-      className={cn(inputClass, 'flex items-center justify-between gap-2 text-left data-[placeholder]:text-fg-3 [&>span]:truncate', className)}
+      className={cn(
+        inputClass,
+        'flex items-center justify-between gap-2 text-left data-[placeholder]:text-fg-3 [&>span]:truncate',
+        className,
+      )}
       {...props}
     >
       {children}
@@ -22,13 +30,21 @@ export function SelectTrigger({ className, children, ...props }: ComponentProps<
   )
 }
 
-export function SelectContent({ className, children, ...props }: ComponentProps<typeof SelectPrimitive.Content>) {
+export function SelectContent({
+  className,
+  children,
+  ...props
+}: ComponentProps<typeof SelectPrimitive.Content>) {
   return (
     <SelectPrimitive.Portal>
       <SelectPrimitive.Content
         position="popper"
         sideOffset={6}
-        className={cn(menuContentClass, 'max-h-72 min-w-[var(--radix-select-trigger-width)]', className)}
+        className={cn(
+          menuContentClass,
+          'max-h-72 min-w-[var(--radix-select-trigger-width)]',
+          className,
+        )}
         {...props}
       >
         <SelectPrimitive.Viewport>{children}</SelectPrimitive.Viewport>
@@ -37,7 +53,11 @@ export function SelectContent({ className, children, ...props }: ComponentProps<
   )
 }
 
-export function SelectItem({ className, children, ...props }: ComponentProps<typeof SelectPrimitive.Item>) {
+export function SelectItem({
+  className,
+  children,
+  ...props
+}: ComponentProps<typeof SelectPrimitive.Item>) {
   return (
     <SelectPrimitive.Item className={cn(menuItemClass, 'pr-8', className)} {...props}>
       <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>

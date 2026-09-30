@@ -4,10 +4,11 @@ import type { ComponentProps } from 'react'
 import { cn } from '@/lib/utils'
 
 export const Dialog = DialogPrimitive.Root
-export const DialogTrigger = DialogPrimitive.Trigger
-export const DialogClose = DialogPrimitive.Close
 
-export function DialogOverlay({ className, ...props }: ComponentProps<typeof DialogPrimitive.Overlay>) {
+export function DialogOverlay({
+  className,
+  ...props
+}: ComponentProps<typeof DialogPrimitive.Overlay>) {
   return (
     <DialogPrimitive.Overlay
       className={cn(
@@ -19,7 +20,11 @@ export function DialogOverlay({ className, ...props }: ComponentProps<typeof Dia
   )
 }
 
-export function DialogContent({ className, children, ...props }: ComponentProps<typeof DialogPrimitive.Content>) {
+export function DialogContent({
+  className,
+  children,
+  ...props
+}: ComponentProps<typeof DialogPrimitive.Content>) {
   return (
     <DialogPrimitive.Portal>
       <DialogOverlay />
@@ -61,9 +66,16 @@ export function DialogFooter({ className, ...props }: ComponentProps<'div'>) {
 }
 
 export function DialogTitle({ className, ...props }: ComponentProps<typeof DialogPrimitive.Title>) {
-  return <DialogPrimitive.Title className={cn('text-md font-semibold text-fg', className)} {...props} />
+  return (
+    <DialogPrimitive.Title className={cn('text-md font-semibold text-fg', className)} {...props} />
+  )
 }
 
-export function DialogDescription({ className, ...props }: ComponentProps<typeof DialogPrimitive.Description>) {
-  return <DialogPrimitive.Description className={cn('mt-1.5 text-sm text-fg-2', className)} {...props} />
+export function DialogDescription({
+  className,
+  ...props
+}: ComponentProps<typeof DialogPrimitive.Description>) {
+  return (
+    <DialogPrimitive.Description className={cn('mt-1.5 text-sm text-fg-2', className)} {...props} />
+  )
 }

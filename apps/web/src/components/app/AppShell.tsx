@@ -1,4 +1,12 @@
-import { type ReactNode, createContext, useCallback, useContext, useEffect, useRef, useState } from 'react'
+import {
+  type ReactNode,
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import { ACCEPT_ATTRIBUTE, intake } from '@/lib/intake'
 import { useRealtimeSync } from '@/lib/realtime'
 import { DropOverlay } from './DropOverlay'
@@ -11,7 +19,10 @@ const FilePickerContext = createContext<() => void>(() => {})
 export const useFilePicker = () => useContext(FilePickerContext)
 
 function isTyping(target: EventTarget | null) {
-  return target instanceof HTMLElement && (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName))
+  return (
+    target instanceof HTMLElement &&
+    (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName))
+  )
 }
 
 export function AppShell({ children }: { children: ReactNode }) {
@@ -76,7 +87,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         <Sidebar />
         <div className="flex min-w-0 flex-1 flex-col">
           <MobileNav />
-          {children}
+          <main className="flex min-w-0 flex-1 flex-col">{children}</main>
         </div>
       </div>
       <input

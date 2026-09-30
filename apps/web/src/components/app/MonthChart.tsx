@@ -56,8 +56,21 @@ export function MonthChart({
         <svg width={width} height={HEIGHT} className="absolute inset-0" aria-hidden>
           {ticks.map((tick) => (
             <g key={tick}>
-              <line x1={AXIS} x2={width} y1={y(tick)} y2={y(tick)} stroke="var(--color-border)" strokeWidth={1} />
-              <text x={AXIS - 10} y={y(tick)} dy="0.32em" textAnchor="end" className="fill-fg-3 font-mono text-[10.5px] tabular">
+              <line
+                x1={AXIS}
+                x2={width}
+                y1={y(tick)}
+                y2={y(tick)}
+                stroke="var(--color-border)"
+                strokeWidth={1}
+              />
+              <text
+                x={AXIS - 10}
+                y={y(tick)}
+                dy="0.32em"
+                textAnchor="end"
+                className="fill-fg-3 font-mono text-[10.5px] tabular"
+              >
                 {formatMoneyCompact(tick, currency)}
               </text>
             </g>
@@ -71,11 +84,19 @@ export function MonthChart({
                 {month.totalMinor > 0 && (
                   <path
                     d={columnPath(x, top, BAR, TOP + plotHeight - top)}
-                    className={cn('transition-[fill] duration-150', active ? 'fill-accent-400' : 'fill-accent-muted')}
+                    className={cn(
+                      'transition-[fill] duration-150',
+                      active ? 'fill-accent-400' : 'fill-accent-muted',
+                    )}
                   />
                 )}
                 {active && month.totalMinor > 0 && (
-                  <text x={x + BAR / 2} y={top - 8} textAnchor="middle" className="fill-fg text-[11px] font-semibold tabular">
+                  <text
+                    x={x + BAR / 2}
+                    y={top - 8}
+                    textAnchor="middle"
+                    className="fill-fg text-[11px] font-semibold tabular"
+                  >
                     {formatMoneyCompact(month.totalMinor, currency)}
                   </text>
                 )}
@@ -99,9 +120,12 @@ export function MonthChart({
             delay={0}
             content={
               <span className="flex flex-col gap-0.5 py-0.5">
-                <span className="text-sm font-semibold tabular">{formatMoney(month.totalMinor, currency)}</span>
+                <span className="text-sm font-semibold tabular">
+                  {formatMoney(month.totalMinor, currency)}
+                </span>
                 <span className="text-fg-2">
-                  {formatMonthYear(`${month.month}-01T00:00:00Z`)} · {pluralize(month.count, 'expense')}
+                  {formatMonthYear(`${month.month}-01T00:00:00Z`)} ·{' '}
+                  {pluralize(month.count, 'expense')}
                 </span>
               </span>
             }
@@ -135,9 +159,13 @@ export function MonthTable({ months, currency }: { months: MonthTotal[]; currenc
         <tbody>
           {months.map((month) => (
             <tr key={month.month} className="border-b border-border last:border-0">
-              <td className="px-3 py-[3px] text-fg-2">{formatMonthYear(`${month.month}-01T00:00:00Z`)}</td>
+              <td className="px-3 py-[3px] text-fg-2">
+                {formatMonthYear(`${month.month}-01T00:00:00Z`)}
+              </td>
               <td className="px-3 py-[3px] text-right text-fg-2 tabular">{month.count}</td>
-              <td className="px-3 py-[3px] text-right text-fg tabular">{formatMoney(month.totalMinor, currency)}</td>
+              <td className="px-3 py-[3px] text-right text-fg tabular">
+                {formatMoney(month.totalMinor, currency)}
+              </td>
             </tr>
           ))}
         </tbody>

@@ -10,7 +10,9 @@ import { usePageTitle } from '@/lib/use-page-title'
 
 export const Route = createFileRoute('/_auth/sign-up')({
   validateSearch: (search: Record<string, unknown>): { redirect?: string } =>
-    typeof search.redirect === 'string' && search.redirect.startsWith('/') ? { redirect: search.redirect } : {},
+    typeof search.redirect === 'string' && search.redirect.startsWith('/')
+      ? { redirect: search.redirect }
+      : {},
   component: SignUp,
 })
 
@@ -61,10 +63,21 @@ function SignUp() {
   }
 
   return (
-    <AuthCard title="Create your Outlay account" description="Upload a receipt and the agent files it for you.">
+    <AuthCard
+      title="Create your Outlay account"
+      description="Upload a receipt and the agent files it for you."
+    >
       <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
         {banner && <FormBanner>{banner}</FormBanner>}
-        <Field id="name" label="Name" autoComplete="name" value={name} onChange={(event) => setName(event.target.value)} required autoFocus />
+        <Field
+          id="name"
+          label="Name"
+          autoComplete="name"
+          value={name}
+          onChange={(event) => setName(event.target.value)}
+          required
+          autoFocus
+        />
         <Field
           id="email"
           label="Email"
@@ -88,7 +101,12 @@ function SignUp() {
         />
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="currency">Home currency</Label>
-          <CurrencySelect id="currency" value={currency} onValueChange={setCurrency} className="h-9" />
+          <CurrencySelect
+            id="currency"
+            value={currency}
+            onValueChange={setCurrency}
+            className="h-9"
+          />
         </div>
         <Button
           type="submit"
@@ -101,7 +119,11 @@ function SignUp() {
         </Button>
         <p className="text-center text-xs text-fg-2">
           Already have an account?{' '}
-          <Link to="/sign-in" search={redirect ? { redirect } : {}} className="font-medium text-accent-300 hover:text-fg">
+          <Link
+            to="/sign-in"
+            search={redirect ? { redirect } : {}}
+            className="font-medium text-accent-300 hover:text-fg"
+          >
             Sign in
           </Link>
         </p>

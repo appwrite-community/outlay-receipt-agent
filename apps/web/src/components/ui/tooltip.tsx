@@ -4,7 +4,11 @@ import { cn } from '@/lib/utils'
 
 export const TooltipProvider = TooltipPrimitive.Provider
 
-export function TooltipContent({ className, sideOffset = 6, ...props }: ComponentProps<typeof TooltipPrimitive.Content>) {
+export function TooltipContent({
+  className,
+  sideOffset = 6,
+  ...props
+}: ComponentProps<typeof TooltipPrimitive.Content>) {
   return (
     <TooltipPrimitive.Portal>
       <TooltipPrimitive.Content

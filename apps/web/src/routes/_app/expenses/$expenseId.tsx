@@ -38,7 +38,15 @@ export const Route = createFileRoute('/_app/expenses/$expenseId')({
   component: ExpenseDetail,
 })
 
-function Section({ title, action, children }: { title: string; action?: ReactNode; children: ReactNode }) {
+function Section({
+  title,
+  action,
+  children,
+}: {
+  title: string
+  action?: ReactNode
+  children: ReactNode
+}) {
   return (
     <section className="border-t border-border px-6 py-5">
       <header className="mb-3.5 flex h-6 items-center justify-between gap-3">
@@ -50,12 +58,24 @@ function Section({ title, action, children }: { title: string; action?: ReactNod
   )
 }
 
-function Callout({ tone, icon: Icon, title, children }: { tone: 'crit' | 'accent'; icon?: typeof Ban; title: string; children: ReactNode }) {
+function Callout({
+  tone,
+  icon: Icon,
+  title,
+  children,
+}: {
+  tone: 'crit' | 'accent'
+  icon?: typeof Ban
+  title: string
+  children: ReactNode
+}) {
   return (
     <div
       className={cn(
         'rounded-lg border p-3.5',
-        tone === 'crit' ? 'border-crit-line bg-[rgb(242_109_109/0.05)]' : 'border-accent-line bg-[rgb(143_132_255/0.05)]',
+        tone === 'crit'
+          ? 'border-crit-line bg-[rgb(242_109_109/0.05)]'
+          : 'border-accent-line bg-[rgb(143_132_255/0.05)]',
       )}
     >
       <p className="flex items-center gap-2 text-sm font-semibold text-fg">
@@ -87,7 +107,9 @@ function NotFoundState({ deleted }: { deleted: boolean }) {
         icon={deleted ? Trash2 : FileQuestion}
         title={deleted ? 'This expense was deleted' : 'Expense not found'}
         description={
-          deleted ? 'It was deleted in another tab or window.' : 'It was deleted, or it belongs to a different account.'
+          deleted
+            ? 'It was deleted in another tab or window.'
+            : 'It was deleted, or it belongs to a different account.'
         }
       >
         <Button asChild variant="primary">
@@ -115,7 +137,8 @@ function ExpenseDetail() {
 
   // Leave edit mode when the agent takes the expense back, for example after a retry.
   useEffect(() => {
-    if (expense && expense.status !== 'ready' && expense.status !== 'needs_review') setEditing(false)
+    if (expense && expense.status !== 'ready' && expense.status !== 'needs_review')
+      setEditing(false)
   }, [expense])
 
   if (!expense) {
@@ -146,7 +169,12 @@ function ExpenseDetail() {
   }
 
   const retryButton = canRetry(expense) && (
-    <Button size="sm" variant={expense.status === 'failed' || stuck ? 'primary' : 'secondary'} onClick={handleRetry} disabled={retrying}>
+    <Button
+      size="sm"
+      variant={expense.status === 'failed' || stuck ? 'primary' : 'secondary'}
+      onClick={handleRetry}
+      disabled={retrying}
+    >
       <RotateCw />
       Retry
     </Button>
@@ -154,14 +182,22 @@ function ExpenseDetail() {
 
   return (
     <>
-      <PageHeader title={<Breadcrumb name={expense.merchant ?? expense.fileName} mono={!expense.merchant} />} />
+      <PageHeader
+        title={<Breadcrumb name={expense.merchant ?? expense.fileName} mono={!expense.merchant} />}
+      />
       <div className="flex min-h-0 flex-1 flex-col md:h-[calc(100dvh-56px)] md:flex-none md:flex-row">
-        <ReceiptViewer expense={expense} className="h-[62dvh] shrink-0 border-b border-border md:h-auto md:w-[55%] md:border-r md:border-b-0" />
+        <ReceiptViewer
+          expense={expense}
+          className="h-[62dvh] shrink-0 border-b border-border md:h-auto md:w-[55%] md:border-r md:border-b-0"
+        />
 
         <div className="min-w-0 flex-1 overflow-y-auto">
           <div className="flex flex-col gap-4 px-6 pt-5 pb-5">
             <div className="flex items-center gap-2">
-              <StatusChip status={expense.status} label={processing ? 'Agent is reading' : undefined} />
+              <StatusChip
+                status={expense.status}
+                label={processing ? 'Agent is reading' : undefined}
+              />
               {expense.status === 'needs_review' && (
                 <span className="text-xs text-fg-2">
                   {openFlags.length} {openFlags.length === 1 ? 'field' : 'fields'} to check
@@ -169,16 +205,31 @@ function ExpenseDetail() {
               )}
               <div className="ml-auto flex items-center gap-1.5">
                 {retryButton}
-                <Tooltip content={filed ? null : processing ? 'The agent is still reading this receipt' : 'Retry first, so the agent can read the receipt'}>
+                <Tooltip
+                  content={
+                    filed
+                      ? null
+                      : processing
+                        ? 'The agent is still reading this receipt'
+                        : 'Retry first, so the agent can read the receipt'
+                  }
+                >
                   <span>
                     <Button size="sm" onClick={() => setEditing(true)} disabled={!filed || editing}>
                       Update
                     </Button>
                   </span>
                 </Tooltip>
-                <Tooltip content={processing && !stuck ? 'Wait until the agent finishes' : 'Delete'}>
+                <Tooltip
+                  content={processing && !stuck ? 'Wait until the agent finishes' : 'Delete'}
+                >
                   <span>
-                    <Button size="icon-sm" onClick={() => setConfirmDelete(true)} disabled={processing && !stuck} aria-label="Delete">
+                    <Button
+                      size="icon-sm"
+                      onClick={() => setConfirmDelete(true)}
+                      disabled={processing && !stuck}
+                      aria-label="Delete"
+                    >
                       <Trash2 />
                     </Button>
                   </span>
@@ -187,9 +238,14 @@ function ExpenseDetail() {
             </div>
 
             <div>
-              <h1 className={cn('truncate text-lg font-semibold text-fg', !expense.merchant && 'font-mono text-md')}>
+              <h2
+                className={cn(
+                  'truncate text-lg font-semibold text-fg',
+                  !expense.merchant && 'font-mono text-md',
+                )}
+              >
                 {expense.merchant ?? expense.fileName}
-              </h1>
+              </h2>
               {processing ? (
                 <div className="mt-2 flex flex-col gap-2">
                   <Skeleton className="h-9 w-40" />
@@ -199,10 +255,16 @@ function ExpenseDetail() {
                 filed && (
                   <>
                     <p className="mt-1 text-2xl font-semibold tracking-[-0.02em] text-fg tabular">
-                      {expense.totalMinor !== null && expense.currency ? formatMoney(expense.totalMinor, expense.currency) : '-'}
+                      {expense.totalMinor !== null && expense.currency
+                        ? formatMoney(expense.totalMinor, expense.currency)
+                        : '-'}
                     </p>
                     <p className="mt-1 text-sm text-fg-2 tabular">
-                      {[expense.spentOn && formatDate(expense.spentOn), expense.category && categoryLabel(expense.category), expense.paymentMethod]
+                      {[
+                        expense.spentOn && formatDate(expense.spentOn),
+                        expense.category && categoryLabel(expense.category),
+                        expense.paymentMethod,
+                      ]
                         .filter(Boolean)
                         .join(' · ')}
                     </p>
@@ -219,7 +281,10 @@ function ExpenseDetail() {
             )}
 
             {processing && (
-              <Callout tone="accent" title={stuck ? 'The agent stopped answering' : 'The agent is reading this receipt'}>
+              <Callout
+                tone="accent"
+                title={stuck ? 'The agent stopped answering' : 'The agent is reading this receipt'}
+              >
                 {stuck ? (
                   <p>The last step was more than 4 minutes ago. Retry to start over.</p>
                 ) : (
@@ -235,12 +300,16 @@ function ExpenseDetail() {
             )}
             {expense.status === 'failed' && (
               <Callout tone="crit" icon={TriangleAlert} title="Could not file this receipt">
-                {expense.failureReason ?? 'Something went wrong while filing this receipt. Retry to try again.'}
+                {expense.failureReason ??
+                  'Something went wrong while filing this receipt. Retry to try again.'}
               </Callout>
             )}
             {expense.status === 'rejected' && (
               <Callout tone="crit" icon={Ban} title="Not a receipt">
-                <p>{expense.failureReason ?? 'The agent could not find a receipt or an invoice in this file.'}</p>
+                <p>
+                  {expense.failureReason ??
+                    'The agent could not find a receipt or an invoice in this file.'}
+                </p>
                 <p className="mt-1">If it is a receipt, retry it. If not, delete this upload.</p>
               </Callout>
             )}
@@ -260,7 +329,11 @@ function ExpenseDetail() {
               {processing ? (
                 <FieldGridSkeleton />
               ) : editing ? (
-                <ExpenseForm expense={expense} openFlags={openFlags} onDone={() => setEditing(false)} />
+                <ExpenseForm
+                  expense={expense}
+                  openFlags={openFlags}
+                  onDone={() => setEditing(false)}
+                />
               ) : (
                 <FieldGrid expense={expense} history={merchantHistory(steps)} />
               )}
@@ -275,7 +348,11 @@ function ExpenseDetail() {
 
           {(filed || processing) && (
             <Section title="Line items">
-              {processing || !items ? <LineItemsSkeleton /> : <LineItemsTable expense={expense} items={items} />}
+              {processing || !items ? (
+                <LineItemsSkeleton />
+              ) : (
+                <LineItemsTable expense={expense} items={items} />
+              )}
             </Section>
           )}
 
@@ -300,7 +377,10 @@ function ExpenseDetail() {
 function Breadcrumb({ name, mono }: { name: string | null; mono?: boolean }) {
   return (
     <nav aria-label="Breadcrumb" className="flex min-w-0 items-center gap-1.5">
-      <Link to="/expenses" className="shrink-0 rounded-sm text-fg-2 transition-colors hover:text-fg">
+      <Link
+        to="/expenses"
+        className="shrink-0 rounded-sm text-fg-2 transition-colors hover:text-fg"
+      >
         Expenses
       </Link>
       {name && (

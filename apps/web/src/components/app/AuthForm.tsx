@@ -3,7 +3,15 @@ import type { ComponentProps, ReactNode } from 'react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
-export function AuthCard({ title, description, children }: { title: string; description: ReactNode; children: ReactNode }) {
+export function AuthCard({
+  title,
+  description,
+  children,
+}: {
+  title: string
+  description: ReactNode
+  children: ReactNode
+}) {
   return (
     <div className="rounded-xl border border-border bg-surface-1/90 shadow-[0_24px_48px_-24px_rgb(0_0_0/0.8)] backdrop-blur-sm">
       <div className="px-6 pt-6 pb-5">
@@ -27,7 +35,13 @@ export function Field({
   return (
     <div className="flex flex-col gap-1.5">
       <Label htmlFor={id}>{label}</Label>
-      <Input id={id} aria-invalid={Boolean(error)} aria-describedby={describedBy} className="h-9" {...props} />
+      <Input
+        id={id}
+        aria-invalid={Boolean(error)}
+        aria-describedby={describedBy}
+        className="h-9"
+        {...props}
+      />
       {error ? (
         <p id={`${id}-error`} className="text-xs text-crit">
           {error}
@@ -45,7 +59,10 @@ export function Field({
 
 export function FormBanner({ children }: { children: ReactNode }) {
   return (
-    <div role="alert" className="mb-4 flex gap-2.5 rounded-md border border-crit-line bg-crit-tint px-3 py-2.5 text-xs text-fg">
+    <div
+      role="alert"
+      className="mb-4 flex gap-2.5 rounded-md border border-crit-line bg-crit-tint px-3 py-2.5 text-xs text-fg"
+    >
       <TriangleAlert className="mt-px size-3.5 shrink-0 text-crit" />
       <span>{children}</span>
     </div>

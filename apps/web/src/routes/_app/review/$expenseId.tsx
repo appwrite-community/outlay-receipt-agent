@@ -17,7 +17,13 @@ import { merchantHistory } from '@/lib/agent'
 import { EDITABLE_FIELDS, FIELD_LABELS } from '@/lib/fields'
 import { formatDate } from '@/lib/format'
 import { formatMoney } from '@/lib/money'
-import { activityQuery, expenseQuery, flagsQuery, lineItemsQuery, reviewQueueQuery } from '@/lib/queries/expenses'
+import {
+  activityQuery,
+  expenseQuery,
+  flagsQuery,
+  lineItemsQuery,
+  reviewQueueQuery,
+} from '@/lib/queries/expenses'
 import type { Expense } from '@/lib/types'
 import { usePageTitle } from '@/lib/use-page-title'
 import { cn } from '@/lib/utils'
@@ -35,7 +41,8 @@ export const Route = createFileRoute('/_app/review/$expenseId')({
 })
 
 const isTyping = (target: EventTarget | null) =>
-  target instanceof HTMLElement && (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName))
+  target instanceof HTMLElement &&
+  (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName))
 
 function Review() {
   const { expenseId } = Route.useParams()
@@ -62,7 +69,12 @@ function ReviewWorkspace({ expenseId }: { expenseId: string }) {
 
   const go = useCallback(
     (target: Expense | undefined) => {
-      if (target) void navigate({ to: '/review/$expenseId', params: { expenseId: target.$id }, replace: true })
+      if (target)
+        void navigate({
+          to: '/review/$expenseId',
+          params: { expenseId: target.$id },
+          replace: true,
+        })
       else void navigate({ to: '/review', replace: true })
     },
     [navigate],
@@ -123,13 +135,37 @@ function ReviewWorkspace({ expenseId }: { expenseId: string }) {
             <span className="mr-1.5 text-xs text-fg-2 tabular">
               {position + 1} of {queue.length}
             </span>
-            <Tooltip content={<>Previous <Kbd className="ml-1">K</Kbd></>}>
-              <Button size="icon-sm" variant="ghost" disabled={position <= 0} onClick={() => go(queue[position - 1])} aria-label="Previous">
+            <Tooltip
+              content={
+                <>
+                  Previous <Kbd className="ml-1">K</Kbd>
+                </>
+              }
+            >
+              <Button
+                size="icon-sm"
+                variant="ghost"
+                disabled={position <= 0}
+                onClick={() => go(queue[position - 1])}
+                aria-label="Previous"
+              >
                 <ChevronUp />
               </Button>
             </Tooltip>
-            <Tooltip content={<>Next <Kbd className="ml-1">J</Kbd></>}>
-              <Button size="icon-sm" variant="ghost" disabled={position >= queue.length - 1} onClick={() => go(queue[position + 1])} aria-label="Next">
+            <Tooltip
+              content={
+                <>
+                  Next <Kbd className="ml-1">J</Kbd>
+                </>
+              }
+            >
+              <Button
+                size="icon-sm"
+                variant="ghost"
+                disabled={position >= queue.length - 1}
+                onClick={() => go(queue[position + 1])}
+                aria-label="Next"
+              >
                 <ChevronDown />
               </Button>
             </Tooltip>
@@ -139,7 +175,11 @@ function ReviewWorkspace({ expenseId }: { expenseId: string }) {
 
       {!expense ? (
         <div className="grid flex-1 place-items-center">
-          <EmptyState icon={CircleCheck} title="This expense is no longer in review" description="It was filed or deleted.">
+          <EmptyState
+            icon={CircleCheck}
+            title="This expense is no longer in review"
+            description="It was filed or deleted."
+          >
             <Button asChild variant="primary">
               <Link to="/review">Open the queue</Link>
             </Button>
@@ -151,18 +191,33 @@ function ReviewWorkspace({ expenseId }: { expenseId: string }) {
             <ReviewQueue queue={queue} currentId={expenseId} />
           </div>
 
-          <ReceiptViewer expense={expense} className="h-[55dvh] border-b border-border md:h-auto md:border-b-0" />
+          <ReceiptViewer
+            expense={expense}
+            className="h-[55dvh] border-b border-border md:h-auto md:border-b-0"
+          />
 
-          <aside className="flex min-h-0 flex-col border-l border-border bg-surface-1">
+          <aside
+            aria-label="What the agent read"
+            className="flex min-h-0 flex-col border-l border-border bg-surface-1"
+          >
             <div className="min-h-0 flex-1 overflow-y-auto">
               <header className="px-5 pt-5 pb-4">
                 <div className="flex items-start gap-3">
-                  <h1 className={cn('min-w-0 flex-1 truncate text-lg font-semibold text-fg', !expense.merchant && 'font-mono text-md')}>
+                  <h2
+                    className={cn(
+                      'min-w-0 flex-1 truncate text-lg font-semibold text-fg',
+                      !expense.merchant && 'font-mono text-md',
+                    )}
+                  >
                     {expense.merchant ?? expense.fileName}
-                  </h1>
+                  </h2>
                   <Tooltip content="Open the expense">
                     <Button asChild size="icon-sm" variant="ghost" className="-mr-1.5">
-                      <Link to="/expenses/$expenseId" params={{ expenseId }} aria-label="Open the expense">
+                      <Link
+                        to="/expenses/$expenseId"
+                        params={{ expenseId }}
+                        aria-label="Open the expense"
+                      >
                         <ArrowUpRight />
                       </Link>
                     </Button>
@@ -170,7 +225,9 @@ function ReviewWorkspace({ expenseId }: { expenseId: string }) {
                 </div>
                 <p className="mt-0.5 text-sm text-fg-2 tabular">
                   {[
-                    expense.totalMinor !== null && expense.currency && formatMoney(expense.totalMinor, expense.currency),
+                    expense.totalMinor !== null &&
+                      expense.currency &&
+                      formatMoney(expense.totalMinor, expense.currency),
                     expense.spentOn && formatDate(expense.spentOn),
                   ]
                     .filter(Boolean)
@@ -186,9 +243,7 @@ function ReviewWorkspace({ expenseId }: { expenseId: string }) {
 
               {openFlags.length > 0 ? (
                 <section className="flex flex-col gap-2.5 px-5 pb-5">
-                  <h2 className="eyebrow text-fg-3">
-                    Needs your review · {openFlags.length}
-                  </h2>
+                  <h2 className="eyebrow text-fg-3">Needs your review · {openFlags.length}</h2>
                   {openFlags.map((flag, flagIndex) => (
                     <FlagCard
                       key={flag.$id}
@@ -210,7 +265,13 @@ function ReviewWorkspace({ expenseId }: { expenseId: string }) {
               <section className="border-t border-border px-2 py-3">
                 <h2 className="eyebrow px-3 pt-1 pb-2 text-fg-3">Details</h2>
                 {EDITABLE_FIELDS.filter((field) => !flaggedFields.has(field)).map((field) => (
-                  <FieldRow key={field} expense={expense} field={field} openFlags={openFlags} history={history} />
+                  <FieldRow
+                    key={field}
+                    expense={expense}
+                    field={field}
+                    openFlags={openFlags}
+                    history={history}
+                  />
                 ))}
               </section>
 

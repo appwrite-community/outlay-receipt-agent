@@ -10,7 +10,8 @@ export const buttonVariants = cva(
       variant: {
         primary:
           'bg-accent-600 text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.14)] hover:bg-accent-700 active:bg-accent-700',
-        secondary: 'border border-border-strong bg-surface-2 text-fg hover:bg-surface-3 active:bg-surface-3',
+        secondary:
+          'border border-border-strong bg-surface-2 text-fg hover:bg-surface-3 active:bg-surface-3',
         ghost: 'text-fg-2 hover:bg-surface-2 hover:text-fg active:bg-surface-3',
         danger: 'bg-crit text-[#1c0808] hover:bg-[#f48585] active:bg-[#f48585]',
         link: 'h-auto px-0 text-accent-300 hover:text-fg hover:underline underline-offset-4',
@@ -36,5 +37,11 @@ export function Button({
   ...props
 }: ComponentProps<'button'> & VariantProps<typeof buttonVariants> & { asChild?: boolean }) {
   const Comp = asChild ? Slot.Root : 'button'
-  return <Comp type={asChild ? undefined : type} className={cn(buttonVariants({ variant, size }), className)} {...props} />
+  return (
+    <Comp
+      type={asChild ? undefined : type}
+      className={cn(buttonVariants({ variant, size }), className)}
+      {...props}
+    />
+  )
 }

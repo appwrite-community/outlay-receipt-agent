@@ -39,7 +39,9 @@ export function useRealtimeSync(enabled: boolean) {
       queryClient.setQueryData(expenseKeys.one(expense.$id), action === 'delete' ? null : expense)
       // Leave the review queue at once, so the next screen never offers a filed expense.
       if (action === 'delete' || expense.status !== 'needs_review') {
-        queryClient.setQueryData<Expense[]>(expenseKeys.reviewQueue, (queue) => queue?.filter((item) => item.$id !== expense.$id))
+        queryClient.setQueryData<Expense[]>(expenseKeys.reviewQueue, (queue) =>
+          queue?.filter((item) => item.$id !== expense.$id),
+        )
       }
       if (action === 'update') {
         // The agent saves line items and flags in bulk, which sends no row events. Load them again.
@@ -55,7 +57,9 @@ export function useRealtimeSync(enabled: boolean) {
       queryClient.setQueryData<Activity[]>(expenseKeys.activity(step.expenseId), (steps) => {
         if (!steps) return steps
         const others = steps.filter((item) => item.$id !== step.$id)
-        return action === 'delete' ? others : [...others, step].sort((a, b) => a.$createdAt.localeCompare(b.$createdAt))
+        return action === 'delete'
+          ? others
+          : [...others, step].sort((a, b) => a.$createdAt.localeCompare(b.$createdAt))
       })
       queryClient.invalidateQueries({ queryKey: expenseKeys.recentActivity })
     }
@@ -75,7 +79,8 @@ export function useRealtimeSync(enabled: boolean) {
         const action = rowEvent(event)
         if (!action) return
         if (event.payload.$tableId === TABLES.expenses) onExpense(action, event.payload as Expense)
-        if (event.payload.$tableId === TABLES.activity) onActivity(action, event.payload as Activity)
+        if (event.payload.$tableId === TABLES.activity)
+          onActivity(action, event.payload as Activity)
         if (event.payload.$tableId === TABLES.flags) onFlag(event.payload as ReviewFlag)
       },
     )

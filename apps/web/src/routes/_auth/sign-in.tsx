@@ -8,7 +8,9 @@ import { usePageTitle } from '@/lib/use-page-title'
 
 export const Route = createFileRoute('/_auth/sign-in')({
   validateSearch: (search: Record<string, unknown>): { redirect?: string } =>
-    typeof search.redirect === 'string' && search.redirect.startsWith('/') ? { redirect: search.redirect } : {},
+    typeof search.redirect === 'string' && search.redirect.startsWith('/')
+      ? { redirect: search.redirect }
+      : {},
   component: SignIn,
 })
 
@@ -33,7 +35,10 @@ function SignIn() {
     } catch (error) {
       if (error instanceof AppwriteException && error.type === 'user_invalid_credentials') {
         setFieldError('The email or password is incorrect.')
-      } else if (error instanceof AppwriteException && error.type === 'general_rate_limit_exceeded') {
+      } else if (
+        error instanceof AppwriteException &&
+        error.type === 'general_rate_limit_exceeded'
+      ) {
         setBanner('Too many attempts. Wait a minute, then try again.')
       } else if (error instanceof AppwriteException && error.code >= 400 && error.code < 500) {
         setBanner(error.message)
@@ -68,12 +73,22 @@ function SignIn() {
           error={fieldError}
           required
         />
-        <Button type="submit" variant="primary" size="lg" className="mt-1 w-full" disabled={submitting || !email || !password}>
+        <Button
+          type="submit"
+          variant="primary"
+          size="lg"
+          className="mt-1 w-full"
+          disabled={submitting || !email || !password}
+        >
           Sign in
         </Button>
         <p className="text-center text-xs text-fg-2">
           New to Outlay?{' '}
-          <Link to="/sign-up" search={redirect ? { redirect } : {}} className="font-medium text-accent-300 hover:text-fg">
+          <Link
+            to="/sign-up"
+            search={redirect ? { redirect } : {}}
+            className="font-medium text-accent-300 hover:text-fg"
+          >
             Create an account
           </Link>
         </p>

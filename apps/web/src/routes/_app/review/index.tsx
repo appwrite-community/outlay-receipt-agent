@@ -13,7 +13,12 @@ export const Route = createFileRoute('/_app/review/')({
   // where the review screen goes right after the last flag is resolved.
   loader: async ({ context: { queryClient } }) => {
     const queue = await queryClient.fetchQuery(reviewQueueQuery)
-    if (queue.length > 0) throw redirect({ to: '/review/$expenseId', params: { expenseId: queue[0].$id }, replace: true })
+    if (queue.length > 0)
+      throw redirect({
+        to: '/review/$expenseId',
+        params: { expenseId: queue[0].$id },
+        replace: true,
+      })
   },
   component: ReviewEmpty,
 })
@@ -25,7 +30,12 @@ function ReviewEmpty() {
 
   // A receipt the agent flags while this page is open goes straight to review.
   useEffect(() => {
-    if (queue.length > 0) void navigate({ to: '/review/$expenseId', params: { expenseId: queue[0].$id }, replace: true })
+    if (queue.length > 0)
+      void navigate({
+        to: '/review/$expenseId',
+        params: { expenseId: queue[0].$id },
+        replace: true,
+      })
   }, [queue, navigate])
 
   return (

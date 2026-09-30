@@ -1,7 +1,14 @@
 import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { CircleAlert, Copy, FileText } from 'lucide-react'
-import { type FormEvent, type KeyboardEvent, type ReactNode, useEffect, useRef, useState } from 'react'
+import {
+  type FormEvent,
+  type KeyboardEvent,
+  type ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -37,13 +44,20 @@ function SourceTag({ flag }: { flag: ReviewFlag }) {
     </span>
   ) : (
     <span className="inline-flex items-center gap-1.5 text-2xs text-fg-2">
-      <CircleAlert className="size-3.5 text-warn" />
-      A check failed
+      <CircleAlert className="size-3.5 text-warn" />A check failed
     </span>
   )
 }
 
-function FlagFrame({ flag, focused, children }: { flag: ReviewFlag; focused?: boolean; children: ReactNode }) {
+function FlagFrame({
+  flag,
+  focused,
+  children,
+}: {
+  flag: ReviewFlag
+  focused?: boolean
+  children: ReactNode
+}) {
   return (
     <section
       aria-label={`Review ${FIELD_LABELS[flag.field].noun}`}
@@ -63,7 +77,11 @@ function FlagFrame({ flag, focused, children }: { flag: ReviewFlag; focused?: bo
 }
 
 /** Resolves a flag and tells the person when the expense is filed. */
-async function resolve(props: FlagProps, resolution: FlagResolution, value?: Parameters<typeof resolveFlag>[0]['value']) {
+async function resolve(
+  props: FlagProps,
+  resolution: FlagResolution,
+  value?: Parameters<typeof resolveFlag>[0]['value'],
+) {
   const { expense, flag, openFlags, onResolved } = props
   await resolveFlag({ expense, flag, openFlags, resolution, value })
   const done = openFlags.filter((open) => open.$id !== flag.$id).length === 0
@@ -72,10 +90,16 @@ async function resolve(props: FlagProps, resolution: FlagResolution, value?: Par
 }
 
 const isTyping = (target: EventTarget | null) =>
-  target instanceof HTMLElement && (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON', 'A'].includes(target.tagName))
+  target instanceof HTMLElement &&
+  (target.isContentEditable ||
+    ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON', 'A'].includes(target.tagName))
 
 export function FlagCard(props: FlagProps) {
-  return props.flag.field === 'duplicate' ? <DuplicateCard {...props} /> : <FieldFlagCard {...props} />
+  return props.flag.field === 'duplicate' ? (
+    <DuplicateCard {...props} />
+  ) : (
+    <FieldFlagCard {...props} />
+  )
 }
 
 /**
@@ -84,7 +108,8 @@ export function FlagCard(props: FlagProps) {
  */
 function FieldFlagCard(props: FlagProps) {
   const { expense, flag, focused } = props
-  const field: ExpenseField | null = flag.field === 'lineItems' || flag.field === 'duplicate' ? null : flag.field
+  const field: ExpenseField | null =
+    flag.field === 'lineItems' || flag.field === 'duplicate' ? null : flag.field
   const current = field ? fieldValue(expense, field) : null
   const [text, setText] = useState(() => (field ? toDraft(expense)[field] : ''))
   const [error, setError] = useState<string | null>(null)
@@ -131,8 +156,13 @@ function FieldFlagCard(props: FlagProps) {
   useEffect(() => {
     if (!focused) return
     function onEnter(event: globalThis.KeyboardEvent) {
-      if (event.key !== 'Enter' || event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return
-      if (isTyping(event.target) || document.querySelector('[role="dialog"], [role="listbox"], [role="menu"]')) return
+      if (event.key !== 'Enter' || event.metaKey || event.ctrlKey || event.altKey || event.shiftKey)
+        return
+      if (
+        isTyping(event.target) ||
+        document.querySelector('[role="dialog"], [role="listbox"], [role="menu"]')
+      )
+        return
       event.preventDefault()
       confirmRef.current()
     }
@@ -143,7 +173,12 @@ function FieldFlagCard(props: FlagProps) {
   return (
     <FlagFrame flag={flag} focused={focused}>
       {field && (
-        <p className={cn('mt-2.5 text-md font-semibold text-fg', ['total', 'tax', 'spentOn'].includes(field) && 'tabular')}>
+        <p
+          className={cn(
+            'mt-2.5 text-md font-semibold text-fg',
+            ['total', 'tax', 'spentOn'].includes(field) && 'tabular',
+          )}
+        >
           {current === null || current === '' ? (
             <span className="text-fg-3">Not found on the receipt</span>
           ) : (
@@ -173,9 +208,20 @@ function FieldFlagCard(props: FlagProps) {
                 Save
               </Button>
             ) : (
-              <Tooltip content={canConfirm ? `Keep ${displayValue(field, current, expense.currency)}` : 'Enter the value to file this expense'}>
+              <Tooltip
+                content={
+                  canConfirm
+                    ? `Keep ${displayValue(field, current, expense.currency)}`
+                    : 'Enter the value to file this expense'
+                }
+              >
                 <span>
-                  <Button type="submit" variant="primary" disabled={busy || !canConfirm} className="w-[76px]">
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    disabled={busy || !canConfirm}
+                    className="w-[76px]"
+                  >
                     Confirm
                   </Button>
                 </span>
@@ -186,7 +232,11 @@ function FieldFlagCard(props: FlagProps) {
         </form>
       ) : (
         <div className="mt-3 flex justify-end">
-          <Button variant="primary" disabled={busy} onClick={() => run(() => resolve(props, 'confirmed'))}>
+          <Button
+            variant="primary"
+            disabled={busy}
+            onClick={() => run(() => resolve(props, 'confirmed'))}
+          >
             Confirm
           </Button>
         </div>
@@ -200,7 +250,11 @@ function Thumb({ expense }: { expense: Expense }) {
   const isImage = expense.mimeType.startsWith('image/')
   return (
     <span className="grid h-16 w-12 shrink-0 place-items-center overflow-hidden rounded-sm border border-border bg-surface-3">
-      {url && isImage ? <img src={url} alt="" className="size-full object-cover object-top" /> : <FileText className="size-4 text-fg-3" />}
+      {url && isImage ? (
+        <img src={url} alt="" className="size-full object-cover object-top" />
+      ) : (
+        <FileText className="size-4 text-fg-3" />
+      )}
     </span>
   )
 }
@@ -211,18 +265,30 @@ function Comparison({ label, expense, link }: { label: string; expense: Expense;
       <Thumb expense={expense} />
       <span className="flex min-w-0 flex-col gap-0.5">
         <span className="eyebrow text-fg-3">{label}</span>
-        <span className="truncate text-sm font-medium text-fg">{expense.merchant ?? expense.fileName}</span>
+        <span className="truncate text-sm font-medium text-fg">
+          {expense.merchant ?? expense.fileName}
+        </span>
         <span className="truncate text-xs text-fg-2 tabular">
-          {[expense.spentOn && formatDate(expense.spentOn), expense.totalMinor !== null && expense.currency && formatMoney(expense.totalMinor, expense.currency)]
+          {[
+            expense.spentOn && formatDate(expense.spentOn),
+            expense.totalMinor !== null &&
+              expense.currency &&
+              formatMoney(expense.totalMinor, expense.currency),
+          ]
             .filter(Boolean)
             .join(' · ')}
         </span>
       </span>
     </>
   )
-  const className = 'flex min-w-0 flex-1 items-center gap-3 rounded-md border border-border bg-surface-1 p-2'
+  const className =
+    'flex min-w-0 flex-1 items-center gap-3 rounded-md border border-border bg-surface-1 p-2'
   return link ? (
-    <Link to="/expenses/$expenseId" params={{ expenseId: expense.$id }} className={cn(className, 'transition-colors hover:bg-surface-2')}>
+    <Link
+      to="/expenses/$expenseId"
+      params={{ expenseId: expense.$id }}
+      className={cn(className, 'transition-colors hover:bg-surface-2')}
+    >
       {body}
     </Link>
   ) : (
@@ -233,7 +299,10 @@ function Comparison({ label, expense, link }: { label: string; expense: Expense;
 /** The same receipt may have been uploaded twice. Shows both side by side. */
 function DuplicateCard(props: FlagProps) {
   const { expense, flag, focused } = props
-  const related = useQuery({ ...expenseQuery(flag.relatedExpenseId ?? ''), enabled: Boolean(flag.relatedExpenseId) })
+  const related = useQuery({
+    ...expenseQuery(flag.relatedExpenseId ?? ''),
+    enabled: Boolean(flag.relatedExpenseId),
+  })
   const [busy, setBusy] = useState(false)
   const [confirmDelete, setConfirmDelete] = useState(false)
 

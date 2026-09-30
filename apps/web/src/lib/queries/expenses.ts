@@ -3,7 +3,15 @@ import { Query } from 'appwrite'
 import { tablesDB } from '../appwrite'
 import { addMonths } from '../format'
 import { DATABASE_ID, TABLES } from '../ids'
-import type { Activity, ActivityKind, Category, Expense, ExpenseStatus, LineItem, ReviewFlag } from '../types'
+import type {
+  Activity,
+  ActivityKind,
+  Category,
+  Expense,
+  ExpenseStatus,
+  LineItem,
+  ReviewFlag,
+} from '../types'
 
 export const PAGE_SIZE = 25
 
@@ -49,9 +57,16 @@ export function expensesQuery(filters: ExpenseFilters) {
       if (filters.categories?.length) queries.push(Query.equal('category', filters.categories))
       if (filters.month) {
         const start = `${filters.month}-01T00:00:00.000Z`
-        queries.push(Query.greaterThanEqual('spentOn', start), Query.lessThan('spentOn', addMonths(start, 1)))
+        queries.push(
+          Query.greaterThanEqual('spentOn', start),
+          Query.lessThan('spentOn', addMonths(start, 1)),
+        )
       }
-      return tablesDB.listRows<Expense>({ databaseId: DATABASE_ID, tableId: TABLES.expenses, queries })
+      return tablesDB.listRows<Expense>({
+        databaseId: DATABASE_ID,
+        tableId: TABLES.expenses,
+        queries,
+      })
     },
     placeholderData: keepPreviousData,
   })
@@ -64,7 +79,11 @@ export const unfiledExpensesQuery = queryOptions({
     tablesDB.listRows<Expense>({
       databaseId: DATABASE_ID,
       tableId: TABLES.expenses,
-      queries: [Query.equal('status', UNFILED_STATUSES), Query.orderDesc('$createdAt'), Query.limit(PAGE_SIZE)],
+      queries: [
+        Query.equal('status', UNFILED_STATUSES),
+        Query.orderDesc('$createdAt'),
+        Query.limit(PAGE_SIZE),
+      ],
     }),
 })
 
@@ -93,7 +112,11 @@ export function lineItemsQuery(expenseId: string) {
       const { rows } = await tablesDB.listRows<LineItem>({
         databaseId: DATABASE_ID,
         tableId: TABLES.lineItems,
-        queries: [Query.equal('expenseId', [expenseId]), Query.orderAsc('position'), Query.limit(100)],
+        queries: [
+          Query.equal('expenseId', [expenseId]),
+          Query.orderAsc('position'),
+          Query.limit(100),
+        ],
       })
       return rows
     },
@@ -107,7 +130,11 @@ export function flagsQuery(expenseId: string) {
       const { rows } = await tablesDB.listRows<ReviewFlag>({
         databaseId: DATABASE_ID,
         tableId: TABLES.flags,
-        queries: [Query.equal('expenseId', [expenseId]), Query.orderAsc('$createdAt'), Query.limit(20)],
+        queries: [
+          Query.equal('expenseId', [expenseId]),
+          Query.orderAsc('$createdAt'),
+          Query.limit(20),
+        ],
       })
       return rows
     },
@@ -121,7 +148,11 @@ export function activityQuery(expenseId: string) {
       const { rows } = await tablesDB.listRows<Activity>({
         databaseId: DATABASE_ID,
         tableId: TABLES.activity,
-        queries: [Query.equal('expenseId', [expenseId]), Query.orderAsc('$createdAt'), Query.limit(100)],
+        queries: [
+          Query.equal('expenseId', [expenseId]),
+          Query.orderAsc('$createdAt'),
+          Query.limit(100),
+        ],
       })
       return rows
     },
@@ -135,16 +166,33 @@ export const reviewQueueQuery = queryOptions({
     const { rows } = await tablesDB.listRows<Expense>({
       databaseId: DATABASE_ID,
       tableId: TABLES.expenses,
-      queries: [Query.equal('status', ['needs_review']), Query.orderAsc('$createdAt'), Query.limit(100)],
+      queries: [
+        Query.equal('status', ['needs_review']),
+        Query.orderAsc('$createdAt'),
+        Query.limit(100),
+      ],
     })
     return rows
   },
 })
 
-export type ActivityWithExpense = { activity: Activity; expense: Pick<Expense, '$id' | 'merchant' | 'fileName'> | null }
+export type ActivityWithExpense = {
+  activity: Activity
+  expense: Pick<Expense, '$id' | 'merchant' | 'fileName'> | null
+}
 
 /** Steps that end an agent run or record a change you made. The steps in between show on each expense. */
-const OUTCOMES: ActivityKind[] = ['filed', 'flagged', 'rejected', 'failed', 'retried', 'confirmed', 'corrected', 'dismissed', 'updated']
+const OUTCOMES: ActivityKind[] = [
+  'filed',
+  'flagged',
+  'rejected',
+  'failed',
+  'retried',
+  'confirmed',
+  'corrected',
+  'dismissed',
+  'updated',
+]
 
 /** The latest outcomes across all expenses, with the expense each one belongs to. */
 export const recentActivityQuery = queryOptions({
@@ -160,7 +208,11 @@ export const recentActivityQuery = queryOptions({
       ? await tablesDB.listRows<Expense>({
           databaseId: DATABASE_ID,
           tableId: TABLES.expenses,
-          queries: [Query.equal('$id', ids), Query.select(['merchant', 'fileName']), Query.limit(ids.length)],
+          queries: [
+            Query.equal('$id', ids),
+            Query.select(['merchant', 'fileName']),
+            Query.limit(ids.length),
+          ],
         })
       : { rows: [] }
     const byId = new Map(expenses.map((expense) => [expense.$id, expense]))

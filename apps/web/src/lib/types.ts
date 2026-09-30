@@ -14,7 +14,8 @@ export type Category =
 export type ExpenseStatus = 'processing' | 'needs_review' | 'ready' | 'failed' | 'rejected'
 
 /** The expense fields a person can review or change. */
-export type ExpenseField = 'merchant' | 'spentOn' | 'total' | 'tax' | 'currency' | 'category' | 'paymentMethod'
+export type ExpenseField =
+  'merchant' | 'spentOn' | 'total' | 'tax' | 'currency' | 'category' | 'paymentMethod'
 
 export type FieldNote = { confidence: 'medium' | 'low'; note: string | null }
 

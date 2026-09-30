@@ -35,8 +35,18 @@ export async function signIn(email: string, password: string): Promise<User> {
   return refreshAccount()
 }
 
-export async function signUp(input: { name: string; email: string; password: string; currency: string }): Promise<User> {
-  await account.create({ userId: ID.unique(), email: input.email, password: input.password, name: input.name })
+export async function signUp(input: {
+  name: string
+  email: string
+  password: string
+  currency: string
+}): Promise<User> {
+  await account.create({
+    userId: ID.unique(),
+    email: input.email,
+    password: input.password,
+    name: input.name,
+  })
   await account.createEmailPasswordSession({ email: input.email, password: input.password })
   localStorage.setItem(SESSION_HINT, '1')
   // The intake agent reads the home currency from the account preferences.
@@ -55,7 +65,10 @@ export function forgetSignedOutData(): void {
   queryClient.removeQueries({ predicate: (query) => query.queryKey[0] !== 'account' })
 }
 
-export async function updateProfile(user: User, changes: { name: string; currency: string }): Promise<User> {
+export async function updateProfile(
+  user: User,
+  changes: { name: string; currency: string },
+): Promise<User> {
   if (changes.name !== user.name) await account.updateName({ name: changes.name })
   if (changes.currency !== homeCurrency(user)) {
     await account.updatePrefs<Preferences>({ prefs: { ...user.prefs, currency: changes.currency } })

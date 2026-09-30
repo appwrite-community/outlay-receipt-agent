@@ -3,17 +3,45 @@ import type { ExpenseStatus } from '@/lib/types'
 import { cn } from '@/lib/utils'
 
 const STATUS = {
-  processing: { label: 'Reading', className: 'border-accent-line bg-accent-tint text-accent-300', icon: null },
-  needs_review: { label: 'Needs review', className: 'border-warn-line bg-warn-tint text-warn', icon: CircleAlert },
-  ready: { label: 'Filed', className: 'border-good-line bg-good-tint text-good', icon: CircleCheck },
-  failed: { label: 'Failed', className: 'border-crit-line bg-crit-tint text-crit', icon: TriangleAlert },
-  rejected: { label: 'Not a receipt', className: 'border-crit-line bg-crit-tint text-crit', icon: Ban },
+  processing: {
+    label: 'Reading',
+    className: 'border-accent-line bg-accent-tint text-accent-300',
+    icon: null,
+  },
+  needs_review: {
+    label: 'Needs review',
+    className: 'border-warn-line bg-warn-tint text-warn',
+    icon: CircleAlert,
+  },
+  ready: {
+    label: 'Filed',
+    className: 'border-good-line bg-good-tint text-good',
+    icon: CircleCheck,
+  },
+  failed: {
+    label: 'Failed',
+    className: 'border-crit-line bg-crit-tint text-crit',
+    icon: TriangleAlert,
+  },
+  rejected: {
+    label: 'Not a receipt',
+    className: 'border-crit-line bg-crit-tint text-crit',
+    icon: Ban,
+  },
 } satisfies Record<ExpenseStatus, unknown>
 
 export const statusLabel = (status: ExpenseStatus) => STATUS[status].label
 
 /** Status is always shown with an icon and a label, never by color alone. */
-export function StatusChip({ status, label, className }: { status: ExpenseStatus; label?: string; className?: string }) {
+export function StatusChip({
+  status,
+  label,
+  className,
+}: {
+  status: ExpenseStatus
+  label?: string
+  className?: string
+}) {
   const { className: tone, icon: Icon } = STATUS[status]
   return (
     <span

@@ -19,7 +19,8 @@ function Root() {
         gap={8}
         toastOptions={{
           classNames: {
-            toast: '!rounded-lg !border !border-border-strong !bg-surface-2 !text-fg !shadow-overlay !font-sans !text-sm',
+            toast:
+              '!rounded-lg !border !border-border-strong !bg-surface-2 !text-fg !shadow-overlay !font-sans !text-sm',
             description: '!text-fg-2',
             success: '[&_[data-icon]]:!text-good',
             error: '[&_[data-icon]]:!text-crit',

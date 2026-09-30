@@ -1,7 +1,14 @@
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 import { deleteExpense } from '@/lib/queries/changes'
 import { errorMessage } from '@/lib/query-client'
 import type { Expense } from '@/lib/types'
@@ -43,7 +50,8 @@ export function DeleteExpenseDialog({
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>
-            Outlay deletes {name}, its line items, its activity, and the receipt file. You cannot undo this.
+            Outlay deletes {name}, its line items, its activity, and the receipt file. You cannot
+            undo this.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>

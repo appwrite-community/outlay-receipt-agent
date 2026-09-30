@@ -44,7 +44,9 @@ export function LineItemsTable({ expense, items }: { expense: Expense; items: Li
           <td colSpan={2} className="pt-2">
             Total
           </td>
-          <td className="pt-2 text-right tabular">{expense.totalMinor === null ? '-' : money(expense.totalMinor)}</td>
+          <td className="pt-2 text-right tabular">
+            {expense.totalMinor === null ? '-' : money(expense.totalMinor)}
+          </td>
         </tr>
       </tfoot>
     </table>

@@ -1,16 +1,23 @@
 const LOCALE = 'en-US'
 
 // Receipt dates are stored at UTC midnight, so they are always shown in UTC.
-const dateFormat = new Intl.DateTimeFormat(LOCALE, { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })
-const shortDateFormat = new Intl.DateTimeFormat(LOCALE, { month: 'short', day: 'numeric', timeZone: 'UTC' })
+const dateFormat = new Intl.DateTimeFormat(LOCALE, {
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric',
+  timeZone: 'UTC',
+})
 const monthFormat = new Intl.DateTimeFormat(LOCALE, { month: 'long', timeZone: 'UTC' })
 const shortMonthFormat = new Intl.DateTimeFormat(LOCALE, { month: 'short', timeZone: 'UTC' })
-const monthYearFormat = new Intl.DateTimeFormat(LOCALE, { month: 'long', year: 'numeric', timeZone: 'UTC' })
+const monthYearFormat = new Intl.DateTimeFormat(LOCALE, {
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'UTC',
+})
 const dateTimeFormat = new Intl.DateTimeFormat(LOCALE, { dateStyle: 'medium', timeStyle: 'short' })
 const timeFormat = new Intl.DateTimeFormat(LOCALE, { timeStyle: 'short' })
 
 export const formatDate = (iso: string) => dateFormat.format(new Date(iso))
-export const formatShortDate = (iso: string) => shortDateFormat.format(new Date(iso))
 export const formatMonth = (iso: string) => monthFormat.format(new Date(iso))
 export const formatShortMonth = (iso: string) => shortMonthFormat.format(new Date(iso))
 export const formatMonthYear = (iso: string) => monthYearFormat.format(new Date(iso))
@@ -56,12 +63,6 @@ export const toDateInput = (iso: string) => iso.slice(0, 10)
 
 /** The stored form of a receipt date: UTC midnight. */
 export const fromDateInput = (value: string) => `${value}T00:00:00.000+00:00`
-
-/** The first moment of the month that contains `iso`, in UTC. */
-export function startOfMonth(iso: string): string {
-  const date = new Date(iso)
-  return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), 1)).toISOString()
-}
 
 export function addMonths(iso: string, months: number): string {
   const date = new Date(iso)

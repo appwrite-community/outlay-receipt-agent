@@ -10,7 +10,12 @@ export function LogoMark({ className }: { className?: string }) {
         strokeWidth={1.75}
         strokeLinejoin="round"
       />
-      <path d="M8.75 9h4.5M8.75 12.5h3" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" />
+      <path
+        d="M8.75 9h4.5M8.75 12.5h3"
+        stroke="currentColor"
+        strokeWidth={1.75}
+        strokeLinecap="round"
+      />
       <circle cx={17.75} cy={4.75} r={2.75} fill="var(--logo-tile, #18181d)" />
       <circle cx={17.75} cy={4.75} r={2} fill="var(--color-accent-400)" />
     </svg>

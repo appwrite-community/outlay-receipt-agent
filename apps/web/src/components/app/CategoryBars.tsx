@@ -4,7 +4,15 @@ import { formatMoney } from '@/lib/money'
 import type { CategoryTotal } from '@/lib/queries/overview'
 
 /** Spending per category for one month, largest first. Each row links to the filtered list. */
-export function CategoryBars({ totals, currency, month }: { totals: CategoryTotal[]; currency: string; month: string }) {
+export function CategoryBars({
+  totals,
+  currency,
+  month,
+}: {
+  totals: CategoryTotal[]
+  currency: string
+  month: string
+}) {
   const sum = totals.reduce((total, entry) => total + entry.totalMinor, 0)
   const max = Math.max(...totals.map((entry) => entry.totalMinor), 1)
 
@@ -30,7 +38,9 @@ export function CategoryBars({ totals, currency, month }: { totals: CategoryTota
                   style={{ width: `${Math.max(2, (entry.totalMinor / max) * 100)}%` }}
                 />
               </span>
-              <span className="text-right text-sm text-fg tabular">{formatMoney(entry.totalMinor, currency)}</span>
+              <span className="text-right text-sm text-fg tabular">
+                {formatMoney(entry.totalMinor, currency)}
+              </span>
               <span className="text-right text-xs text-fg-3 tabular">{share}%</span>
             </Link>
           </li>

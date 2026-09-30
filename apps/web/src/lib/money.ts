@@ -2,8 +2,26 @@ const LOCALE = 'en-US'
 
 /** Common home currencies for the sign-up and settings forms. */
 export const CURRENCIES = [
-  'USD', 'EUR', 'GBP', 'CAD', 'AUD', 'NZD', 'JPY', 'CHF', 'SEK', 'NOK',
-  'DKK', 'PLN', 'CZK', 'SGD', 'HKD', 'INR', 'BRL', 'MXN', 'ZAR', 'KRW',
+  'USD',
+  'EUR',
+  'GBP',
+  'CAD',
+  'AUD',
+  'NZD',
+  'JPY',
+  'CHF',
+  'SEK',
+  'NOK',
+  'DKK',
+  'PLN',
+  'CZK',
+  'SGD',
+  'HKD',
+  'INR',
+  'BRL',
+  'MXN',
+  'ZAR',
+  'KRW',
 ] as const
 
 export function currencyName(code: string): string {
@@ -12,7 +30,10 @@ export function currencyName(code: string): string {
 
 /** Digits after the decimal point: 2 for USD and EUR, 0 for JPY. */
 export function fractionDigits(currency: string): number {
-  return new Intl.NumberFormat(LOCALE, { style: 'currency', currency }).resolvedOptions().maximumFractionDigits ?? 2
+  return (
+    new Intl.NumberFormat(LOCALE, { style: 'currency', currency }).resolvedOptions()
+      .maximumFractionDigits ?? 2
+  )
 }
 
 export function fromMinor(minor: number, currency: string): number {
@@ -25,7 +46,9 @@ export function toMinor(amount: number, currency: string): number {
 
 /** Money is stored in minor units (cents), so sums stay exact. */
 export function formatMoney(minor: number, currency: string): string {
-  return new Intl.NumberFormat(LOCALE, { style: 'currency', currency }).format(fromMinor(minor, currency))
+  return new Intl.NumberFormat(LOCALE, { style: 'currency', currency }).format(
+    fromMinor(minor, currency),
+  )
 }
 
 /** Short amounts for charts, such as $191 or $1.2K. */

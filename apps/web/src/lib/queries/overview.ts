@@ -10,10 +10,26 @@ export const CHART_MONTHS = 6
 
 type OverviewRow = Pick<
   Expense,
-  '$id' | '$createdAt' | 'spentOn' | 'totalMinor' | 'currency' | 'category' | 'status' | 'filedInMs' | 'correctedFields'
+  | '$id'
+  | '$createdAt'
+  | 'spentOn'
+  | 'totalMinor'
+  | 'currency'
+  | 'category'
+  | 'status'
+  | 'filedInMs'
+  | 'correctedFields'
 >
 
-const COLUMNS = ['spentOn', 'totalMinor', 'currency', 'category', 'status', 'filedInMs', 'correctedFields']
+const COLUMNS = [
+  'spentOn',
+  'totalMinor',
+  'currency',
+  'category',
+  'status',
+  'filedInMs',
+  'correctedFields',
+]
 
 /** The first day of the current month, in UTC like the receipt dates. */
 export function currentMonthStart(now = new Date()): string {
@@ -28,7 +44,12 @@ async function listAll(queries: string[]): Promise<OverviewRow[]> {
     const page = await tablesDB.listRows<Expense>({
       databaseId: DATABASE_ID,
       tableId: TABLES.expenses,
-      queries: [...queries, Query.select(COLUMNS), Query.limit(500), ...(cursor ? [Query.cursorAfter(cursor)] : [])],
+      queries: [
+        ...queries,
+        Query.select(COLUMNS),
+        Query.limit(500),
+        ...(cursor ? [Query.cursorAfter(cursor)] : []),
+      ],
       total: false,
     })
     rows.push(...page.rows)
@@ -50,7 +71,10 @@ export const overviewQuery = queryOptions({
         Query.equal('status', FILED_STATUSES),
         Query.greaterThanEqual('spentOn', addMonths(monthStart, 1 - CHART_MONTHS)),
       ]),
-      listAll([Query.equal('status', FILED_STATUSES), Query.greaterThanEqual('$createdAt', monthStart)]),
+      listAll([
+        Query.equal('status', FILED_STATUSES),
+        Query.greaterThanEqual('$createdAt', monthStart),
+      ]),
     ])
     return { monthStart, spent, filedThisMonth }
   },
@@ -84,8 +108,12 @@ export function summarize(
   const monthKeys = Array.from({ length: CHART_MONTHS }, (_, index) =>
     monthKey(addMonths(data.monthStart, index + 1 - CHART_MONTHS)),
   )
-  const months = new Map<string, MonthTotal>(monthKeys.map((month) => [month, { month, totalMinor: 0, count: 0 }]))
-  const categories = new Map<string, Map<Category, CategoryTotal>>(monthKeys.map((month) => [month, new Map()]))
+  const months = new Map<string, MonthTotal>(
+    monthKeys.map((month) => [month, { month, totalMinor: 0, count: 0 }]),
+  )
+  const categories = new Map<string, Map<Category, CategoryTotal>>(
+    monthKeys.map((month) => [month, new Map()]),
+  )
   const others = new Map<string, CurrencyTotal>()
 
   for (const row of data.spent) {
@@ -114,12 +142,17 @@ export function summarize(
   }
 
   const monthList = [...months.values()]
-  const unchanged = data.filedThisMonth.filter((row) => row.status === 'ready' && row.correctedFields.length === 0)
+  const unchanged = data.filedThisMonth.filter(
+    (row) => row.status === 'ready' && row.correctedFields.length === 0,
+  )
 
   return {
     months: monthList,
     categoriesByMonth: new Map(
-      [...categories].map(([month, totals]) => [month, [...totals.values()].sort((a, b) => b.totalMinor - a.totalMinor)]),
+      [...categories].map(([month, totals]) => [
+        month,
+        [...totals.values()].sort((a, b) => b.totalMinor - a.totalMinor),
+      ]),
     ),
     otherCurrencies: [...others.values()].sort((a, b) => b.count - a.count),
     thisMonth: monthList.at(-1)!,
@@ -127,7 +160,9 @@ export function summarize(
     filed: {
       count: data.filedThisMonth.length,
       unchanged: unchanged.length,
-      medianMs: median(data.filedThisMonth.flatMap((row) => (row.filedInMs === null ? [] : [row.filedInMs]))),
+      medianMs: median(
+        data.filedThisMonth.flatMap((row) => (row.filedInMs === null ? [] : [row.filedInMs])),
+      ),
     },
   }
 }

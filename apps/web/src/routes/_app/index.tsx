@@ -1,6 +1,14 @@
 import { useQuery } from '@tanstack/react-query'
 import { Link, createFileRoute, useNavigate } from '@tanstack/react-router'
-import { ArrowDownRight, ArrowRight, ArrowUpRight, BarChart3, Coins, FileUp, Table2 } from 'lucide-react'
+import {
+  ArrowDownRight,
+  ArrowRight,
+  ArrowUpRight,
+  BarChart3,
+  Coins,
+  FileUp,
+  Table2,
+} from 'lucide-react'
 import { useState } from 'react'
 import { CategoryBars } from '@/components/app/CategoryBars'
 import { KpiTile, KpiTileSkeleton } from '@/components/app/KpiTile'
@@ -21,7 +29,9 @@ import { usePageTitle } from '@/lib/use-page-title'
 
 export const Route = createFileRoute('/_app/')({
   validateSearch: (search: Record<string, unknown>): { month?: string } =>
-    typeof search.month === 'string' && /^\d{4}-\d{2}$/.test(search.month) ? { month: search.month } : {},
+    typeof search.month === 'string' && /^\d{4}-\d{2}$/.test(search.month)
+      ? { month: search.month }
+      : {},
   loader: ({ context: { queryClient } }) => {
     void queryClient.prefetchQuery(overviewQuery)
     void queryClient.prefetchQuery(recentActivityQuery)
@@ -37,7 +47,9 @@ function SpentDelta({ summary }: { summary: OverviewSummary }) {
   const { thisMonth, lastMonth } = summary
   const lastName = formatMonth(monthIso(lastMonth.month))
   if (lastMonth.totalMinor === 0) return <span>Nothing spent in {lastName}</span>
-  const change = Math.round(((thisMonth.totalMinor - lastMonth.totalMinor) / lastMonth.totalMinor) * 100)
+  const change = Math.round(
+    ((thisMonth.totalMinor - lastMonth.totalMinor) / lastMonth.totalMinor) * 100,
+  )
   if (change === 0) return <span>Same as {lastName}</span>
   const Icon = change > 0 ? ArrowUpRight : ArrowDownRight
   return (
@@ -62,8 +74,8 @@ function FirstReceipt() {
         </span>
         <span className="mt-5 text-lg font-semibold text-fg">Drop your first receipt</span>
         <span className="mt-1.5 max-w-sm text-sm text-fg-2">
-          Drag a photo of a paper receipt or a PDF invoice anywhere in Outlay. The agent reads it, files the expense, and asks
-          you only about what it could not read.
+          Drag a photo of a paper receipt or a PDF invoice anywhere in Outlay. The agent reads it,
+          files the expense, and asks you only about what it could not read.
         </span>
         <span className="mt-6 inline-flex h-8 items-center rounded-sm bg-accent-600 px-3 text-sm font-medium text-white">
           Choose files
@@ -126,7 +138,9 @@ function Overview() {
   const currency = user ? homeCurrency(user) : 'USD'
   const summary = overview.data ? summarize(overview.data, currency) : null
   const currentMonth = summary?.thisMonth.month ?? monthKey(new Date().toISOString())
-  const selected = summary?.months.some((month) => month.month === search.month) ? search.month! : currentMonth
+  const selected = summary?.months.some((month) => month.month === search.month)
+    ? search.month!
+    : currentMonth
   const selectedTotal = summary?.months.find((month) => month.month === selected)
   const categories = summary?.categoriesByMonth.get(selected) ?? []
   const reviewCount = queue.data?.length ?? 0
@@ -138,7 +152,7 @@ function Overview() {
       {hasExpenses.data === false ? (
         <FirstReceipt />
       ) : (
-        <main className="mx-auto flex w-full max-w-[1280px] flex-col gap-4 p-4 md:p-6">
+        <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-4 p-4 md:p-6">
           {loading ? (
             <OverviewSkeleton />
           ) : (
@@ -154,7 +168,10 @@ function Overview() {
                   value={reviewCount}
                   detail={
                     reviewCount > 0 ? (
-                      <Link to="/review" className="inline-flex items-center gap-1 text-accent-300 hover:text-fg">
+                      <Link
+                        to="/review"
+                        className="inline-flex items-center gap-1 text-accent-300 hover:text-fg"
+                      >
                         Open the review queue
                         <ArrowRight className="size-3.5" />
                       </Link>
@@ -174,7 +191,9 @@ function Overview() {
                 />
                 <KpiTile
                   label="Median time to file"
-                  value={summary.filed.medianMs === null ? '-' : formatDuration(summary.filed.medianMs)}
+                  value={
+                    summary.filed.medianMs === null ? '-' : formatDuration(summary.filed.medianMs)
+                  }
                   detail="From upload to filed, this month"
                 />
               </div>
@@ -207,7 +226,11 @@ function Overview() {
                           currency={currency}
                           selected={selected}
                           onSelect={(month) =>
-                            navigate({ search: month === currentMonth ? {} : { month }, replace: true, resetScroll: false })
+                            navigate({
+                              search: month === currentMonth ? {} : { month },
+                              replace: true,
+                              resetScroll: false,
+                            })
                           }
                         />
                       )}
@@ -215,11 +238,17 @@ function Overview() {
                     {summary.otherCurrencies.length > 0 && (
                       <div className="flex flex-col gap-1 border-t border-border px-4 py-2.5">
                         {summary.otherCurrencies.map((other) => (
-                          <p key={other.currency} className="flex items-center gap-2 text-xs text-fg-2">
+                          <p
+                            key={other.currency}
+                            className="flex items-center gap-2 text-xs text-fg-2"
+                          >
                             <Coins className="size-3.5 shrink-0 text-fg-3" />
                             <span>
-                              <span className="font-medium text-fg tabular">{formatMoney(other.totalMinor, other.currency)}</span> in{' '}
-                              {other.currency} across {pluralize(other.count, 'expense')}, not included above
+                              <span className="font-medium text-fg tabular">
+                                {formatMoney(other.totalMinor, other.currency)}
+                              </span>{' '}
+                              in {other.currency} across {pluralize(other.count, 'expense')}, not
+                              included above
                             </span>
                           </p>
                         ))}
@@ -233,7 +262,13 @@ function Overview() {
                       description={`${formatMonthYear(monthIso(selected))} · ${formatMoney(selectedTotal?.totalMinor ?? 0, currency)}`}
                       action={
                         selected !== currentMonth && (
-                          <Button variant="ghost" size="sm" onClick={() => navigate({ search: {}, replace: true, resetScroll: false })}>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() =>
+                              navigate({ search: {}, replace: true, resetScroll: false })
+                            }
+                          >
                             Back to {formatMonth(monthIso(currentMonth))}
                           </Button>
                         )
@@ -272,7 +307,7 @@ function Overview() {
               </div>
             </>
           )}
-        </main>
+        </div>
       )}
     </>
   )

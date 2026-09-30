@@ -67,16 +67,29 @@ function Thumbnail({ upload }: { upload: Upload }) {
   )
 }
 
-function StateLine({ phase, upload, expense }: { phase: Phase; upload: Upload; expense: Expense | null | undefined }) {
+function StateLine({
+  phase,
+  upload,
+  expense,
+}: {
+  phase: Phase
+  upload: Upload
+  expense: Expense | null | undefined
+}) {
   switch (phase) {
     case 'uploading': {
       const measured = reportsProgress(upload.file)
       return (
         <div className="flex items-center gap-2.5">
-          <span className="w-24 shrink-0 text-xs text-fg-2 tabular">{measured ? `Uploading ${upload.progress}%` : 'Uploading'}</span>
+          <span className="w-24 shrink-0 text-xs text-fg-2 tabular">
+            {measured ? `Uploading ${upload.progress}%` : 'Uploading'}
+          </span>
           <div className="relative h-1 flex-1 overflow-hidden rounded-full bg-surface-3">
             {measured ? (
-              <div className="h-full rounded-full bg-accent-400 transition-[width] duration-200" style={{ width: `${upload.progress}%` }} />
+              <div
+                className="h-full rounded-full bg-accent-400 transition-[width] duration-200"
+                style={{ width: `${upload.progress}%` }}
+              />
             ) : (
               <div className="absolute inset-y-0 w-1/3 animate-indeterminate rounded-full bg-accent-400" />
             )}
@@ -100,7 +113,9 @@ function StateLine({ phase, upload, expense }: { phase: Phase; upload: Upload; e
           label={[
             'Filed',
             expense?.category && categoryLabel(expense.category),
-            expense?.totalMinor != null && expense.currency && formatMoney(expense.totalMinor, expense.currency),
+            expense?.totalMinor != null &&
+              expense.currency &&
+              formatMoney(expense.totalMinor, expense.currency),
           ]
             .filter(Boolean)
             .join(' · ')}
@@ -108,7 +123,12 @@ function StateLine({ phase, upload, expense }: { phase: Phase; upload: Upload; e
       )
     case 'needs_review': {
       const count = expense?.openFlags ?? 1
-      return <StatusChip status="needs_review" label={`${count} ${count === 1 ? 'field' : 'fields'} to review`} />
+      return (
+        <StatusChip
+          status="needs_review"
+          label={`${count} ${count === 1 ? 'field' : 'fields'} to review`}
+        />
+      )
     }
     case 'rejected':
       return <StatusChip status="rejected" />
@@ -121,9 +141,20 @@ function StateLine({ phase, upload, expense }: { phase: Phase; upload: Upload; e
   }
 }
 
-function IntakeCard({ upload, expense, phase }: { upload: Upload; expense: Expense | null | undefined; phase: Phase }) {
+function IntakeCard({
+  upload,
+  expense,
+  phase,
+}: {
+  upload: Upload
+  expense: Expense | null | undefined
+  phase: Phase
+}) {
   const [busy, setBusy] = useState(false)
-  const { data: steps = [] } = useQuery({ ...activityQuery(upload.fileId), enabled: Boolean(expense) })
+  const { data: steps = [] } = useQuery({
+    ...activityQuery(upload.fileId),
+    enabled: Boolean(expense),
+  })
   const finished = !ACTIVE.includes(phase)
   const extension = upload.file.name.split('.').pop()?.toUpperCase()
 
@@ -169,7 +200,13 @@ function IntakeCard({ upload, expense, phase }: { upload: Upload; expense: Expen
               </p>
             </div>
             {finished && (
-              <Button variant="ghost" size="icon-sm" className="-mt-1 -mr-1" onClick={() => intake.dismiss(upload.key)} aria-label="Dismiss">
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                className="-mt-1 -mr-1"
+                onClick={() => intake.dismiss(upload.key)}
+                aria-label="Dismiss"
+              >
                 <X />
               </Button>
             )}
@@ -192,13 +229,21 @@ function IntakeCard({ upload, expense, phase }: { upload: Upload; expense: Expen
         <div className="mt-3 flex justify-end gap-2">
           {phase === 'ready' ? (
             <Button asChild size="sm">
-              <Link to="/expenses/$expenseId" params={{ expenseId: expense.$id }} onClick={() => intake.setOpen(false)}>
+              <Link
+                to="/expenses/$expenseId"
+                params={{ expenseId: expense.$id }}
+                onClick={() => intake.setOpen(false)}
+              >
                 Open
               </Link>
             </Button>
           ) : (
             <Button asChild size="sm" variant="primary">
-              <Link to="/review/$expenseId" params={{ expenseId: expense.$id }} onClick={() => intake.setOpen(false)}>
+              <Link
+                to="/review/$expenseId"
+                params={{ expenseId: expense.$id }}
+                onClick={() => intake.setOpen(false)}
+              >
                 Review
               </Link>
             </Button>
@@ -207,7 +252,11 @@ function IntakeCard({ upload, expense, phase }: { upload: Upload; expense: Expen
       )}
       {expense && phase === 'rejected' && (
         <div className="mt-3 flex justify-end gap-2">
-          <Button size="sm" disabled={busy} onClick={() => run(() => retryExpense(expense), 'Could not retry. Try again.')}>
+          <Button
+            size="sm"
+            disabled={busy}
+            onClick={() => run(() => retryExpense(expense), 'Could not retry. Try again.')}
+          >
             Retry
           </Button>
           <Button
@@ -226,7 +275,12 @@ function IntakeCard({ upload, expense, phase }: { upload: Upload; expense: Expen
       )}
       {expense && phase === 'failed' && (
         <div className="mt-3 flex justify-end">
-          <Button size="sm" variant="primary" disabled={busy} onClick={() => run(() => retryExpense(expense), 'Could not retry. Try again.')}>
+          <Button
+            size="sm"
+            variant="primary"
+            disabled={busy}
+            onClick={() => run(() => retryExpense(expense), 'Could not retry. Try again.')}
+          >
             Retry
           </Button>
         </div>
@@ -251,7 +305,11 @@ export function IntakeSheet() {
 
   return (
     <Sheet open={open} onOpenChange={intake.setOpen} modal={false}>
-      <SheetContent overlay={false} onInteractOutside={(event) => event.preventDefault()} className="md:w-[420px]">
+      <SheetContent
+        overlay={false}
+        onInteractOutside={(event) => event.preventDefault()}
+        className="md:w-[420px]"
+      >
         <div className="shrink-0 border-b border-border px-5 pt-4 pb-4">
           <SheetTitle className="text-md font-semibold">Intake</SheetTitle>
           <SheetDescription className="mt-0.5 text-xs text-fg-2 tabular">

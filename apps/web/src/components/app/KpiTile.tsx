@@ -1,7 +1,15 @@
 import type { ReactNode } from 'react'
 import { Skeleton } from '@/components/ui/skeleton'
 
-export function KpiTile({ label, value, detail }: { label: string; value: ReactNode; detail: ReactNode }) {
+export function KpiTile({
+  label,
+  value,
+  detail,
+}: {
+  label: string
+  value: ReactNode
+  detail: ReactNode
+}) {
   return (
     <div className="flex min-w-0 flex-col rounded-lg border border-border bg-surface-1 px-4 py-3.5">
       <p className="truncate text-xs font-medium text-fg-2">{label}</p>

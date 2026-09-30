@@ -26,9 +26,13 @@ export function RecentActivity({ items }: { items: ActivityWithExpense[] }) {
             <div className="min-w-0 flex-1">
               <p className="truncate text-sm text-fg">{activity.label}</p>
               <p className="mt-0.5 flex min-w-0 items-center gap-1.5 text-xs text-fg-3">
-                <span className="shrink-0 text-fg-2">{activity.actor === 'agent' ? 'Agent' : 'You'}</span>
+                <span className="shrink-0 text-fg-2">
+                  {activity.actor === 'agent' ? 'Agent' : 'You'}
+                </span>
                 <span aria-hidden>·</span>
-                <span className="truncate">{expense?.merchant ?? expense?.fileName ?? 'Deleted expense'}</span>
+                <span className="truncate">
+                  {expense?.merchant ?? expense?.fileName ?? 'Deleted expense'}
+                </span>
                 <span aria-hidden>·</span>
                 <Tooltip content={formatDateTime(activity.$createdAt)}>
                   <time dateTime={activity.$createdAt} className="shrink-0 tabular">

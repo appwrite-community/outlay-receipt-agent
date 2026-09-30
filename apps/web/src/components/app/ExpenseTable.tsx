@@ -1,6 +1,13 @@
 import { Link } from '@tanstack/react-router'
 import { Skeleton } from '@/components/ui/skeleton'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
 import { Tooltip } from '@/components/ui/tooltip'
 import { categoryIcon, categoryLabel } from '@/lib/categories'
 import { formatDate } from '@/lib/format'
@@ -35,13 +42,23 @@ function MerchantCell({ expense }: { expense: Expense }) {
 }
 
 /** A value the agent has not read yet shows as a shimmer while it works. */
-function Value({ expense, value, className }: { expense: Expense; value: string | null; className?: string }) {
+function Value({
+  expense,
+  value,
+  className,
+}: {
+  expense: Expense
+  value: string | null
+  className?: string
+}) {
   if (expense.status === 'processing') return <Skeleton className={cn('h-3 w-16', className)} />
   return value ?? <span className="text-fg-3">-</span>
 }
 
 const money = (expense: Expense) =>
-  expense.totalMinor !== null && expense.currency ? formatMoney(expense.totalMinor, expense.currency) : null
+  expense.totalMinor !== null && expense.currency
+    ? formatMoney(expense.totalMinor, expense.currency)
+    : null
 
 export function ExpenseRow({ expense }: { expense: Expense }) {
   // The merchant link stretches over the whole row, so the row opens the expense.
@@ -51,7 +68,11 @@ export function ExpenseRow({ expense }: { expense: Expense }) {
         <MerchantCell expense={expense} />
       </TableCell>
       <TableCell className="text-fg-2 tabular">
-        <Value expense={expense} value={expense.spentOn && formatDate(expense.spentOn)} className="w-20" />
+        <Value
+          expense={expense}
+          value={expense.spentOn && formatDate(expense.spentOn)}
+          className="w-20"
+        />
       </TableCell>
       <TableCell className="text-fg-2">
         <Value expense={expense} value={expense.category && categoryLabel(expense.category)} />
@@ -143,11 +164,19 @@ export function ExpenseCard({ expense }: { expense: Expense }) {
         <Icon className="size-4" />
       </span>
       <span className="min-w-0 flex-1">
-        <span className={cn('block truncate', expense.merchant ? 'font-medium text-fg' : 'font-mono text-xs text-fg-2')}>
+        <span
+          className={cn(
+            'block truncate',
+            expense.merchant ? 'font-medium text-fg' : 'font-mono text-xs text-fg-2',
+          )}
+        >
           {expense.merchant ?? expense.fileName}
         </span>
         <span className="mt-0.5 block truncate text-xs text-fg-3">
-          {[expense.spentOn && formatDate(expense.spentOn), expense.category && categoryLabel(expense.category)]
+          {[
+            expense.spentOn && formatDate(expense.spentOn),
+            expense.category && categoryLabel(expense.category),
+          ]
             .filter(Boolean)
             .join(' · ') || 'Not filed yet'}
         </span>

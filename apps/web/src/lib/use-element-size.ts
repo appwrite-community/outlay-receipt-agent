@@ -1,6 +1,9 @@
 import { type RefObject, useLayoutEffect, useState } from 'react'
 
-export function useElementSize(ref: RefObject<HTMLElement | null>): { width: number; height: number } {
+export function useElementSize(ref: RefObject<HTMLElement | null>): {
+  width: number
+  height: number
+} {
   const [size, setSize] = useState({ width: 0, height: 0 })
   useLayoutEffect(() => {
     const element = ref.current

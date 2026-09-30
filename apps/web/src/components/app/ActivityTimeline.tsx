@@ -1,5 +1,14 @@
 import { useQuery } from '@tanstack/react-query'
-import { Ban, Check, CircleAlert, Inbox, type LucideIcon, ScanText, Search, TriangleAlert } from 'lucide-react'
+import {
+  Ban,
+  Check,
+  CircleAlert,
+  Inbox,
+  type LucideIcon,
+  ScanText,
+  Search,
+  TriangleAlert,
+} from 'lucide-react'
 import { Tooltip } from '@/components/ui/tooltip'
 import { formatDateTime, formatDuration, formatRelative } from '@/lib/format'
 import { accountQuery } from '@/lib/queries/account'
@@ -21,12 +30,24 @@ const AGENT_ICONS: Partial<Record<ActivityKind, { icon: LucideIcon; tone: string
 // Agent steps that end a run carry how long the whole run took.
 const RUN_ENDS: ActivityKind[] = ['filed', 'flagged', 'rejected', 'failed']
 
-export function StepAvatar({ step, userName, live }: { step: Activity; userName: string; live?: boolean }) {
+export function StepAvatar({
+  step,
+  userName,
+  live,
+}: {
+  step: Activity
+  userName: string
+  live?: boolean
+}) {
   if (step.actor === 'user') return <UserAvatar name={userName} className="size-6 text-[9px]" />
   const { icon: Icon, tone } = AGENT_ICONS[step.kind] ?? AGENT_ICONS.reading!
   return (
-    <span className={cn('relative grid size-6 shrink-0 place-items-center rounded-full border', tone)}>
-      {live && <span className="absolute -inset-1 animate-pulse-dot rounded-full border border-accent-400/50" />}
+    <span
+      className={cn('relative grid size-6 shrink-0 place-items-center rounded-full border', tone)}
+    >
+      {live && (
+        <span className="absolute -inset-1 animate-pulse-dot rounded-full border border-accent-400/50" />
+      )}
       <Icon className="size-3" strokeWidth={2.25} />
     </span>
   )
@@ -34,7 +55,8 @@ export function StepAvatar({ step, userName, live }: { step: Activity; userName:
 
 /** When a step happened: seconds into the agent's run, or a relative time. */
 function stepTime(step: Activity, runStart: Activity | undefined, now: number): string {
-  if (step.durationMs !== null && RUN_ENDS.includes(step.kind)) return formatDuration(step.durationMs)
+  if (step.durationMs !== null && RUN_ENDS.includes(step.kind))
+    return formatDuration(step.durationMs)
   if (step.actor === 'agent' && runStart && runStart.$id !== step.$id) {
     return `+${formatDuration(Date.parse(step.$createdAt) - Date.parse(runStart.$createdAt))}`
   }
@@ -76,16 +98,37 @@ export function ActivityTimeline({
         const live = working && last && step.actor === 'agent'
         const time = stepTime(step, starts[index], now)
         return (
-          <li key={step.$id} className={cn('relative flex animate-rise gap-3', compact ? 'pb-2.5' : 'pb-4', last && 'pb-0')}>
-            {!last && <span aria-hidden className="absolute top-7 bottom-1 left-3 w-px -translate-x-1/2 bg-border-strong" />}
+          <li
+            key={step.$id}
+            className={cn(
+              'relative flex animate-rise gap-3',
+              compact ? 'pb-2.5' : 'pb-4',
+              last && 'pb-0',
+            )}
+          >
+            {!last && (
+              <span
+                aria-hidden
+                className="absolute top-7 bottom-1 left-3 w-px -translate-x-1/2 bg-border-strong"
+              />
+            )}
             <StepAvatar step={step} userName={userName} live={live} />
             <div className="min-w-0 flex-1 pt-0.5">
               <div className="flex items-baseline gap-3">
-                <p className={cn('min-w-0 flex-1 text-sm text-fg', compact ? 'truncate text-xs leading-5' : 'font-medium', live && 'text-accent-300')}>
+                <p
+                  className={cn(
+                    'min-w-0 flex-1 text-sm text-fg',
+                    compact ? 'truncate text-xs leading-5' : 'font-medium',
+                    live && 'text-accent-300',
+                  )}
+                >
                   {step.label}
                 </p>
                 <Tooltip content={formatDateTime(step.$createdAt)}>
-                  <time dateTime={step.$createdAt} className="shrink-0 font-mono text-2xs text-fg-3 tabular">
+                  <time
+                    dateTime={step.$createdAt}
+                    className="shrink-0 font-mono text-2xs text-fg-3 tabular"
+                  >
                     {time}
                   </time>
                 </Tooltip>

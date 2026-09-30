@@ -37,7 +37,9 @@ export function ExpenseForm({
     // Amounts are read in the currency the form ends up with.
     const currencyChanged = currency !== expense.currency
     const changed = EDITABLE_FIELDS.filter(
-      (field) => draft[field] !== initial[field] || (currencyChanged && (field === 'total' || field === 'tax')),
+      (field) =>
+        draft[field] !== initial[field] ||
+        (currencyChanged && (field === 'total' || field === 'tax')),
     )
     for (const field of changed) {
       const parsed = parseField(field, draft[field], currency)
@@ -62,7 +64,10 @@ export function ExpenseForm({
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       <div className="grid grid-cols-2 gap-x-4 gap-y-3.5">
         {EDITABLE_FIELDS.map((field) => (
-          <div key={field} className={cn('flex min-w-0 flex-col gap-1.5', field === 'merchant' && 'col-span-2')}>
+          <div
+            key={field}
+            className={cn('flex min-w-0 flex-col gap-1.5', field === 'merchant' && 'col-span-2')}
+          >
             <label htmlFor={`edit-${field}`} className="text-xs font-medium text-fg-2">
               {FIELD_LABELS[field].title}
             </label>

@@ -9,5 +9,10 @@ export function Input({ className, ...props }: ComponentProps<'input'>) {
 }
 
 export function Textarea({ className, ...props }: ComponentProps<'textarea'>) {
-  return <textarea className={cn(inputClass, 'h-auto min-h-16 resize-none py-1.5', className)} {...props} />
+  return (
+    <textarea
+      className={cn(inputClass, 'h-auto min-h-16 resize-none py-1.5', className)}
+      {...props}
+    />
+  )
 }

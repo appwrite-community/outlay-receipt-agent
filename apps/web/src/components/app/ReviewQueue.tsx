@@ -33,15 +33,23 @@ export function ReviewQueue({ queue, currentId }: { queue: Expense[]; currentId:
                 aria-current={active ? 'page' : undefined}
                 className={cn(
                   'relative flex flex-col gap-1 rounded-md px-3 py-2.5 transition-colors hover:bg-surface-2',
-                  active && 'bg-surface-2 before:absolute before:inset-y-2.5 before:left-0 before:w-0.5 before:rounded-full before:bg-warn',
+                  active &&
+                    'bg-surface-2 before:absolute before:inset-y-2.5 before:left-0 before:w-0.5 before:rounded-full before:bg-warn',
                 )}
               >
                 <span className="flex items-center gap-2">
-                  <span className={cn('min-w-0 flex-1 truncate text-sm', expense.merchant ? 'font-medium text-fg' : 'font-mono text-xs text-fg-2')}>
+                  <span
+                    className={cn(
+                      'min-w-0 flex-1 truncate text-sm',
+                      expense.merchant ? 'font-medium text-fg' : 'font-mono text-xs text-fg-2',
+                    )}
+                  >
                     {expense.merchant ?? expense.fileName}
                   </span>
                   <span className="shrink-0 text-sm text-fg tabular">
-                    {expense.totalMinor !== null && expense.currency ? formatMoney(expense.totalMinor, expense.currency) : ''}
+                    {expense.totalMinor !== null && expense.currency
+                      ? formatMoney(expense.totalMinor, expense.currency)
+                      : ''}
                   </span>
                 </span>
                 <span className="flex items-center gap-2 text-xs text-fg-3">

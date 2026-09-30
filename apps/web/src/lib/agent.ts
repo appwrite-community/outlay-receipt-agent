@@ -14,5 +14,8 @@ export function canRetry(expense: Expense): boolean {
 
 /** What the agent found when it looked up the merchant, such as the category you chose before. */
 export function merchantHistory(steps: Activity[]): string | null {
-  return steps.findLast((step) => step.kind === 'lookup' && step.label.startsWith('Looked up'))?.detail ?? null
+  return (
+    steps.findLast((step) => step.kind === 'lookup' && step.label.startsWith('Looked up'))
+      ?.detail ?? null
+  )
 }

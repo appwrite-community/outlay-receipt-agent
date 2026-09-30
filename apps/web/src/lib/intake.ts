@@ -4,7 +4,8 @@ import { storage } from './appwrite'
 import { BUCKET_ID } from './ids'
 
 export const ACCEPTED_EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp', 'pdf']
-export const ACCEPT_ATTRIBUTE = '.jpg,.jpeg,.png,.webp,.pdf,image/jpeg,image/png,image/webp,application/pdf'
+export const ACCEPT_ATTRIBUTE =
+  '.jpg,.jpeg,.png,.webp,.pdf,image/jpeg,image/png,image/webp,application/pdf'
 export const MAX_FILE_BYTES = 10_000_000
 
 /** The SDK uploads files larger than this in 5 MiB chunks and reports progress after each one. */
@@ -16,7 +17,8 @@ export const reportsProgress = (file: File) => file.size > CHUNK_BYTES
 /** Checks a file before uploading it. The bucket enforces the same rules. */
 export function checkFile(file: File): string | null {
   const extension = file.name.split('.').pop()?.toLowerCase() ?? ''
-  if (extension === 'heic' || extension === 'heif') return 'HEIC photos are not supported. Export as JPG.'
+  if (extension === 'heic' || extension === 'heif')
+    return 'HEIC photos are not supported. Export as JPG.'
   if (!ACCEPTED_EXTENSIONS.includes(extension)) return 'Outlay reads JPG, PNG, WEBP, and PDF files.'
   if (file.size > MAX_FILE_BYTES) return 'Larger than 10 MB.'
   return null
@@ -46,12 +48,15 @@ function setState(next: Partial<IntakeState>) {
 }
 
 function patchUpload(key: string, patch: Partial<Upload>) {
-  setState({ uploads: state.uploads.map((upload) => (upload.key === key ? { ...upload, ...patch } : upload)) })
+  setState({
+    uploads: state.uploads.map((upload) => (upload.key === key ? { ...upload, ...patch } : upload)),
+  })
 }
 
 function uploadError(error: unknown): string {
   if (error instanceof AppwriteException) {
-    if (error.type === 'storage_file_type_unsupported') return 'Outlay reads JPG, PNG, WEBP, and PDF files.'
+    if (error.type === 'storage_file_type_unsupported')
+      return 'Outlay reads JPG, PNG, WEBP, and PDF files.'
     if (error.type === 'storage_invalid_file_size') return 'Larger than 10 MB.'
     return error.message
   }

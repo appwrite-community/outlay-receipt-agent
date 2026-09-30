@@ -6,7 +6,6 @@ import { cn } from '@/lib/utils'
 export const Sheet = SheetPrimitive.Root
 export const SheetTitle = SheetPrimitive.Title
 export const SheetDescription = SheetPrimitive.Description
-export const SheetClose = SheetPrimitive.Close
 
 /** A panel that slides in from the right, or from the bottom on small screens. */
 export function SheetContent({

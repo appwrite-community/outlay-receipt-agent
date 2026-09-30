@@ -3,11 +3,23 @@ import { functions, storage, tablesDB } from '../appwrite'
 import { FIELD_LABELS, displayValue, fieldData, fieldValue, type FieldValues } from '../fields'
 import { BUCKET_ID, DATABASE_ID, FUNCTION_ID, TABLES } from '../ids'
 import { queryClient } from '../query-client'
-import type { Activity, ActivityKind, Expense, ExpenseField, FlagResolution, ReviewFlag } from '../types'
+import type {
+  Activity,
+  ActivityKind,
+  Expense,
+  ExpenseField,
+  FlagResolution,
+  ReviewFlag,
+} from '../types'
 import { expenseKeys } from './expenses'
 
 /** A timeline step written by the signed-in person. Only they can read or delete it. */
-function userStep(expense: Expense, kind: ActivityKind, label: string, detail: string | null = null) {
+function userStep(
+  expense: Expense,
+  kind: ActivityKind,
+  label: string,
+  detail: string | null = null,
+) {
   const owner = Role.user(expense.ownerId)
   return {
     databaseId: DATABASE_ID,
@@ -44,9 +56,13 @@ function reviewState(expense: Expense, openFlagsLeft: number): Partial<Expense> 
  * later; until then the review queue must not offer an expense that is already filed.
  */
 function applyLocally(expenseId: string, data: Partial<Expense> | null) {
-  queryClient.setQueryData<Expense | null>(expenseKeys.one(expenseId), (current) => (current && data ? { ...current, ...data } : null))
+  queryClient.setQueryData<Expense | null>(expenseKeys.one(expenseId), (current) =>
+    current && data ? { ...current, ...data } : null,
+  )
   if (!data || data.status === 'ready') {
-    queryClient.setQueryData<Expense[]>(expenseKeys.reviewQueue, (queue) => queue?.filter((item) => item.$id !== expenseId))
+    queryClient.setQueryData<Expense[]>(expenseKeys.reviewQueue, (queue) =>
+      queue?.filter((item) => item.$id !== expenseId),
+    )
   }
 }
 
@@ -80,7 +96,11 @@ export async function resolveFlag(input: {
     step = userStep(
       expense,
       'corrected',
-      changeLabel(field, displayValue(field, fieldValue(expense, field), expense.currency), displayValue(field, input.value ?? null, currency)),
+      changeLabel(
+        field,
+        displayValue(field, fieldValue(expense, field), expense.currency),
+        displayValue(field, input.value ?? null, currency),
+      ),
     )
   } else if (resolution === 'dismissed') {
     step = userStep(expense, 'dismissed', 'You kept both expenses', flag.reason)
@@ -147,17 +167,29 @@ export async function updateExpense(input: {
       ),
     )
   }
-  if (changed.length > 0) data.correctedFields = [...new Set([...expense.correctedFields, ...changed])]
-  if (resolved.length > 0) Object.assign(data, reviewState(expense, input.openFlags.length - resolved.length))
+  if (changed.length > 0)
+    data.correctedFields = [...new Set([...expense.correctedFields, ...changed])]
+  if (resolved.length > 0)
+    Object.assign(data, reviewState(expense, input.openFlags.length - resolved.length))
 
   if (noteChanged) {
     data.note = input.note
-    const label = !input.note ? 'You removed the note' : expense.note ? 'You changed the note' : 'You added a note'
+    const label = !input.note
+      ? 'You removed the note'
+      : expense.note
+        ? 'You changed the note'
+        : 'You added a note'
     steps.push(userStep(expense, 'updated', label, input.note))
   }
 
   await inTransaction(async (transactionId) => {
-    await tablesDB.updateRow<Expense>({ databaseId: DATABASE_ID, tableId: TABLES.expenses, rowId: expense.$id, data, transactionId })
+    await tablesDB.updateRow<Expense>({
+      databaseId: DATABASE_ID,
+      tableId: TABLES.expenses,
+      rowId: expense.$id,
+      data,
+      transactionId,
+    })
     for (const flag of resolved) {
       await tablesDB.updateRow<ReviewFlag>({
         databaseId: DATABASE_ID,
@@ -170,7 +202,8 @@ export async function updateExpense(input: {
     for (const step of steps) await tablesDB.createRow<Activity>({ ...step, transactionId })
   })
   applyLocally(expense.$id, data)
-  if (resolved.length > 0) await queryClient.invalidateQueries({ queryKey: expenseKeys.flags(expense.$id) })
+  if (resolved.length > 0)
+    await queryClient.invalidateQueries({ queryKey: expenseKeys.flags(expense.$id) })
 }
 
 /** IDs of the rows in `tableId` that belong to one expense. */
@@ -198,7 +231,12 @@ export async function deleteExpense(expense: Expense): Promise<void> {
   await inTransaction(async (transactionId) => {
     await tablesDB.createOperations({
       transactionId,
-      operations: rows.map(({ tableId, rowId }) => ({ action: 'delete', databaseId: DATABASE_ID, tableId, rowId })),
+      operations: rows.map(({ tableId, rowId }) => ({
+        action: 'delete',
+        databaseId: DATABASE_ID,
+        tableId,
+        rowId,
+      })),
     })
   })
   await storage.deleteFile({ bucketId: BUCKET_ID, fileId: expense.$id })

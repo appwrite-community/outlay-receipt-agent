@@ -1,4 +1,10 @@
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { CURRENCIES, currencyName } from '@/lib/money'
 
 export function CurrencySelect({
@@ -14,7 +20,9 @@ export function CurrencySelect({
   onValueChange: (value: string) => void
   disabled?: boolean
 }) {
-  const options: string[] = CURRENCIES.includes(value as (typeof CURRENCIES)[number]) ? [...CURRENCIES] : [value, ...CURRENCIES]
+  const options: string[] = CURRENCIES.includes(value as (typeof CURRENCIES)[number])
+    ? [...CURRENCIES]
+    : [value, ...CURRENCIES]
   return (
     <Select value={value} onValueChange={onValueChange} disabled={disabled}>
       <SelectTrigger id={id} className={className}>

@@ -1,8 +1,22 @@
 import { useQuery } from '@tanstack/react-query'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { ChevronDown, ChevronLeft, ChevronRight, CloudOff, ReceiptText, Search, SearchX, X } from 'lucide-react'
+import {
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  CloudOff,
+  ReceiptText,
+  Search,
+  SearchX,
+  X,
+} from 'lucide-react'
 import { type ReactNode, useEffect, useState } from 'react'
-import { ExpenseCard, ExpenseRow, ExpenseTableHead, ExpenseTableSkeleton } from '@/components/app/ExpenseTable'
+import {
+  ExpenseCard,
+  ExpenseRow,
+  ExpenseTableHead,
+  ExpenseTableSkeleton,
+} from '@/components/app/ExpenseTable'
 import { EmptyState } from '@/components/app/EmptyState'
 import { PageHeader, UploadButton } from '@/components/app/PageHeader'
 import { statusLabel } from '@/components/app/StatusChip'
@@ -10,7 +24,13 @@ import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 import { CATEGORIES, categoryLabel, isCategory } from '@/lib/categories'
 import { addMonths, formatMonthYear } from '@/lib/format'
@@ -27,7 +47,13 @@ import { useMediaQuery } from '@/lib/use-media-query'
 import { usePageTitle } from '@/lib/use-page-title'
 import { cn } from '@/lib/utils'
 
-type Search = { page?: number; q?: string; category?: Category[]; status?: ExpenseStatus; month?: string }
+type Search = {
+  page?: number
+  q?: string
+  category?: Category[]
+  status?: ExpenseStatus
+  month?: string
+}
 
 const STATUSES: ExpenseStatus[] = ['ready', 'needs_review', 'processing', 'failed', 'rejected']
 
@@ -41,8 +67,13 @@ export const Route = createFileRoute('/_app/expenses/')({
       page: Number.isInteger(page) && page > 1 ? page : undefined,
       q: typeof search.q === 'string' && search.q.trim() ? search.q.trim().slice(0, 64) : undefined,
       category: categories.length ? categories : undefined,
-      status: STATUSES.includes(search.status as ExpenseStatus) ? (search.status as ExpenseStatus) : undefined,
-      month: typeof search.month === 'string' && /^\d{4}-\d{2}$/.test(search.month) ? search.month : undefined,
+      status: STATUSES.includes(search.status as ExpenseStatus)
+        ? (search.status as ExpenseStatus)
+        : undefined,
+      month:
+        typeof search.month === 'string' && /^\d{4}-\d{2}$/.test(search.month)
+          ? search.month
+          : undefined,
     }
   },
   loaderDeps: ({ search }) => search,
@@ -53,17 +84,38 @@ export const Route = createFileRoute('/_app/expenses/')({
 })
 
 function toFilters(search: Search): ExpenseFilters {
-  return { page: search.page ?? 1, search: search.q, categories: search.category, status: search.status, month: search.month }
+  return {
+    page: search.page ?? 1,
+    search: search.q,
+    categories: search.category,
+    status: search.status,
+    month: search.month,
+  }
 }
 
-const MONTHS = Array.from({ length: 12 }, (_, index) => addMonths(currentMonthStart(), -index).slice(0, 7))
+const MONTHS = Array.from({ length: 12 }, (_, index) =>
+  addMonths(currentMonthStart(), -index).slice(0, 7),
+)
 
-function CategoryFilter({ value, onChange }: { value: Category[]; onChange: (value: Category[]) => void }) {
+function CategoryFilter({
+  value,
+  onChange,
+}: {
+  value: Category[]
+  onChange: (value: Category[]) => void
+}) {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button size="md" className={cn('font-normal', value.length && 'border-accent-line bg-accent-tint text-fg')}>
-          {value.length === 0 ? 'Category' : value.length === 1 ? categoryLabel(value[0]) : `${value.length} categories`}
+        <Button
+          size="md"
+          className={cn('font-normal', value.length && 'border-accent-line bg-accent-tint text-fg')}
+        >
+          {value.length === 0
+            ? 'Category'
+            : value.length === 1
+              ? categoryLabel(value[0])
+              : `${value.length} categories`}
           <ChevronDown className="text-fg-3" />
         </Button>
       </PopoverTrigger>
@@ -71,10 +123,15 @@ function CategoryFilter({ value, onChange }: { value: Category[]; onChange: (val
         {CATEGORIES.map(({ id, label, icon: Icon }) => {
           const checked = value.includes(id)
           return (
-            <label key={id} className="flex h-8 cursor-default items-center gap-2.5 rounded-[5px] px-2 text-sm hover:bg-surface-3">
+            <label
+              key={id}
+              className="flex h-8 cursor-default items-center gap-2.5 rounded-[5px] px-2 text-sm hover:bg-surface-3"
+            >
               <Checkbox
                 checked={checked}
-                onCheckedChange={(next) => onChange(next ? [...value, id] : value.filter((item) => item !== id))}
+                onCheckedChange={(next) =>
+                  onChange(next ? [...value, id] : value.filter((item) => item !== id))
+                }
               />
               <Icon className="size-4 text-fg-3" />
               {label}
@@ -143,7 +200,11 @@ function Expenses() {
   let body: ReactNode
   if (list.isError) {
     body = (
-      <EmptyState icon={CloudOff} title="Could not load your expenses" description="Check your connection, then try again.">
+      <EmptyState
+        icon={CloudOff}
+        title="Could not load your expenses"
+        description="Check your connection, then try again."
+      >
         <Button onClick={() => list.refetch()}>Try again</Button>
       </EmptyState>
     )
@@ -151,7 +212,11 @@ function Expenses() {
     body = <ExpenseTableSkeleton rows={phone ? 6 : 12} />
   } else if (rows.length === 0 && unfiledRows.length === 0) {
     body = hasFilters ? (
-      <EmptyState icon={SearchX} title={noResultsText(search)} description="Try a different search, or clear the filters.">
+      <EmptyState
+        icon={SearchX}
+        title={noResultsText(search)}
+        description="Try a different search, or clear the filters."
+      >
         <Button
           onClick={() => {
             setQuery('')
@@ -180,14 +245,19 @@ function Expenses() {
     )
   } else {
     body = (
-      <div className={cn('transition-opacity duration-150', list.isPlaceholderData && 'opacity-60')}>
+      <div
+        className={cn('transition-opacity duration-150', list.isPlaceholderData && 'opacity-60')}
+      >
         <Table className="table-fixed">
           <ExpenseTableHead />
           <TableBody>
             {unfiledRows.length > 0 && (
               <>
                 <TableRow className="bg-surface-1 hover:bg-surface-1">
-                  <TableCell colSpan={6} className="h-8 text-2xs font-semibold tracking-[0.06em] text-fg-3 uppercase">
+                  <TableCell
+                    colSpan={6}
+                    className="h-8 text-2xs font-semibold tracking-[0.06em] text-fg-3 uppercase"
+                  >
                     Not filed yet · {unfiledRows.length}
                   </TableCell>
                 </TableRow>
@@ -196,7 +266,10 @@ function Expenses() {
                 ))}
                 {rows.length > 0 && (
                   <TableRow className="bg-surface-1 hover:bg-surface-1">
-                    <TableCell colSpan={6} className="h-8 text-2xs font-semibold tracking-[0.06em] text-fg-3 uppercase">
+                    <TableCell
+                      colSpan={6}
+                      className="h-8 text-2xs font-semibold tracking-[0.06em] text-fg-3 uppercase"
+                    >
                       Filed
                     </TableCell>
                   </TableRow>
@@ -234,15 +307,26 @@ function Expenses() {
       <PageHeader title="Expenses">
         <div className="hidden w-64 sm:block">{searchField}</div>
       </PageHeader>
-      <main className="mx-auto flex w-full max-w-[1280px] flex-col gap-3 p-4 md:px-6 md:pt-4 md:pb-6">
+      <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-3 p-4 md:px-6 md:pt-4 md:pb-6">
         <div className="sm:hidden">{searchField}</div>
         <div className="flex flex-wrap items-center gap-2">
-          <CategoryFilter value={search.category ?? []} onChange={(category) => update({ category: category.length ? category : undefined })} />
+          <CategoryFilter
+            value={search.category ?? []}
+            onChange={(category) => update({ category: category.length ? category : undefined })}
+          />
           <Select
             value={search.status ?? 'all'}
-            onValueChange={(value) => update({ status: value === 'all' ? undefined : (value as ExpenseStatus) })}
+            onValueChange={(value) =>
+              update({ status: value === 'all' ? undefined : (value as ExpenseStatus) })
+            }
           >
-            <SelectTrigger className={cn('w-auto min-w-36', search.status && 'border-accent-line bg-accent-tint')} aria-label="Status">
+            <SelectTrigger
+              className={cn(
+                'w-auto min-w-36',
+                search.status && 'border-accent-line bg-accent-tint',
+              )}
+              aria-label="Status"
+            >
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -254,8 +338,14 @@ function Expenses() {
               ))}
             </SelectContent>
           </Select>
-          <Select value={search.month ?? 'all'} onValueChange={(value) => update({ month: value === 'all' ? undefined : value })}>
-            <SelectTrigger className={cn('w-auto min-w-36', search.month && 'border-accent-line bg-accent-tint')} aria-label="Month">
+          <Select
+            value={search.month ?? 'all'}
+            onValueChange={(value) => update({ month: value === 'all' ? undefined : value })}
+          >
+            <SelectTrigger
+              className={cn('w-auto min-w-36', search.month && 'border-accent-line bg-accent-tint')}
+              aria-label="Month"
+            >
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -289,7 +379,14 @@ function Expenses() {
               size="icon"
               aria-label="Previous page"
               disabled={filters.page <= 1}
-              onClick={() => navigate({ search: (previous) => ({ ...previous, page: filters.page - 1 > 1 ? filters.page - 1 : undefined }) })}
+              onClick={() =>
+                navigate({
+                  search: (previous) => ({
+                    ...previous,
+                    page: filters.page - 1 > 1 ? filters.page - 1 : undefined,
+                  }),
+                })
+              }
             >
               <ChevronLeft />
             </Button>
@@ -297,14 +394,16 @@ function Expenses() {
               size="icon"
               aria-label="Next page"
               disabled={filters.page >= pages}
-              onClick={() => navigate({ search: (previous) => ({ ...previous, page: filters.page + 1 }) })}
+              onClick={() =>
+                navigate({ search: (previous) => ({ ...previous, page: filters.page + 1 }) })
+              }
             >
               <ChevronRight />
             </Button>
           </div>
         </div>
         <div className="overflow-hidden rounded-lg border border-border bg-bg">{body}</div>
-      </main>
+      </div>
     </>
   )
 }

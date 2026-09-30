@@ -75,19 +75,28 @@ export function ReceiptViewer({ expense, className }: { expense: Expense; classN
     function onWheel(event: WheelEvent) {
       if (!event.ctrlKey && !event.metaKey) return
       event.preventDefault()
-      changeZoom((value) => Math.min(MAX_ZOOM, Math.max(1, value * (event.deltaY < 0 ? 1.1 : 1 / 1.1))))
+      changeZoom((value) =>
+        Math.min(MAX_ZOOM, Math.max(1, value * (event.deltaY < 0 ? 1.1 : 1 / 1.1))),
+      )
     }
     element.addEventListener('wheel', onWheel, { passive: false })
     return () => element.removeEventListener('wheel', onWheel)
   }, [changeZoom])
 
-  const zoomIn = () => changeZoom((value) => ZOOM_STEPS.find((step) => step > value + 0.01) ?? MAX_ZOOM)
-  const zoomOut = () => changeZoom((value) => [...ZOOM_STEPS].reverse().find((step) => step < value - 0.01) ?? 1)
+  const zoomIn = () =>
+    changeZoom((value) => ZOOM_STEPS.find((step) => step > value + 0.01) ?? MAX_ZOOM)
+  const zoomOut = () =>
+    changeZoom((value) => [...ZOOM_STEPS].reverse().find((step) => step < value - 0.01) ?? 1)
 
   function onPointerDown(event: PointerEvent<HTMLDivElement>) {
     const element = scrollRef.current
     if (!element || zoom === 1 || event.button !== 0) return
-    drag.current = { x: event.clientX, y: event.clientY, left: element.scrollLeft, top: element.scrollTop }
+    drag.current = {
+      x: event.clientX,
+      y: event.clientY,
+      left: element.scrollLeft,
+      top: element.scrollTop,
+    }
     element.setPointerCapture(event.pointerId)
   }
   function onPointerMove(event: PointerEvent<HTMLDivElement>) {
@@ -103,7 +112,8 @@ export function ReceiptViewer({ expense, className }: { expense: Expense; classN
   // Fit the whole image inside the panel, then scale by the zoom.
   const turned = rotation % 180 !== 0
   const box = { width: Math.max(0, width - PADDING * 2), height: Math.max(0, height - PADDING * 2) }
-  let image: { width: number; height: number; frameWidth: number; frameHeight: number } | null = null
+  let image: { width: number; height: number; frameWidth: number; frameHeight: number } | null =
+    null
   if (natural && box.width > 0 && box.height > 0) {
     const shownWidth = turned ? natural.height : natural.width
     const shownHeight = turned ? natural.width : natural.height
@@ -121,11 +131,19 @@ export function ReceiptViewer({ expense, className }: { expense: Expense; classN
       <div className="flex h-11 shrink-0 items-center gap-2 border-b border-border px-3">
         <p className="min-w-0 flex-1 truncate font-mono text-xs text-fg-2">
           {expense.fileName}
-          {expense.sizeBytes !== null && <span className="text-fg-3"> · {formatBytes(expense.sizeBytes)}</span>}
+          {expense.sizeBytes !== null && (
+            <span className="text-fg-3"> · {formatBytes(expense.sizeBytes)}</span>
+          )}
         </p>
         <div className="flex items-center gap-0.5">
           <Tooltip content="Zoom out">
-            <Button variant="ghost" size="icon-sm" onClick={zoomOut} disabled={zoom <= 1} aria-label="Zoom out">
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              onClick={zoomOut}
+              disabled={zoom <= 1}
+              aria-label="Zoom out"
+            >
               <Minus />
             </Button>
           </Tooltip>
@@ -138,13 +156,24 @@ export function ReceiptViewer({ expense, className }: { expense: Expense; classN
             {Math.round(zoom * 100)}%
           </button>
           <Tooltip content="Zoom in">
-            <Button variant="ghost" size="icon-sm" onClick={zoomIn} disabled={zoom >= MAX_ZOOM} aria-label="Zoom in">
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              onClick={zoomIn}
+              disabled={zoom >= MAX_ZOOM}
+              aria-label="Zoom in"
+            >
               <Plus />
             </Button>
           </Tooltip>
           <span className="mx-1 h-4 w-px bg-border-strong" />
           <Tooltip content="Rotate">
-            <Button variant="ghost" size="icon-sm" onClick={() => setRotation((value) => (value + 90) % 360)} aria-label="Rotate">
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              onClick={() => setRotation((value) => (value + 90) % 360)}
+              aria-label="Rotate"
+            >
               <RotateCw />
             </Button>
           </Tooltip>
@@ -191,13 +220,25 @@ export function ReceiptViewer({ expense, className }: { expense: Expense; classN
             <Skeleton className="aspect-[3/4] h-[70%] max-h-[560px] rounded-sm" />
           </div>
         ) : isPdf ? (
-          <div className="mx-auto" style={{ width: width * zoom - PADDING * 2, padding: `${PADDING}px 0` }}>
+          <div
+            className="mx-auto"
+            style={{ width: width * zoom - PADDING * 2, padding: `${PADDING}px 0` }}
+          >
             {width > 0 && (
-              <PdfPages key={attempt} url={url} width={width * zoom - PADDING * 2} rotation={rotation} onError={onPdfError} />
+              <PdfPages
+                key={attempt}
+                url={url}
+                width={width * zoom - PADDING * 2}
+                rotation={rotation}
+                onError={onPdfError}
+              />
             )}
           </div>
         ) : (
-          <div className="flex min-h-full min-w-full w-max items-center justify-center" style={{ padding: PADDING }}>
+          <div
+            className="flex min-h-full min-w-full w-max items-center justify-center"
+            style={{ padding: PADDING }}
+          >
             {!image && <Skeleton className="aspect-[3/4] h-[70%] max-h-[560px] rounded-sm" />}
             <div
               className={cn('relative shrink-0', !image && 'absolute opacity-0')}
@@ -208,12 +249,21 @@ export function ReceiptViewer({ expense, className }: { expense: Expense; classN
                 src={url}
                 alt={`Receipt ${expense.fileName}`}
                 draggable={false}
-                onLoad={(event) => setNatural({ width: event.currentTarget.naturalWidth, height: event.currentTarget.naturalHeight })}
+                onLoad={(event) =>
+                  setNatural({
+                    width: event.currentTarget.naturalWidth,
+                    height: event.currentTarget.naturalHeight,
+                  })
+                }
                 onError={() => setFailed(true)}
                 className="absolute top-1/2 left-1/2 max-w-none rounded-sm shadow-[0_12px_32px_-12px_rgb(0_0_0/0.9)] select-none"
                 style={
                   image
-                    ? { width: image.width, height: image.height, transform: `translate(-50%, -50%) rotate(${rotation}deg)` }
+                    ? {
+                        width: image.width,
+                        height: image.height,
+                        transform: `translate(-50%, -50%) rotate(${rotation}deg)`,
+                      }
                     : { width: 1, height: 1 }
                 }
               />

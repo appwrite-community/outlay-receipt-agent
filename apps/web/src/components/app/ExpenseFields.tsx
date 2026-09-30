@@ -4,7 +4,15 @@ import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Tooltip } from '@/components/ui/tooltip'
 import { categoryIcon } from '@/lib/categories'
-import { EDITABLE_FIELDS, FIELD_LABELS, displayValue, fieldValue, parseField, provenance, toDraft } from '@/lib/fields'
+import {
+  EDITABLE_FIELDS,
+  FIELD_LABELS,
+  displayValue,
+  fieldValue,
+  parseField,
+  provenance,
+  toDraft,
+} from '@/lib/fields'
 import { updateExpense } from '@/lib/queries/changes'
 import { errorMessage } from '@/lib/query-client'
 import type { Expense, ExpenseField, ReviewFlag } from '@/lib/types'
@@ -15,7 +23,15 @@ import { FieldInput } from './FieldInput'
  * Where a value came from. "history" is what the agent found when it looked
  * up the merchant, which explains the category it chose.
  */
-export function ProvenanceHint({ expense, field, history }: { expense: Expense; field: ExpenseField; history?: string | null }) {
+export function ProvenanceHint({
+  expense,
+  field,
+  history,
+}: {
+  expense: Expense
+  field: ExpenseField
+  history?: string | null
+}) {
   const source = provenance(expense, field)
   const value = fieldValue(expense, field)
   if (source.kind !== 'changed' && (value === null || value === '')) return null
@@ -29,10 +45,17 @@ export function ProvenanceHint({ expense, field, history }: { expense: Expense; 
   }
   if (source.kind === 'inferred') {
     return (
-      <Tooltip content={source.note ?? 'The agent was fairly sure, but the value is not printed clearly.'}>
-        <span tabIndex={0} className="inline-flex cursor-help items-center gap-1 rounded-sm text-2xs text-accent-300">
+      <Tooltip
+        content={source.note ?? 'The agent was fairly sure, but the value is not printed clearly.'}
+      >
+        <span
+          tabIndex={0}
+          className="inline-flex cursor-help items-center gap-1 rounded-sm text-2xs text-accent-300"
+        >
           <Sparkles className="size-3" />
-          <span className="underline decoration-accent-300/40 decoration-dotted underline-offset-2">{source.label}</span>
+          <span className="underline decoration-accent-300/40 decoration-dotted underline-offset-2">
+            {source.label}
+          </span>
         </span>
       </Tooltip>
     )
@@ -66,7 +89,16 @@ function FieldValue({ expense, field }: { expense: Expense; field: ExpenseField 
       </span>
     )
   }
-  return <span className={cn((field === 'total' || field === 'tax' || field === 'spentOn') && 'tabular', field === 'currency' && 'font-mono')}>{text}</span>
+  return (
+    <span
+      className={cn(
+        (field === 'total' || field === 'tax' || field === 'spentOn') && 'tabular',
+        field === 'currency' && 'font-mono',
+      )}
+    >
+      {text}
+    </span>
+  )
 }
 
 /**
@@ -78,13 +110,11 @@ export function FieldRow({
   field,
   openFlags,
   history,
-  readOnly,
 }: {
   expense: Expense
   field: ExpenseField
   openFlags: ReviewFlag[]
   history?: string | null
-  readOnly?: boolean
 }) {
   const [editing, setEditing] = useState(false)
   const [text, setText] = useState('')
@@ -104,7 +134,12 @@ export function FieldRow({
     if (parsed.error !== undefined) return setError(parsed.error)
     setSaving(true)
     try {
-      await updateExpense({ expense, openFlags, values: { [field]: parsed.value }, note: expense.note })
+      await updateExpense({
+        expense,
+        openFlags,
+        values: { [field]: parsed.value },
+        note: expense.note,
+      })
       setEditing(false)
     } catch (caught) {
       toast.error(errorMessage(caught, 'Could not save the change. Try again.'))
@@ -115,7 +150,10 @@ export function FieldRow({
 
   if (editing) {
     return (
-      <form onSubmit={handleSubmit} className="flex flex-col gap-2 rounded-md bg-surface-2/60 px-3 py-2.5">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-2 rounded-md bg-surface-2/60 px-3 py-2.5"
+      >
         <label htmlFor={inputId} className="text-xs font-medium text-fg-2">
           {FIELD_LABELS[field].title}
         </label>
@@ -155,17 +193,15 @@ export function FieldRow({
         </span>
         <ProvenanceHint expense={expense} field={field} history={history} />
       </div>
-      {!readOnly && (
-        <Button
-          variant="link"
-          size="sm"
-          onClick={startEditing}
-          className="shrink-0 text-xs opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100 focus-visible:opacity-100"
-          aria-label={`Update ${FIELD_LABELS[field].noun}`}
-        >
-          Update
-        </Button>
-      )}
+      <Button
+        variant="link"
+        size="sm"
+        onClick={startEditing}
+        className="shrink-0 text-xs opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100 focus-visible:opacity-100"
+        aria-label={`Update ${FIELD_LABELS[field].noun}`}
+      >
+        Update
+      </Button>
     </div>
   )
 }
@@ -175,7 +211,10 @@ export function FieldGrid({ expense, history }: { expense: Expense; history?: st
   return (
     <dl className="grid grid-cols-2 gap-x-6 gap-y-4">
       {EDITABLE_FIELDS.map((field) => (
-        <div key={field} className={cn('flex min-w-0 flex-col gap-0.5', field === 'merchant' && 'col-span-2')}>
+        <div
+          key={field}
+          className={cn('flex min-w-0 flex-col gap-0.5', field === 'merchant' && 'col-span-2')}
+        >
           <dt className="text-xs text-fg-2">{FIELD_LABELS[field].title}</dt>
           <dd className="truncate text-sm text-fg">
             <FieldValue expense={expense} field={field} />

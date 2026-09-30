@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Skeleton } from '@/components/ui/skeleton'
 
-type LoadingTask = ReturnType<typeof import('pdfjs-dist')['getDocument']>
+type LoadingTask = ReturnType<(typeof import('pdfjs-dist'))['getDocument']>
 type PdfDocument = Awaited<LoadingTask['promise']>
 
 /** Loads pdf.js only when a PDF is shown. Vite bundles the worker. */
@@ -14,7 +14,17 @@ async function openPdf(url: string): Promise<LoadingTask> {
   return pdfjs.getDocument({ url, verbosity: pdfjs.VerbosityLevel.ERRORS })
 }
 
-function PdfPage({ pdf, number, width, rotation }: { pdf: PdfDocument; number: number; width: number; rotation: number }) {
+function PdfPage({
+  pdf,
+  number,
+  width,
+  rotation,
+}: {
+  pdf: PdfDocument
+  number: number
+  width: number
+  rotation: number
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
@@ -39,7 +49,12 @@ function PdfPage({ pdf, number, width, rotation }: { pdf: PdfDocument; number: n
     }
   }, [pdf, number, width, rotation])
 
-  return <canvas ref={canvasRef} className="block rounded-sm bg-white shadow-[0_8px_24px_-12px_rgb(0_0_0/0.8)]" />
+  return (
+    <canvas
+      ref={canvasRef}
+      className="block rounded-sm bg-white shadow-[0_8px_24px_-12px_rgb(0_0_0/0.8)]"
+    />
+  )
 }
 
 /** Every page of a PDF receipt, stacked, `width` px wide. */

@@ -18,7 +18,15 @@ export function UploadButton() {
 }
 
 /** The 56 px bar at the top of every page: title on the left, actions and Upload on the right. */
-export function PageHeader({ title, children, className }: { title: ReactNode; children?: ReactNode; className?: string }) {
+export function PageHeader({
+  title,
+  children,
+  className,
+}: {
+  title: ReactNode
+  children?: ReactNode
+  className?: string
+}) {
   return (
     <header
       className={cn(
@@ -26,7 +34,9 @@ export function PageHeader({ title, children, className }: { title: ReactNode; c
         className,
       )}
     >
-      <div className="flex min-w-0 flex-1 items-center gap-2 text-md font-semibold text-fg">{title}</div>
+      <h1 className="flex min-w-0 flex-1 items-center gap-2 text-md font-semibold text-fg">
+        {title}
+      </h1>
       {children}
       <UploadButton />
     </header>

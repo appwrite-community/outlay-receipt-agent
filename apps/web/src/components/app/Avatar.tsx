@@ -6,7 +6,10 @@ export function AgentAvatar({ className }: { className?: string }) {
   return (
     <span
       aria-hidden
-      className={cn('grid size-5 shrink-0 place-items-center rounded-full border border-accent-line bg-accent-tint', className)}
+      className={cn(
+        'grid size-5 shrink-0 place-items-center rounded-full border border-accent-line bg-accent-tint',
+        className,
+      )}
     >
       <span className="size-1.5 rounded-full bg-accent-400" />
     </span>
