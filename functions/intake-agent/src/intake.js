@@ -308,6 +308,9 @@ function canRetry(expense) {
  * Moves an expense back to processing for a retry. The update is staged
  * before the row is read, so two retries at the same time cannot both win:
  * the later one either reads "processing" or its commit fails with a conflict.
+ * `$updatedAt` is set explicitly because a run that stopped answering is
+ * already "processing", and an update that changes no value keeps the old
+ * timestamp: the claim must always count as a change.
  */
 async function claimRetry({ tablesDB }, expenseId, callerId) {
   const { $id: transactionId } = await tablesDB.createTransaction({ ttl: 60 });
@@ -316,7 +319,7 @@ async function claimRetry({ tablesDB }, expenseId, callerId) {
       databaseId: DATABASE_ID,
       tableId: TABLES.expenses,
       rowId: expenseId,
-      data: { status: 'processing', failureReason: null },
+      data: { status: 'processing', failureReason: null, $updatedAt: new Date().toISOString() },
       transactionId,
     });
     const expense = await tablesDB.getRow({ databaseId: DATABASE_ID, tableId: TABLES.expenses, rowId: expenseId });
