@@ -308,6 +308,8 @@ export function IntakeSheet() {
       <SheetContent
         overlay={false}
         onInteractOutside={(event) => event.preventDefault()}
+        // The sheet opens on its own when files are dropped; it announces them instead of taking focus.
+        onOpenAutoFocus={(event) => event.preventDefault()}
         className="md:w-[420px]"
       >
         <div className="shrink-0 border-b border-border px-5 pt-4 pb-4">

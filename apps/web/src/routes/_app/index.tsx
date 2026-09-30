@@ -185,7 +185,7 @@ function Overview() {
                   value={summary.filed.count}
                   detail={
                     summary.filed.count > 0
-                      ? `${Math.round((summary.filed.unchanged / summary.filed.count) * 100)}% needed no changes`
+                      ? `${Math.round((summary.filed.unaided / summary.filed.count) * 100)}% filed without your help`
                       : 'No receipts filed yet'
                   }
                 />
@@ -194,7 +194,7 @@ function Overview() {
                   value={
                     summary.filed.medianMs === null ? '-' : formatDuration(summary.filed.medianMs)
                   }
-                  detail="From upload to filed, this month"
+                  detail="Agent time per receipt, this month"
                 />
               </div>
 

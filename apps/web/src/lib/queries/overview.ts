@@ -19,6 +19,7 @@ type OverviewRow = Pick<
   | 'status'
   | 'filedInMs'
   | 'correctedFields'
+  | 'reviewedAt'
 >
 
 const COLUMNS = [
@@ -29,6 +30,7 @@ const COLUMNS = [
   'status',
   'filedInMs',
   'correctedFields',
+  'reviewedAt',
 ]
 
 /** The first day of the current month, in UTC like the receipt dates. */
@@ -90,7 +92,7 @@ export type OverviewSummary = {
   otherCurrencies: CurrencyTotal[]
   thisMonth: MonthTotal
   lastMonth: MonthTotal
-  filed: { count: number; unchanged: number; medianMs: number | null }
+  filed: { count: number; unaided: number; medianMs: number | null }
 }
 
 function median(values: number[]): number | null {
@@ -142,8 +144,9 @@ export function summarize(
   }
 
   const monthList = [...months.values()]
-  const unchanged = data.filedThisMonth.filter(
-    (row) => row.status === 'ready' && row.correctedFields.length === 0,
+  // Filed without your help: never reviewed and never changed by you.
+  const unaided = data.filedThisMonth.filter(
+    (row) => row.status === 'ready' && row.correctedFields.length === 0 && !row.reviewedAt,
   )
 
   return {
@@ -159,7 +162,7 @@ export function summarize(
     lastMonth: monthList.at(-2)!,
     filed: {
       count: data.filedThisMonth.length,
-      unchanged: unchanged.length,
+      unaided: unaided.length,
       medianMs: median(
         data.filedThisMonth.flatMap((row) => (row.filedInMs === null ? [] : [row.filedInMs])),
       ),
