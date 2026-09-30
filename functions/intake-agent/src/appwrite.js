@@ -31,8 +31,19 @@ export function ownerPermissions(userId, actions = ['read', 'update', 'delete'])
   return actions.map((action) => Permission[action](Role.user(userId)));
 }
 
-/** Logs an Appwrite or model error without request details, headers, or tokens. */
+/** The provider's own error message, which OpenRouter passes on as a JSON string. */
+function providerMessage(err) {
+  const raw = err.error?.metadata?.raw;
+  if (typeof raw !== 'string') return null;
+  try {
+    return JSON.parse(raw).error?.message ?? raw;
+  } catch {
+    return raw;
+  }
+}
+
+/** Describes an Appwrite or model error without request details, headers, or tokens. */
 export function describeError(err) {
-  const parts = [err.code ?? err.status, err.type, err.message].filter(Boolean);
-  return parts.join(' ').replace(/token=[^&\s"]+/g, 'token=<hidden>');
+  const text = [err.type, err.message, providerMessage(err)].filter(Boolean).join(': ');
+  return text.replace(/token=[^&\s"]+/g, 'token=<hidden>');
 }
