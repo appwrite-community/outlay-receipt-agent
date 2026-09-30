@@ -103,6 +103,7 @@ export async function resolveFlag(input: {
       ),
     )
   } else if (resolution === 'dismissed') {
+    expenseData.duplicateOf = null
     step = userStep(expense, 'dismissed', 'You kept both expenses', flag.reason)
   } else {
     step = userStep(expense, 'confirmed', `You confirmed ${FIELD_LABELS[flag.field].noun}`)

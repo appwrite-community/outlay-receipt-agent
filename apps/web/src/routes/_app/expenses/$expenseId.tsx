@@ -2,7 +2,6 @@ import { useQuery } from '@tanstack/react-query'
 import { Link, createFileRoute, useNavigate } from '@tanstack/react-router'
 import { Ban, ChevronRight, FileQuestion, RotateCw, Trash2, TriangleAlert } from 'lucide-react'
 import { type ReactNode, useEffect, useRef, useState } from 'react'
-import { toast } from 'sonner'
 import { ActivityTimeline } from '@/components/app/ActivityTimeline'
 import { AgentAvatar } from '@/components/app/Avatar'
 import { DeleteExpenseDialog } from '@/components/app/DeleteExpenseDialog'
@@ -17,13 +16,12 @@ import { StatusChip } from '@/components/app/StatusChip'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Tooltip } from '@/components/ui/tooltip'
-import { canRetry, isStuck, merchantHistory } from '@/lib/agent'
+import { canRetry, currentRun, isStuck, merchantHistory, useRetry } from '@/lib/agent'
 import { categoryLabel } from '@/lib/categories'
 import { formatDate } from '@/lib/format'
 import { formatMoney } from '@/lib/money'
-import { retryExpense } from '@/lib/queries/changes'
 import { activityQuery, expenseQuery, flagsQuery, lineItemsQuery } from '@/lib/queries/expenses'
-import { errorMessage } from '@/lib/query-client'
+import { useNow } from '@/lib/use-now'
 import { usePageTitle } from '@/lib/use-page-title'
 import { cn } from '@/lib/utils'
 
@@ -129,7 +127,9 @@ function ExpenseDetail() {
   const { data: steps = [] } = useQuery(activityQuery(expenseId))
   const [editing, setEditing] = useState(false)
   const [confirmDelete, setConfirmDelete] = useState(false)
-  const [retriedAt, setRetriedAt] = useState<string | null>(null)
+  const { retry, retrying } = useRetry(expense)
+  // Checked again every 15 s, so a run that stops answering offers Retry without a reload.
+  const now = useNow(15_000)
   const seen = useRef(false)
   if (expense) seen.current = true
 
@@ -153,26 +153,15 @@ function ExpenseDetail() {
   const openFlags = flags.filter((flag) => flag.status !== 'resolved')
   const processing = expense.status === 'processing'
   const filed = expense.status === 'ready' || expense.status === 'needs_review'
-  const stuck = isStuck(expense)
-  const retrying = retriedAt === expense.$updatedAt
+  const stuck = isStuck(expense, now)
+  // The agent is working on it right now (a run that stopped answering is not).
+  const reading = processing && !stuck
 
-  async function handleRetry() {
-    if (!expense) return
-    setRetriedAt(expense.$updatedAt)
-    try {
-      await retryExpense(expense)
-      toast.success('The agent is reading the receipt again')
-    } catch (error) {
-      setRetriedAt(null)
-      toast.error(errorMessage(error, 'Could not start the agent. Try again.'))
-    }
-  }
-
-  const retryButton = canRetry(expense) && (
+  const retryButton = canRetry(expense, now) && (
     <Button
       size="sm"
       variant={expense.status === 'failed' || stuck ? 'primary' : 'secondary'}
-      onClick={handleRetry}
+      onClick={retry}
       disabled={retrying}
     >
       <RotateCw />
@@ -195,8 +184,8 @@ function ExpenseDetail() {
           <div className="flex flex-col gap-4 px-6 pt-5 pb-5">
             <div className="flex items-center gap-2">
               <StatusChip
-                status={expense.status}
-                label={processing ? 'Agent is reading' : undefined}
+                status={stuck ? 'failed' : expense.status}
+                label={stuck ? 'Stopped' : reading ? 'Agent is reading' : undefined}
               />
               {expense.status === 'needs_review' && (
                 <span className="text-xs text-fg-2">
@@ -209,7 +198,7 @@ function ExpenseDetail() {
                   content={
                     filed
                       ? null
-                      : processing
+                      : reading
                         ? 'The agent is still reading this receipt'
                         : 'Retry first, so the agent can read the receipt'
                   }
@@ -220,14 +209,12 @@ function ExpenseDetail() {
                     </Button>
                   </span>
                 </Tooltip>
-                <Tooltip
-                  content={processing && !stuck ? 'Wait until the agent finishes' : 'Delete'}
-                >
+                <Tooltip content={reading || retrying ? 'Wait until the agent finishes' : 'Delete'}>
                   <span>
                     <Button
                       size="icon-sm"
                       onClick={() => setConfirmDelete(true)}
-                      disabled={processing && !stuck}
+                      disabled={reading || retrying}
                       aria-label="Delete"
                     >
                       <Trash2 />
@@ -246,7 +233,7 @@ function ExpenseDetail() {
               >
                 {expense.merchant ?? expense.fileName}
               </h2>
-              {processing ? (
+              {reading ? (
                 <div className="mt-2 flex flex-col gap-2">
                   <Skeleton className="h-9 w-40" />
                   <Skeleton className="h-3.5 w-48" />
@@ -280,22 +267,20 @@ function ExpenseDetail() {
               </p>
             )}
 
-            {processing && (
-              <Callout
-                tone="accent"
-                title={stuck ? 'The agent stopped answering' : 'The agent is reading this receipt'}
-              >
-                {stuck ? (
-                  <p>The last step was more than 4 minutes ago. Retry to start over.</p>
-                ) : (
-                  <div className="mt-2">
-                    {steps.length > 0 ? (
-                      <ActivityTimeline steps={steps} working />
-                    ) : (
-                      <p>Waiting for the agent to start.</p>
-                    )}
-                  </div>
-                )}
+            {reading && (
+              <Callout tone="accent" title="The agent is reading this receipt">
+                <div className="mt-2">
+                  {steps.length > 0 ? (
+                    <ActivityTimeline steps={currentRun(steps)} working />
+                  ) : (
+                    <p>Waiting for the agent to start.</p>
+                  )}
+                </div>
+              </Callout>
+            )}
+            {stuck && (
+              <Callout tone="crit" icon={TriangleAlert} title="The agent stopped answering">
+                The last step was more than 4 minutes ago. Retry to start over.
               </Callout>
             )}
             {expense.status === 'failed' && (
@@ -324,9 +309,9 @@ function ExpenseDetail() {
             )}
           </div>
 
-          {(filed || processing) && (
+          {(filed || reading) && (
             <Section title="Details">
-              {processing ? (
+              {reading ? (
                 <FieldGridSkeleton />
               ) : editing ? (
                 <ExpenseForm
@@ -346,9 +331,9 @@ function ExpenseDetail() {
             </Section>
           )}
 
-          {(filed || processing) && (
+          {(filed || reading) && (
             <Section title="Line items">
-              {processing || !items ? (
+              {reading || !items ? (
                 <LineItemsSkeleton />
               ) : (
                 <LineItemsTable expense={expense} items={items} />
@@ -356,7 +341,7 @@ function ExpenseDetail() {
             </Section>
           )}
 
-          {!processing && steps.length > 0 && (
+          {!reading && steps.length > 0 && (
             <Section title="Activity">
               <ActivityTimeline steps={steps} working={false} />
             </Section>

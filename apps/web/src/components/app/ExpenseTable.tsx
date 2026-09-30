@@ -9,6 +9,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Tooltip } from '@/components/ui/tooltip'
+import { isStuck } from '@/lib/agent'
 import { categoryIcon, categoryLabel } from '@/lib/categories'
 import { formatDate } from '@/lib/format'
 import { formatMoney } from '@/lib/money'
@@ -51,7 +52,8 @@ function Value({
   value: string | null
   className?: string
 }) {
-  if (expense.status === 'processing') return <Skeleton className={cn('h-3 w-16', className)} />
+  if (expense.status === 'processing' && !isStuck(expense))
+    return <Skeleton className={cn('h-3 w-16', className)} />
   return value ?? <span className="text-fg-3">-</span>
 }
 
@@ -84,7 +86,11 @@ export function ExpenseRow({ expense }: { expense: Expense }) {
         <Value expense={expense} value={money(expense)} className="ml-auto w-14" />
       </TableCell>
       <TableCell>
-        <StatusChip status={expense.status} />
+        {isStuck(expense) ? (
+          <StatusChip status="failed" label="Stopped" />
+        ) : (
+          <StatusChip status={expense.status} />
+        )}
       </TableCell>
     </TableRow>
   )

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { Link, createFileRoute, useNavigate } from '@tanstack/react-router'
 import { ArrowUpRight, ChevronDown, ChevronUp, CircleCheck } from 'lucide-react'
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { AgentAvatar } from '@/components/app/Avatar'
 import { EmptyState } from '@/components/app/EmptyState'
 import { FieldRow } from '@/components/app/ExpenseFields'
@@ -115,6 +115,8 @@ function ReviewWorkspace({ expenseId }: { expenseId: string }) {
   const openFlags = flags.filter((flag) => flag.status !== 'resolved')
   const flaggedFields = new Set<string>(openFlags.map((flag) => flag.field))
   const history = merchantHistory(steps)
+  // Whether the first flag holds a typed correction, so the Enter hint says Save.
+  const [draftChanged, setDraftChanged] = useState(false)
 
   return (
     <>
@@ -252,6 +254,7 @@ function ReviewWorkspace({ expenseId }: { expenseId: string }) {
                       openFlags={openFlags}
                       focused={flagIndex === 0}
                       onResolved={(done) => done && advance()}
+                      onDraftChange={flagIndex === 0 ? setDraftChanged : undefined}
                     />
                   ))}
                 </section>
@@ -290,7 +293,7 @@ function ReviewWorkspace({ expenseId }: { expenseId: string }) {
               {openFlags[0] && openFlags[0].field !== 'duplicate' && (
                 <span className="flex items-center gap-1.5">
                   <Kbd>Enter</Kbd>
-                  Confirm {FIELD_LABELS[openFlags[0].field].noun}
+                  {draftChanged ? 'Save' : 'Confirm'} {FIELD_LABELS[openFlags[0].field].noun}
                 </span>
               )}
             </footer>

@@ -34,6 +34,8 @@ type FlagProps = {
   focused?: boolean
   /** `done` is true when nothing is left to review on this expense. */
   onResolved?: (done: boolean) => void
+  /** Tells the review screen whether Enter will confirm or save a typed correction. */
+  onDraftChange?: (changed: boolean) => void
 }
 
 function SourceTag({ flag }: { flag: ReviewFlag }) {
@@ -147,11 +149,13 @@ function FieldFlagCard(props: FlagProps) {
     if (event.key === 'Escape' && field) setText(toDraft(expense)[field])
   }
 
-  // On the review screen, Enter confirms the focused flag.
+  const { onDraftChange } = props
+  useEffect(() => onDraftChange?.(changed), [changed, onDraftChange])
+
+  // On the review screen, Enter runs the focused flag's button: Confirm, or Save after an edit.
   const confirmRef = useRef<() => void>(() => {})
   confirmRef.current = () => {
-    if (busy || changed || !canConfirm) return
-    void run(() => resolve(props, 'confirmed'))
+    if (!busy) save()
   }
   useEffect(() => {
     if (!focused) return

@@ -8,9 +8,10 @@ import { Sheet, SheetContent, SheetDescription, SheetTitle } from '@/components/
 import { Tooltip } from '@/components/ui/tooltip'
 import { categoryLabel } from '@/lib/categories'
 import { formatBytes } from '@/lib/format'
+import { currentRun, useRetry } from '@/lib/agent'
 import { type Upload, intake, reportsProgress, useIntake } from '@/lib/intake'
 import { formatMoney } from '@/lib/money'
-import { deleteExpense, retryExpense } from '@/lib/queries/changes'
+import { deleteExpense } from '@/lib/queries/changes'
 import { activityQuery, expenseQuery } from '@/lib/queries/expenses'
 import { errorMessage } from '@/lib/query-client'
 import type { Expense } from '@/lib/types'
@@ -151,6 +152,7 @@ function IntakeCard({
   phase: Phase
 }) {
   const [busy, setBusy] = useState(false)
+  const { retry, retrying } = useRetry(expense)
   const { data: steps = [] } = useQuery({
     ...activityQuery(upload.fileId),
     enabled: Boolean(expense),
@@ -219,7 +221,7 @@ function IntakeCard({
 
       {phase === 'processing' && steps.length > 0 && (
         <div className="mt-3 border-t border-border pt-3">
-          <ActivityTimeline steps={steps} working compact />
+          <ActivityTimeline steps={currentRun(steps)} working compact />
         </div>
       )}
 
@@ -252,16 +254,12 @@ function IntakeCard({
       )}
       {expense && phase === 'rejected' && (
         <div className="mt-3 flex justify-end gap-2">
-          <Button
-            size="sm"
-            disabled={busy}
-            onClick={() => run(() => retryExpense(expense), 'Could not retry. Try again.')}
-          >
+          <Button size="sm" disabled={busy || retrying} onClick={retry}>
             Retry
           </Button>
           <Button
             size="sm"
-            disabled={busy}
+            disabled={busy || retrying}
             onClick={() =>
               run(async () => {
                 await deleteExpense(expense)
@@ -275,12 +273,7 @@ function IntakeCard({
       )}
       {expense && phase === 'failed' && (
         <div className="mt-3 flex justify-end">
-          <Button
-            size="sm"
-            variant="primary"
-            disabled={busy}
-            onClick={() => run(() => retryExpense(expense), 'Could not retry. Try again.')}
-          >
+          <Button size="sm" variant="primary" disabled={retrying} onClick={retry}>
             Retry
           </Button>
         </div>

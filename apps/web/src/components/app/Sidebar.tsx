@@ -189,6 +189,10 @@ function UserMenu({ compact }: { compact?: boolean }) {
           side="top"
           align="start"
           className="w-[var(--radix-dropdown-menu-trigger-width)] min-w-52"
+          // Settings takes focus. Giving it back to the menu button would pull it out of the dialog.
+          onCloseAutoFocus={(event) => {
+            if (settingsOpen) event.preventDefault()
+          }}
         >
           <DropdownMenuLabel className="truncate">{user.email}</DropdownMenuLabel>
           <DropdownMenuSeparator />
