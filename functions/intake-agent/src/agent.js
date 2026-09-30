@@ -75,7 +75,8 @@ export async function runAgent({ document, homeCurrency, today, lookups, openai 
     },
   ];
 
-  for (let round = 1; round <= MAX_ROUNDS; round++) {
+  let rounds = MAX_ROUNDS;
+  for (let round = 1; round <= rounds; round++) {
     const completion = await openai.chat.completions.create({
       model: modelId(),
       messages,
@@ -102,7 +103,11 @@ export async function runAgent({ document, homeCurrency, today, lookups, openai 
 
       let result;
       if (!valid) result = { error: `The arguments do not match the ${name} schema. Call it again.` };
-      else if (TERMINAL_TOOLS.has(name)) result = { error: `Read the lookup results first, then call ${name} again.` };
+      else if (TERMINAL_TOOLS.has(name)) {
+        result = { error: `Read the lookup results first, then call ${name} again.` };
+        // The model needs one more call to repeat it, even on the last round.
+        if (round === MAX_ROUNDS) rounds = MAX_ROUNDS + 1;
+      }
       else if (lookups[name]) result = await lookups[name](args);
       else result = { error: `There is no tool named ${name}.` };
       messages.push({ role: 'tool', tool_call_id: call.id, content: JSON.stringify(result) });

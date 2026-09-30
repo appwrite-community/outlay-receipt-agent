@@ -122,3 +122,19 @@ test('a submit_expense sent with a lookup waits until the model has read the loo
   assert.equal(results[0].content, '{"matches":[{"category":"meals"}]}');
   assert.match(results[1].content, /Read the lookup results first/);
 });
+
+test('a submit_expense deferred on the last round gets one more call', async () => {
+  const lookup = (id) => ({ tool_calls: [call(id, 'find_merchant_history', { merchant: 'Harbor Light Cafe' })] });
+  const openai = scriptedModel(
+    lookup('a'),
+    lookup('b'),
+    lookup('c'),
+    lookup('d'),
+    { tool_calls: [call('e', 'find_merchant_history', { merchant: 'Harbor Light Cafe' }), call('f', 'submit_expense', SUBMISSION)] },
+    { tool_calls: [call('g', 'submit_expense', SUBMISSION)] },
+  );
+  const outcome = await run(openai, { find_merchant_history: async () => ({ matches: [] }) });
+
+  assert.deepEqual(outcome, { tool: 'submit_expense', args: SUBMISSION });
+  assert.equal(openai.requests.length, 6);
+});
