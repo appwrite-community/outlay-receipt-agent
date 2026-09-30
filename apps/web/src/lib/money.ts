@@ -28,14 +28,15 @@ export function formatMoney(minor: number, currency: string): string {
   return new Intl.NumberFormat(LOCALE, { style: 'currency', currency }).format(fromMinor(minor, currency))
 }
 
-/** Short amounts for chart axes, such as $1.2K. */
+/** Short amounts for charts, such as $191 or $1.2K. */
 export function formatMoneyCompact(minor: number, currency: string): string {
+  const amount = fromMinor(minor, currency)
   return new Intl.NumberFormat(LOCALE, {
     style: 'currency',
     currency,
     notation: 'compact',
-    maximumFractionDigits: 1,
-  }).format(fromMinor(minor, currency))
+    maximumFractionDigits: Math.abs(amount) >= 1000 ? 1 : 0,
+  }).format(amount)
 }
 
 export function currencySymbol(currency: string): string {

@@ -3,7 +3,7 @@ import { Query } from 'appwrite'
 import { tablesDB } from '../appwrite'
 import { addMonths } from '../format'
 import { DATABASE_ID, TABLES } from '../ids'
-import type { Activity, Category, Expense, ExpenseStatus, LineItem, ReviewFlag } from '../types'
+import type { Activity, ActivityKind, Category, Expense, ExpenseStatus, LineItem, ReviewFlag } from '../types'
 
 export const PAGE_SIZE = 25
 
@@ -143,14 +143,17 @@ export const reviewQueueQuery = queryOptions({
 
 export type ActivityWithExpense = { activity: Activity; expense: Pick<Expense, '$id' | 'merchant' | 'fileName'> | null }
 
-/** The latest steps across all expenses, with the expense each one belongs to. */
+/** Steps that end an agent run or record a change you made. The steps in between show on each expense. */
+const OUTCOMES: ActivityKind[] = ['filed', 'flagged', 'rejected', 'failed', 'retried', 'confirmed', 'corrected', 'dismissed', 'updated']
+
+/** The latest outcomes across all expenses, with the expense each one belongs to. */
 export const recentActivityQuery = queryOptions({
   queryKey: expenseKeys.recentActivity,
   queryFn: async (): Promise<ActivityWithExpense[]> => {
     const { rows: steps } = await tablesDB.listRows<Activity>({
       databaseId: DATABASE_ID,
       tableId: TABLES.activity,
-      queries: [Query.orderDesc('$createdAt'), Query.limit(8)],
+      queries: [Query.equal('kind', OUTCOMES), Query.orderDesc('$createdAt'), Query.limit(8)],
     })
     const ids = [...new Set(steps.map((step) => step.expenseId))]
     const { rows: expenses } = ids.length

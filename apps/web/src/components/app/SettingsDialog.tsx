@@ -42,7 +42,17 @@ export function SettingsDialog({ open, onOpenChange }: { open: boolean; onOpenCh
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent
+        onOpenAutoFocus={(event) => {
+          // Put the caret after the name instead of selecting all of it.
+          event.preventDefault()
+          const input = document.getElementById('settings-name')
+          if (input instanceof HTMLInputElement) {
+            input.focus()
+            input.setSelectionRange(input.value.length, input.value.length)
+          }
+        }}
+      >
         <form onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle>Settings</DialogTitle>

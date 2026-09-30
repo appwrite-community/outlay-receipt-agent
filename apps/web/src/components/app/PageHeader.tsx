@@ -9,9 +9,9 @@ export function UploadButton() {
   const pickFiles = useFilePicker()
   return (
     <Tooltip content="Upload receipts or drop them anywhere">
-      <Button variant="primary" onClick={pickFiles} className="pr-2">
+      <Button variant="primary" onClick={pickFiles} className="md:pr-2">
         Upload
-        <Kbd className="ml-0.5 border-white/25 text-white">U</Kbd>
+        <Kbd className="ml-0.5 hidden border-white/25 text-white md:inline-flex">U</Kbd>
       </Button>
     </Tooltip>
   )

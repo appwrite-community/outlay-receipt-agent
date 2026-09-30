@@ -72,6 +72,16 @@
   --animate-sweep: sweep 1.6s linear infinite;
   --animate-shimmer: shimmer 1.4s ease-in-out infinite;
   --animate-pulse-dot: pulse-dot 1.6s ease-in-out infinite;
+  --animate-indeterminate: indeterminate 1.3s var(--ease-out-soft) infinite;
+}
+
+@keyframes indeterminate {
+  from {
+    left: -35%;
+  }
+  to {
+    left: 100%;
+  }
 }
 
 @keyframes rise {
@@ -177,7 +187,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-@utility overline {
+@utility eyebrow {
   font-size: var(--text-2xs);
   line-height: var(--text-2xs--line-height);
   font-weight: 600;

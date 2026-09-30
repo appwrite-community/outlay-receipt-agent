@@ -77,7 +77,7 @@ function FirstReceipt() {
 function OverviewSkeleton() {
   return (
     <>
-      <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {Array.from({ length: 4 }, (_, index) => (
           <KpiTileSkeleton key={index} />
         ))}
@@ -143,7 +143,7 @@ function Overview() {
             <OverviewSkeleton />
           ) : (
             <>
-              <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
                 <KpiTile
                   label={`Spent in ${formatMonth(monthIso(currentMonth))}`}
                   value={formatMoney(summary.thisMonth.totalMinor, currency)}
@@ -254,7 +254,7 @@ function Overview() {
                 <Card className="min-w-0">
                   <CardHeader
                     title="Recent activity"
-                    description="What the agent did, and what you changed"
+                    description="The agent's work and your changes"
                     action={
                       <Button asChild variant="ghost" size="sm">
                         <Link to="/expenses">All expenses</Link>

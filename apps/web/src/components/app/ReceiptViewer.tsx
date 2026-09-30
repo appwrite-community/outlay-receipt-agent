@@ -1,5 +1,5 @@
 import { ExternalLink, ImageOff, Minus, Plus, RotateCw } from 'lucide-react'
-import { type PointerEvent, useCallback, useEffect, useRef, useState } from 'react'
+import { type PointerEvent, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Tooltip } from '@/components/ui/tooltip'
@@ -34,11 +34,13 @@ export function ReceiptViewer({ expense, className }: { expense: Expense; classN
   const [failed, setFailed] = useState(false)
   const [attempt, setAttempt] = useState(0)
   const drag = useRef<{ x: number; y: number; left: number; top: number } | null>(null)
+  const focus = useRef({ x: 0.5, y: 0.5 })
   const url = receiptUrl(expense)
   const isPdf = expense.mimeType === 'application/pdf'
 
   // A different receipt starts at the default view.
   useEffect(() => {
+    focus.current = { x: 0.5, y: 0.5 }
     setZoom(1)
     setRotation(0)
     setNatural(null)
@@ -47,6 +49,25 @@ export function ReceiptViewer({ expense, className }: { expense: Expense; classN
 
   const onPdfError = useCallback(() => setFailed(true), [])
 
+  // Zooming keeps the same part of the receipt in the middle of the panel.
+  const changeZoom = useCallback((next: (value: number) => number) => {
+    const element = scrollRef.current
+    if (element) {
+      focus.current = {
+        x: (element.scrollLeft + element.clientWidth / 2) / element.scrollWidth,
+        y: (element.scrollTop + element.clientHeight / 2) / element.scrollHeight,
+      }
+    }
+    setZoom(next)
+  }, [])
+
+  useLayoutEffect(() => {
+    const element = scrollRef.current
+    if (!element) return
+    element.scrollLeft = focus.current.x * element.scrollWidth - element.clientWidth / 2
+    element.scrollTop = focus.current.y * element.scrollHeight - element.clientHeight / 2
+  }, [zoom])
+
   // Ctrl or Cmd with the wheel zooms, like a map.
   useEffect(() => {
     const element = scrollRef.current
@@ -54,14 +75,14 @@ export function ReceiptViewer({ expense, className }: { expense: Expense; classN
     function onWheel(event: WheelEvent) {
       if (!event.ctrlKey && !event.metaKey) return
       event.preventDefault()
-      setZoom((value) => Math.min(MAX_ZOOM, Math.max(1, value * (event.deltaY < 0 ? 1.1 : 1 / 1.1))))
+      changeZoom((value) => Math.min(MAX_ZOOM, Math.max(1, value * (event.deltaY < 0 ? 1.1 : 1 / 1.1))))
     }
     element.addEventListener('wheel', onWheel, { passive: false })
     return () => element.removeEventListener('wheel', onWheel)
-  }, [])
+  }, [changeZoom])
 
-  const zoomIn = () => setZoom((value) => ZOOM_STEPS.find((step) => step > value + 0.01) ?? MAX_ZOOM)
-  const zoomOut = () => setZoom((value) => [...ZOOM_STEPS].reverse().find((step) => step < value - 0.01) ?? 1)
+  const zoomIn = () => changeZoom((value) => ZOOM_STEPS.find((step) => step > value + 0.01) ?? MAX_ZOOM)
+  const zoomOut = () => changeZoom((value) => [...ZOOM_STEPS].reverse().find((step) => step < value - 0.01) ?? 1)
 
   function onPointerDown(event: PointerEvent<HTMLDivElement>) {
     const element = scrollRef.current
@@ -110,7 +131,7 @@ export function ReceiptViewer({ expense, className }: { expense: Expense; classN
           </Tooltip>
           <button
             type="button"
-            onClick={() => setZoom(1)}
+            onClick={() => changeZoom(() => 1)}
             className="h-7 w-12 rounded-sm text-center font-mono text-2xs text-fg-2 tabular hover:bg-surface-2 hover:text-fg"
             aria-label="Reset zoom"
           >

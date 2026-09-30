@@ -7,6 +7,12 @@ export const ACCEPTED_EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp', 'pdf']
 export const ACCEPT_ATTRIBUTE = '.jpg,.jpeg,.png,.webp,.pdf,image/jpeg,image/png,image/webp,application/pdf'
 export const MAX_FILE_BYTES = 10_000_000
 
+/** The SDK uploads files larger than this in 5 MiB chunks and reports progress after each one. */
+const CHUNK_BYTES = 5 * 1024 * 1024
+
+/** Small files go up in one request, so there is no progress to show until it finishes. */
+export const reportsProgress = (file: File) => file.size > CHUNK_BYTES
+
 /** Checks a file before uploading it. The bucket enforces the same rules. */
 export function checkFile(file: File): string | null {
   const extension = file.name.split('.').pop()?.toLowerCase() ?? ''
@@ -81,7 +87,7 @@ export const intake = {
     const added: Upload[] = files.map((file) => {
       const error = checkFile(file)
       return {
-        key: crypto.randomUUID(),
+        key: ID.unique(),
         fileId: '',
         file,
         previewUrl: file.type.startsWith('image/') && !error ? URL.createObjectURL(file) : null,

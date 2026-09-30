@@ -1,6 +1,6 @@
-import { categoryLabel } from './categories'
-import { formatDate } from './format'
-import { formatMoney } from './money'
+import { categoryLabel, isCategory } from './categories'
+import { formatDate, fromDateInput, toDateInput } from './format'
+import { formatMoney, fractionDigits, fromMinor, isCurrencyCode, parseAmount, toMinor } from './money'
 import type { Expense, ExpenseField, FieldNote, FlagField } from './types'
 
 /** How each field is named in the UI and in the activity log ("You confirmed the total"). */
@@ -77,5 +77,62 @@ export function parseFieldNotes(expense: Pick<Expense, 'fieldNotes'>): Partial<R
     return JSON.parse(expense.fieldNotes)
   } catch {
     return {}
+  }
+}
+
+export type Provenance = { kind: 'read' | 'inferred' | 'changed'; label: string; note: string | null }
+
+/** Where a value came from: printed on the receipt, inferred by the agent, or changed by you. */
+export function provenance(expense: Expense, field: ExpenseField): Provenance {
+  if (expense.correctedFields.includes(field)) return { kind: 'changed', label: 'Changed by you', note: null }
+  const note = parseFieldNotes(expense)[field]
+  if (note) return { kind: 'inferred', label: 'Inferred by the agent', note: note.note }
+  return { kind: 'read', label: 'Read by the agent', note: null }
+}
+
+/** Form text for each field while a person edits it. */
+export type Draft = Record<ExpenseField, string>
+
+export function toDraft(expense: Expense): Draft {
+  const amount = (minor: number | null) =>
+    minor === null || !expense.currency ? '' : fromMinor(minor, expense.currency).toFixed(fractionDigits(expense.currency))
+  return {
+    merchant: expense.merchant ?? '',
+    spentOn: expense.spentOn ? toDateInput(expense.spentOn) : '',
+    total: amount(expense.totalMinor),
+    tax: amount(expense.taxMinor),
+    currency: expense.currency ?? '',
+    category: expense.category ?? '',
+    paymentMethod: expense.paymentMethod ?? '',
+  }
+}
+
+export type Parsed = { value: FieldValues[ExpenseField]; error?: never } | { value?: never; error: string }
+
+/** Turns form text into a stored value, or explains what is wrong with it. */
+export function parseField(field: ExpenseField, text: string, currency: string | null): Parsed {
+  const trimmed = text.trim()
+  const ok = (value: FieldValues[ExpenseField]) => ({ value })
+  switch (field) {
+    case 'merchant':
+      return trimmed ? ok(trimmed) : { error: 'Enter the merchant name.' }
+    case 'spentOn':
+      return /^\d{4}-\d{2}-\d{2}$/.test(trimmed) ? ok(fromDateInput(trimmed)) : { error: 'Choose the date on the receipt.' }
+    case 'total':
+    case 'tax': {
+      if (!trimmed) return field === 'tax' ? ok(null) : { error: 'Enter the total.' }
+      const amount = parseAmount(trimmed)
+      if (amount === null) return { error: 'Enter an amount like 44.50.' }
+      if (!currency || !isCurrencyCode(currency)) return { error: 'Set the currency first.' }
+      return ok(toMinor(amount, currency))
+    }
+    case 'currency': {
+      const code = trimmed.toUpperCase()
+      return isCurrencyCode(code) ? ok(code) : { error: 'Enter a three-letter code like USD.' }
+    }
+    case 'category':
+      return isCategory(trimmed) ? ok(trimmed) : { error: 'Choose a category.' }
+    case 'paymentMethod':
+      return ok(trimmed || null)
   }
 }

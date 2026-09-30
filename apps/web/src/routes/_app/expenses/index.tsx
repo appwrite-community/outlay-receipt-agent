@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { ChevronDown, ChevronLeft, ChevronRight, ReceiptText, RotateCw, Search, SearchX, X } from 'lucide-react'
+import { ChevronDown, ChevronLeft, ChevronRight, CloudOff, ReceiptText, Search, SearchX, X } from 'lucide-react'
 import { type ReactNode, useEffect, useState } from 'react'
 import { ExpenseCard, ExpenseRow, ExpenseTableHead, ExpenseTableSkeleton } from '@/components/app/ExpenseTable'
 import { EmptyState } from '@/components/app/EmptyState'
@@ -143,7 +143,7 @@ function Expenses() {
   let body: ReactNode
   if (list.isError) {
     body = (
-      <EmptyState icon={RotateCw} title="Could not load your expenses" description="Check your connection, then try again.">
+      <EmptyState icon={CloudOff} title="Could not load your expenses" description="Check your connection, then try again.">
         <Button onClick={() => list.refetch()}>Try again</Button>
       </EmptyState>
     )
@@ -212,24 +212,30 @@ function Expenses() {
     )
   }
 
+  // In the top bar from 640 px, above the filters on phones.
+  const searchField = (
+    <div className="relative">
+      <Search className="pointer-events-none absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2 text-fg-3" />
+      <Input
+        value={query}
+        onChange={(event) => setQuery(event.target.value)}
+        onKeyDown={(event) => {
+          if (event.key === 'Escape') setQuery('')
+        }}
+        placeholder="Search merchants"
+        aria-label="Search merchants"
+        className="pl-8"
+      />
+    </div>
+  )
+
   return (
     <>
       <PageHeader title="Expenses">
-        <div className="relative hidden w-64 sm:block">
-          <Search className="pointer-events-none absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2 text-fg-3" />
-          <Input
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            onKeyDown={(event) => {
-              if (event.key === 'Escape') setQuery('')
-            }}
-            placeholder="Search merchants"
-            aria-label="Search merchants"
-            className="pl-8"
-          />
-        </div>
+        <div className="hidden w-64 sm:block">{searchField}</div>
       </PageHeader>
       <main className="mx-auto flex w-full max-w-[1280px] flex-col gap-3 p-4 md:px-6 md:pt-4 md:pb-6">
+        <div className="sm:hidden">{searchField}</div>
         <div className="flex flex-wrap items-center gap-2">
           <CategoryFilter value={search.category ?? []} onChange={(category) => update({ category: category.length ? category : undefined })} />
           <Select

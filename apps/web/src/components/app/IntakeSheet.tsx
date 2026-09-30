@@ -8,7 +8,7 @@ import { Sheet, SheetContent, SheetDescription, SheetTitle } from '@/components/
 import { Tooltip } from '@/components/ui/tooltip'
 import { categoryLabel } from '@/lib/categories'
 import { formatBytes } from '@/lib/format'
-import { type Upload, intake, useIntake } from '@/lib/intake'
+import { type Upload, intake, reportsProgress, useIntake } from '@/lib/intake'
 import { formatMoney } from '@/lib/money'
 import { deleteExpense, retryExpense } from '@/lib/queries/changes'
 import { activityQuery, expenseQuery } from '@/lib/queries/expenses'
@@ -34,14 +34,11 @@ const NEEDS_YOU: Phase[] = ['needs_review', 'failed', 'rejected', 'blocked', 'up
 /** Each upload with the expense the agent created for it, kept current by Realtime. */
 function useIntakeCards() {
   const { uploads, open } = useIntake()
-  const expenses = useQueries({
-    queries: uploads.map((upload) => ({
-      ...expenseQuery(upload.fileId),
-      enabled: upload.state === 'uploaded',
-    })),
-  })
-  const cards = uploads.map((upload, index) => {
-    const expense = expenses[index]?.data
+  const uploaded = uploads.filter((upload) => upload.state === 'uploaded')
+  const expenses = useQueries({ queries: uploaded.map((upload) => expenseQuery(upload.fileId)) })
+  const byFileId = new Map(uploaded.map((upload, index) => [upload.fileId, expenses[index]?.data]))
+  const cards = uploads.map((upload) => {
+    const expense = byFileId.get(upload.fileId)
     return { upload, expense, phase: phaseOf(upload, expense) }
   })
   return { cards, open }
@@ -72,15 +69,21 @@ function Thumbnail({ upload }: { upload: Upload }) {
 
 function StateLine({ phase, upload, expense }: { phase: Phase; upload: Upload; expense: Expense | null | undefined }) {
   switch (phase) {
-    case 'uploading':
+    case 'uploading': {
+      const measured = reportsProgress(upload.file)
       return (
         <div className="flex items-center gap-2.5">
-          <span className="w-24 shrink-0 text-xs text-fg-2 tabular">Uploading {upload.progress}%</span>
-          <div className="h-1 flex-1 overflow-hidden rounded-full bg-surface-3">
-            <div className="h-full rounded-full bg-accent-400 transition-[width] duration-200" style={{ width: `${upload.progress}%` }} />
+          <span className="w-24 shrink-0 text-xs text-fg-2 tabular">{measured ? `Uploading ${upload.progress}%` : 'Uploading'}</span>
+          <div className="relative h-1 flex-1 overflow-hidden rounded-full bg-surface-3">
+            {measured ? (
+              <div className="h-full rounded-full bg-accent-400 transition-[width] duration-200" style={{ width: `${upload.progress}%` }} />
+            ) : (
+              <div className="absolute inset-y-0 w-1/3 animate-indeterminate rounded-full bg-accent-400" />
+            )}
           </div>
         </div>
       )
+    }
     case 'waiting':
       return (
         <span className="flex items-center gap-2 text-xs text-fg-2">

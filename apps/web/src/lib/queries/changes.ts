@@ -39,6 +39,17 @@ function reviewState(expense: Expense, openFlagsLeft: number): Partial<Expense> 
   }
 }
 
+/**
+ * Shows a committed change right away. Realtime delivers the saved row a moment
+ * later; until then the review queue must not offer an expense that is already filed.
+ */
+function applyLocally(expenseId: string, data: Partial<Expense> | null) {
+  queryClient.setQueryData<Expense | null>(expenseKeys.one(expenseId), (current) => (current && data ? { ...current, ...data } : null))
+  if (!data || data.status === 'ready') {
+    queryClient.setQueryData<Expense[]>(expenseKeys.reviewQueue, (queue) => queue?.filter((item) => item.$id !== expenseId))
+  }
+}
+
 function changeLabel(field: ExpenseField, from: string, to: string): string {
   return `You changed ${FIELD_LABELS[field].noun} from ${from} to ${to}`
 }
@@ -94,6 +105,7 @@ export async function resolveFlag(input: {
     })
     await tablesDB.createRow<Activity>({ ...step, transactionId })
   })
+  applyLocally(expense.$id, expenseData)
   await queryClient.invalidateQueries({ queryKey: expenseKeys.flags(expense.$id) })
 }
 
@@ -157,6 +169,7 @@ export async function updateExpense(input: {
     }
     for (const step of steps) await tablesDB.createRow<Activity>({ ...step, transactionId })
   })
+  applyLocally(expense.$id, data)
   if (resolved.length > 0) await queryClient.invalidateQueries({ queryKey: expenseKeys.flags(expense.$id) })
 }
 
@@ -190,7 +203,7 @@ export async function deleteExpense(expense: Expense): Promise<void> {
   })
   await storage.deleteFile({ bucketId: BUCKET_ID, fileId: expense.$id })
 
-  queryClient.setQueryData(expenseKeys.one(expense.$id), null)
+  applyLocally(expense.$id, null)
   await queryClient.invalidateQueries({ queryKey: expenseKeys.all })
 }
 

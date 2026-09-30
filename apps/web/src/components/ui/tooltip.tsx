@@ -19,7 +19,7 @@ export function TooltipContent({ className, sideOffset = 6, ...props }: Componen
   )
 }
 
-/** Wraps one element with a tooltip. The child must accept a ref. */
+/** Wraps one element with a tooltip. The child must accept a ref. Without content, renders the child alone. */
 export function Tooltip({
   content,
   children,
@@ -31,6 +31,7 @@ export function Tooltip({
   side?: ComponentProps<typeof TooltipPrimitive.Content>['side']
   delay?: number
 }) {
+  if (!content) return children
   return (
     <TooltipPrimitive.Root delayDuration={delay}>
       <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>

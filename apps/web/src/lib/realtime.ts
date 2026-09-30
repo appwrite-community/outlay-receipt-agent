@@ -4,7 +4,7 @@ import { realtime } from './appwrite'
 import { DATABASE_ID, TABLES } from './ids'
 import { expenseKeys } from './queries/expenses'
 import { queryClient } from './query-client'
-import type { Activity, Expense } from './types'
+import type { Activity, Expense, ReviewFlag } from './types'
 
 type RowEvent = 'create' | 'update' | 'delete'
 
@@ -37,6 +37,10 @@ export function useRealtimeSync(enabled: boolean) {
 
     function onExpense(action: RowEvent, expense: Expense) {
       queryClient.setQueryData(expenseKeys.one(expense.$id), action === 'delete' ? null : expense)
+      // Leave the review queue at once, so the next screen never offers a filed expense.
+      if (action === 'delete' || expense.status !== 'needs_review') {
+        queryClient.setQueryData<Expense[]>(expenseKeys.reviewQueue, (queue) => queue?.filter((item) => item.$id !== expense.$id))
+      }
       if (action === 'update') {
         // The agent saves line items and flags in bulk, which sends no row events. Load them again.
         queryClient.invalidateQueries({ queryKey: expenseKeys.lineItems(expense.$id) })
@@ -56,21 +60,28 @@ export function useRealtimeSync(enabled: boolean) {
       queryClient.invalidateQueries({ queryKey: expenseKeys.recentActivity })
     }
 
+    // Flags you resolve in another tab. The agent's own flags arrive with the expense update.
+    function onFlag(flag: ReviewFlag) {
+      queryClient.invalidateQueries({ queryKey: expenseKeys.flags(flag.expenseId) })
+    }
+
     const subscription = realtime.subscribe(
       [
         Channel.tablesdb(DATABASE_ID).table(TABLES.expenses).row(),
         Channel.tablesdb(DATABASE_ID).table(TABLES.activity).row(),
+        Channel.tablesdb(DATABASE_ID).table(TABLES.flags).row(),
       ],
-      (event: RealtimeResponseEvent<Expense | Activity>) => {
+      (event: RealtimeResponseEvent<Expense | Activity | ReviewFlag>) => {
         const action = rowEvent(event)
         if (!action) return
         if (event.payload.$tableId === TABLES.expenses) onExpense(action, event.payload as Expense)
         if (event.payload.$tableId === TABLES.activity) onActivity(action, event.payload as Activity)
+        if (event.payload.$tableId === TABLES.flags) onFlag(event.payload as ReviewFlag)
       },
     )
 
     return () => {
       subscription.then((active) => active.unsubscribe())
     }
-  }, [enabled, queryClient])
+  }, [enabled])
 }
