@@ -86,6 +86,17 @@ test('a missing currency falls back to the home currency and is flagged', () => 
   assert.deepEqual([flag.field, flag.source, flag.agentValue], ['currency', 'check', 'EUR']);
 });
 
+test('an unsure answer about a missing optional value is not a flag', () => {
+  const input = submission({ tax: { value: null, confidence: 'low', note: 'No tax is listed.' } });
+  assert.deepEqual(flagsFor(input), []);
+  assert.equal(normalizeSubmission(input, { homeCurrency: 'USD' }).data.fieldNotes, null);
+});
+
+test('a missing merchant is flagged by a check, with the model note', () => {
+  const [flag] = flagsFor(submission({ merchant: { value: null, confidence: 'low', note: 'Logo only.' } }));
+  assert.deepEqual([flag.field, flag.source, flag.reason], ['merchant', 'check', 'Logo only. No merchant found.']);
+});
+
 test('model and check reasons for one field merge into one flag', () => {
   const flags = flagsFor(submission({ total: { value: 0, confidence: 'low', note: 'Smudged.' }, lineItems: [] }));
   assert.equal(flags.length, 1);

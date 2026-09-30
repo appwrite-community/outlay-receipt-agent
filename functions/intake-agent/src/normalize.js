@@ -91,12 +91,12 @@ export function normalizeSubmission(submission, { homeCurrency }) {
   };
 }
 
-/** Confidence and notes for every field the model was not sure about, as JSON. */
+/** Confidence and notes for every value the model was not sure about, as JSON. */
 function fieldNotes(submission) {
   const notes = {};
   for (const [name, field] of Object.entries(REVIEWED_FIELDS)) {
-    const { confidence, note } = submission[name];
-    if (confidence !== 'high') notes[field] = { confidence, note: clip(note, 280) };
+    const { value, confidence, note } = submission[name];
+    if (value !== null && confidence !== 'high') notes[field] = { confidence, note: clip(note, 280) };
   }
   return Object.keys(notes).length ? JSON.stringify(notes) : null;
 }

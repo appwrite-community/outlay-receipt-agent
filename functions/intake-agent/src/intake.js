@@ -32,7 +32,8 @@ export async function handleUpload(ctx, file, ownerId) {
   }
 
   await createActivityLog(ctx.tablesDB, expense)('received', `Received ${file.name}`);
-  await fileExpense(ctx, expense);
+  const status = await fileExpense(ctx, expense);
+  ctx.log(`${expense.$id}: ${status}`);
 }
 
 /**
@@ -138,18 +139,17 @@ async function fileExpense(ctx, expense) {
 
 /**
  * The model may point at a duplicate, but only one that the lookup returned in
- * this run. If the model never ran the lookup, code runs the same query.
+ * this run. If the model never ran the lookup, code runs the same query and
+ * applies the rule from the prompt: same merchant, same date.
  */
-async function pickDuplicate({ tablesDB }, expense, submission, data, duplicateCheck) {
+export async function pickDuplicate({ tablesDB }, expense, submission, data, duplicateCheck) {
   if (duplicateCheck.matches.has(submission.duplicateOf)) return duplicateCheck.matches.get(submission.duplicateOf);
-  if (duplicateCheck.ran || data.totalMinor === null || !data.spentOn) return null;
+  if (duplicateCheck.ran || data.totalMinor === null || !data.spentOn || !data.merchant) return null;
 
-  const [match] = await findDuplicateRows(tablesDB, expense, {
-    totalMinor: data.totalMinor,
-    currency: data.currency,
-    date: data.spentOn.slice(0, 10),
-  });
-  return match ?? null;
+  const date = data.spentOn.slice(0, 10);
+  const matches = await findDuplicateRows(tablesDB, expense, { totalMinor: data.totalMinor, currency: data.currency, date });
+  const sameReceipt = (match) => match.date === date && match.merchant?.toLowerCase() === data.merchant.toLowerCase();
+  return matches.find(sameReceipt) ?? null;
 }
 
 const FIELD_NAMES = {
@@ -351,5 +351,6 @@ export async function handleRetry(ctx, body, callerId) {
   }
 
   const status = await fileExpense(ctx, expense);
+  ctx.log(`${expense.$id}: ${status} after a retry`);
   return { status: 200, body: { expenseId: expense.$id, status } };
 }

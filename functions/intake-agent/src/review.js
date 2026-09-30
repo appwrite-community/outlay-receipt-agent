@@ -3,6 +3,8 @@ import { REVIEWED_FIELDS } from './normalize.js';
 
 // A guess on these fields changes how much money was spent, or when.
 const REVIEW_WHEN_INFERRED = new Set(['total', 'date', 'currency']);
+// Many receipts show no tax or payment method. That is not a problem.
+const OPTIONAL = new Set(['tax', 'paymentMethod']);
 const DAY_MS = 24 * 60 * 60 * 1000;
 
 /**
@@ -25,7 +27,8 @@ export function reviewFlags({ submission, data, lineItems, issues, duplicate, to
 
   // What the model itself was unsure about.
   for (const [name, field] of Object.entries(REVIEWED_FIELDS)) {
-    const { confidence, note } = submission[name];
+    const { value, confidence, note } = submission[name];
+    if (value === null && OPTIONAL.has(name)) continue;
     if (confidence === 'low' || (confidence === 'medium' && REVIEW_WHEN_INFERRED.has(name))) {
       flag(field, 'model', note ?? 'The agent was not sure about this value.');
     }
@@ -35,7 +38,8 @@ export function reviewFlags({ submission, data, lineItems, issues, duplicate, to
   for (const issue of issues) flag(issue.field, 'check', issue.reason);
 
   // Checks on the values themselves.
-  const { totalMinor, taxMinor, currency, spentOn, category } = data;
+  const { merchant, totalMinor, taxMinor, currency, spentOn, category } = data;
+  if (!merchant) flag('merchant', 'check', 'No merchant found.');
   if (totalMinor === null) flag('total', 'check', 'No total found.');
   else if (totalMinor <= 0) flag('total', 'check', 'The total is not a positive amount.');
 

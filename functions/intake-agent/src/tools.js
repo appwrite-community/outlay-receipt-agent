@@ -40,7 +40,7 @@ export const TOOLS = [
   tool(
     'find_merchant_history',
     "Look up the user's earlier expenses from a merchant, with the category they were filed under and whether the user set that category.",
-    { merchant: { type: 'string', description: 'Merchant name as printed on the document' } },
+    { merchant: { type: 'string', description: 'Merchant name, written the same way as in submit_expense' } },
   ),
   tool(
     'find_possible_duplicates',
@@ -81,7 +81,12 @@ export const TOOLS = [
   tool(
     'reject_document',
     'Stop without filing, because the document is not a receipt or an invoice.',
-    { reason: { type: 'string', description: 'One sentence for the user' } },
+    {
+      reason: {
+        type: 'string',
+        description: 'One sentence for the user about what the file is, for example "This is a handwritten to-do list, not a receipt."',
+      },
+    },
   ),
 ];
 
@@ -101,8 +106,8 @@ export async function findDuplicateRows(tablesDB, expense, { totalMinor, currenc
       Query.equal('currency', currency),
       Query.equal('totalMinor', totalMinor),
       Query.between('spentOn', new Date(day - 3 * DAY_MS).toISOString(), new Date(day + 3 * DAY_MS).toISOString()),
+      // The expense being filed is still processing, so this also leaves it out.
       Query.equal('status', ['needs_review', 'ready']),
-      Query.notEqual('$id', expense.$id),
       Query.limit(5),
       Query.select(['merchant', 'spentOn', 'totalMinor', 'currency']),
     ],
@@ -136,7 +141,6 @@ export function createLookups({ tablesDB, error }, expense, record) {
         Query.search('merchant', `"${name}"`),
         Query.equal('ownerId', expense.ownerId),
         Query.equal('status', 'ready'),
-        Query.notEqual('$id', expense.$id),
         Query.orderDesc('spentOn'),
         Query.limit(5),
         Query.select(['merchant', 'category', 'correctedFields', 'spentOn', 'totalMinor', 'currency']),
