@@ -102,3 +102,23 @@ test('gives up after five rounds without a terminal tool', async () => {
   await assert.rejects(run(openai, { find_merchant_history: async () => ({ matches: [] }) }), FilingError);
   assert.equal(openai.requests.length, 5);
 });
+
+test('a submit_expense sent with a lookup waits until the model has read the lookup', async () => {
+  const openai = scriptedModel(
+    {
+      tool_calls: [
+        call('a', 'find_merchant_history', { merchant: 'Harbor Light Cafe' }),
+        call('b', 'submit_expense', SUBMISSION),
+      ],
+    },
+    { tool_calls: [call('c', 'submit_expense', SUBMISSION)] },
+  );
+  const outcome = await run(openai, { find_merchant_history: async () => ({ matches: [{ category: 'meals' }] }) });
+
+  assert.deepEqual(outcome, { tool: 'submit_expense', args: SUBMISSION });
+  assert.equal(openai.requests.length, 2);
+  const results = openai.requests[1].messages.filter((message) => message.role === 'tool');
+  assert.deepEqual(results.map((message) => message.tool_call_id), ['a', 'b']);
+  assert.equal(results[0].content, '{"matches":[{"category":"meals"}]}');
+  assert.match(results[1].content, /Read the lookup results first/);
+});

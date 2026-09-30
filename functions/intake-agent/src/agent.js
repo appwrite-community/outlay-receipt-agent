@@ -91,14 +91,18 @@ export async function runAgent({ document, homeCurrency, today, lookups, openai 
       continue;
     }
 
+    // A finishing call in the same turn as a lookup has not seen the lookup's
+    // result yet, so it only counts when the model sends it without lookups.
+    const hasLookups = message.tool_calls.some((call) => !TERMINAL_TOOLS.has(call.function.name));
     for (const call of message.tool_calls) {
       const name = call.function.name;
       const args = parseArguments(call.function.arguments);
       const valid = args !== null && (IS_VALID[name]?.(args) ?? true);
-      if (valid && TERMINAL_TOOLS.has(name)) return { tool: name, args };
+      if (valid && TERMINAL_TOOLS.has(name) && !hasLookups) return { tool: name, args };
 
       let result;
       if (!valid) result = { error: `The arguments do not match the ${name} schema. Call it again.` };
+      else if (TERMINAL_TOOLS.has(name)) result = { error: `Read the lookup results first, then call ${name} again.` };
       else if (lookups[name]) result = await lookups[name](args);
       else result = { error: `There is no tool named ${name}.` };
       messages.push({ role: 'tool', tool_call_id: call.id, content: JSON.stringify(result) });

@@ -45,6 +45,8 @@ export function reviewFlags({ submission, data, lineItems, issues, duplicate, to
 
   if (spentOn) {
     const age = Date.parse(today) - Date.parse(spentOn);
+    // One day of slack: the receipt date is local to the buyer, and today is
+    // the UTC date, so a receipt from today can be a day ahead of it.
     if (age < -DAY_MS) flag('spentOn', 'check', 'The date is in the future.');
     if (age > 365 * DAY_MS) flag('spentOn', 'check', 'The date is more than a year ago.');
   } else if (!flags.has('spentOn')) {
